@@ -1,6 +1,8 @@
 from Analyzation.PostAnalysisProcessing.CharacterUpdater import CharacterUpdater
+from Analyzation.PostAnalysisProcessing.RelationshipsData import Relationship
+from Analyzation.PostAnalysisProcessing.RelationshipsUpdater import RelationshipsUpdater
 from Analyzation.TextAnalyzation.TextAnalysis import *
-from Analyzation.PostAnalysisProcessing.CharacterData import Character, Relationship, Mentions
+from Analyzation.PostAnalysisProcessing.CharacterData import Character, Mentions
 
 
 class TextAnalysisPostProcessor:
@@ -13,7 +15,9 @@ class TextAnalysisPostProcessor:
                               relationships: List[Relationship], indx_chapter: int):
         charUpdater = CharacterUpdater()
         charUpdater.update_characters_information(text_analysis, charUpdater, indx_chapter)
-        self.__update_relationships(text_analysis, characters, relationships)
+
+        relationshipsUpdater = RelationshipsUpdater()
+        relationshipsUpdater.update_relationships(text_analysis, characters, relationships)
 
 
 

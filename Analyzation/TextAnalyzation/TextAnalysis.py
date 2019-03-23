@@ -2,9 +2,10 @@ from typing import List
 
 
 class SentimentedSentence:
-    def __init__(self, text, sentiment):
+    def __init__(self, text, sentiment, sentiment_value):
         self.text = text
         self.sentiment = sentiment
+        self.sentiment_value = sentiment_value
 
 
 class TaggedEntity:

@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9a7094d-9890-4c20-b814-7e9a59d7fa84" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/PostAnalysisProcessor.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookContentProviderBase.py" beforeDir="false" afterPath="$PROJECT_DIR$/ContentProviders/ContentProviderBase.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ObjectModels/TextAnalysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TextAnalysisPostProcessor.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TextAnalyzer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalyzer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/PostAnalysisProcessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/PostAnalysisProcessor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/RelationshipsUpdater.py" beforeDir="false" afterPath="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/RelationshipsUpdater.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalyzer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalyzer.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,29 +28,31 @@
         <counts>
           <entry key="NameExtractor" value="1" />
           <entry key="OrganizationData" value="1" />
+          <entry key="README" value="1" />
           <entry key="log" value="1" />
-          <entry key="py" value="27" />
+          <entry key="py" value="29" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="PLAIN_TEXT" value="1" />
-          <entry key="Python" value="29" />
+          <entry key="PLAIN_TEXT" value="2" />
+          <entry key="Python" value="31" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="NameExtractor" value="1271" />
           <entry key="Python Console" value="57" />
+          <entry key="README" value="151" />
           <entry key="TaggedEntitiesExtractor" value="355" />
           <entry key="dummy" value="24" />
-          <entry key="py" value="8833" />
+          <entry key="py" value="9045" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="379" />
-          <entry key="Python" value="10161" />
+          <entry key="PLAIN_TEXT" value="530" />
+          <entry key="Python" value="10373" />
         </counts>
       </usages-collector>
     </session>
@@ -59,10 +60,34 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalyzer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="263">
+              <caret line="33" selection-start-line="33" selection-end-line="33" />
+              <folding>
+                <element signature="e#0#43#0" expanded="true" />
+                <marker date="1553377752426" expanded="true" signature="111:114" ph="..." />
+                <marker date="1553377752426" expanded="true" signature="329:665" ph="..." />
+                <marker date="1553377752426" expanded="true" signature="696:705" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalysis.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="25" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ContentProviders/ContentProviderBase.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="75">
+              <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
               <folding>
                 <marker date="1553314631839" expanded="true" signature="33:38" ph="..." />
               </folding>
@@ -73,27 +98,36 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/PostAnalysisProcessor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+            <state relative-caret-position="300">
+              <caret line="20" selection-start-line="20" selection-end-line="20" />
               <folding>
                 <element signature="e#0#80#0" expanded="true" />
-                <marker date="1553376926054" expanded="true" signature="265:266" ph="..." />
-                <marker date="1553376926054" expanded="true" signature="265:807" ph="..." />
+                <marker date="1553377510814" expanded="true" signature="418:419" ph="..." />
+                <marker date="1553377510814" expanded="true" signature="418:1029" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/RelationshipsUpdater.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+                <marker date="1553377943146" expanded="true" signature="276:277" ph="..." />
+                <marker date="1553377943146" expanded="true" signature="276:282" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/RelationshipsUpdater.py">
+        <entry file="file://$PROJECT_DIR$/README">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="8" lean-forward="true" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
-              <folding>
-                <element signature="e#0#23#0" expanded="true" />
-                <marker date="1553376927514" expanded="true" signature="203:204" ph="..." />
-                <marker date="1553376927514" expanded="true" signature="203:209" ph="..." />
-              </folding>
+            <state relative-caret-position="15">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
             </state>
           </provider>
         </entry>
@@ -102,7 +136,7 @@
         <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/CharacterUpdater.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
-              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+              <caret line="7" selection-start-line="7" selection-end-line="7" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -146,6 +180,7 @@
       <find>idx</find>
       <find>neural</find>
       <find>indx_end</find>
+      <find>Sentiment</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -168,12 +203,13 @@
         <option value="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/LocationData.py" />
         <option value="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/RelationsData.py" />
         <option value="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/RelationshipsData.py" />
-        <option value="$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalyzer.py" />
-        <option value="$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalysis.py" />
         <option value="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/CharacterData.py" />
         <option value="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/CharacterUpdater.py" />
         <option value="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/PostAnalysisProcessor.py" />
+        <option value="$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalysis.py" />
+        <option value="$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalyzer.py" />
         <option value="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/RelationshipsUpdater.py" />
+        <option value="$PROJECT_DIR$/README" />
       </list>
     </option>
   </component>
@@ -309,14 +345,14 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.72904587" weight="0.32867885" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49762782" weight="0.40064448" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49762782" visible="true" weight="0.40064448" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49973643" weight="0.3290461" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49973643" weight="0.32867885" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32975295" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49815497" weight="0.3290461" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50237215" side_tool="true" weight="0.40064448" />
-      <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.4960464" visible="true" weight="0.32867885" />
+      <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.4960464" weight="0.32867885" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -400,19 +436,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalyzer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1200">
-          <caret line="80" column="87" selection-start-line="80" selection-start-column="87" selection-end-line="80" selection-end-column="87" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-            <marker date="1553371414334" expanded="true" signature="111:114" ph="..." />
-            <marker date="1553371414334" expanded="true" signature="329:665" ph="..." />
-            <marker date="1553371414334" expanded="true" signature="696:705" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/RelationsData.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -428,23 +451,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/LocationData.py">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="32" column="107" selection-start-line="32" selection-start-column="107" selection-end-line="32" selection-end-column="107" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ContentProviders/ContentProviderBase.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-          <folding>
-            <marker date="1553314631839" expanded="true" signature="33:38" ph="..." />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/CharacterData.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -464,34 +470,71 @@
     <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/CharacterUpdater.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ContentProviders/ContentProviderBase.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
+          <folding>
+            <marker date="1553314631839" expanded="true" signature="33:38" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/PostAnalysisProcessor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        <state relative-caret-position="300">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
           <folding>
             <element signature="e#0#80#0" expanded="true" />
-            <marker date="1553376926054" expanded="true" signature="265:266" ph="..." />
-            <marker date="1553376926054" expanded="true" signature="265:807" ph="..." />
+            <marker date="1553377510814" expanded="true" signature="418:419" ph="..." />
+            <marker date="1553377510814" expanded="true" signature="418:1029" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalyzer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+            <marker date="1553377752426" expanded="true" signature="111:114" ph="..." />
+            <marker date="1553377752426" expanded="true" signature="329:665" ph="..." />
+            <marker date="1553377752426" expanded="true" signature="696:705" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="25" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/RelationshipsUpdater.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="8" lean-forward="true" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+        <state relative-caret-position="180">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
-            <marker date="1553376927514" expanded="true" signature="203:204" ph="..." />
-            <marker date="1553376927514" expanded="true" signature="203:209" ph="..." />
+            <marker date="1553377943146" expanded="true" signature="276:277" ph="..." />
+            <marker date="1553377943146" expanded="true" signature="276:282" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
         </state>
       </provider>
     </entry>

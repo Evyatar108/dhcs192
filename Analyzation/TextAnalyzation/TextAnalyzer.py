@@ -29,7 +29,7 @@ class TextAnalyzer:
         for sentence_obj in data['sentences']:
             text = "".join([token['originalText'] + token['after'] for token in sentence_obj['tokens']])
             sentiment = sentence_obj['sentiment']
-            sentimented_sentences.append(SentimentedSentence(text=text, sentiment=sentiment))
+            sentimented_sentences.append(SentimentedSentence(text=text, sentiment=sentiment, sentiment_value= (-1)*(int(sentence_obj['sentimentValue'])-2)))
         return sentimented_sentences
 
 
