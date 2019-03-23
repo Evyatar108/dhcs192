@@ -15,9 +15,9 @@ class TextAnalyzer:
 
     def analyze_text(self,text) -> TextAnalysis:
         data = self.__request_data(text)
-        sentences = self.__extract_sentences(data)
+        sentences = self.__extract_sentimented_sentences(data)
         tagged_entities = self.__extract_tagged_entities(data)
-        coreferences = self.__extract_coreferences(data)
+        coreferences = self.__extract_coreferences_clusters(data)
         return TextAnalysis(data, sentences, tagged_entities, coreferences)
 
 
@@ -38,58 +38,58 @@ class TextAnalyzer:
         tagged_tokens = []
         for indx,s in enumerate(data['sentences']):
             for token in s['tokens']:
-                tagged_tokens.append(TaggedEntity(text=token['originalText'], tag=token['ner'], indx_sentence= indx, indx_start=token['index'], indx_end=token['index']+1))
+                tagged_tokens.append(TaggedEntity(text=token['originalText'], tag=token['ner'], indx_sentence= indx, indx_start=token['index']-1, indx_end=token['index']))
         tagged_entities = self.__get_continuous_tagged_chunks(tagged_tokens)
         return tagged_entities
 
     def __get_continuous_tagged_chunks(self, tagged_tokens: List[TaggedEntity]) -> List[TaggedEntity]:
-        tagged_entities = []
-        current_tagged_entity = None
-        current_tokens = []
-        for tagged_entity in tagged_tokens:
-            if tagged_entity.tag != "O":
-                if not current_tagged_entity:
-                    current_tagged_entity = TaggedEntity(\
-                        text=None,\
-                        tag=tagged_entity.tag,\
-                        indx_sentence=tagged_entity.indx_sentence,\
-                        indx_start=tagged_entity.indx_start-1,
-                        indx_end=None)
-                current_tokens.append(tagged_entity.text)
-            else:
-                if current_tagged_entity:
-                    current_tagged_entity.text = " ".join(current_tokens)
-                    current_tagged_entity.indx_end = tagged_entity.indx_end-1
-                    tagged_entities.append(current_tagged_entity)
-                    current_tokens = []
-                    current_tagged_entity = None
-        if current_tagged_entity:
-            current_tagged_entity.text = " ".join(current_tokens)
-            current_tagged_entity.indx_end = tagged_tokens[-1].indx_end-1
-            tagged_entities.append(current_tagged_entity)
+        tagged_tokens_clusters_gen = self.__generate_clusters(tagged_tokens, self.__pred_same_tagged_entity)
+        tagged_entities = [TaggedEntity( \
+            text=" ".join([tagged_token.text for tagged_token in tagged_tokens_cluster]), \
+            tag=tagged_tokens_cluster[0].tag, \
+            indx_sentence=tagged_tokens_cluster[0].indx_sentence, \
+            indx_start=tagged_tokens_cluster[0].indx_start,
+            indx_end=tagged_tokens_cluster[-1].indx_end)
+            for tagged_tokens_cluster in tagged_tokens_clusters_gen]
         return tagged_entities
 
-    def __extract_coreferences(self, data) -> List[List[CoReference]]:
-        coreferences = []
-        for corefs_cluster in data['corefs'].values():
-            for coref in corefs_cluster:
-                coreferences.append(
-                    CoReference(text=coref['text'],
-                                type=coref['type'], \
-                                plurality=coref['number'], \
-                                gender=coref['gender'],
-                                animacy=coref['animacy'], \
-                                indx_sentence=coref['sentNum'], \
-                                indx_start=coref['startIndex'],
-                                indx_end=coref['endIndex'],
-                                is_representative_mention=coref['isRepresentativeMention'],
-                                indx_named_entity=None))
-        return coreferences
+
+    def __pred_same_tagged_entity(self, prev_tagged_token: TaggedEntity, curr_tagged_token: TaggedEntity):
+        return curr_tagged_token.tag != 'O'
+
+    def __generate_clusters(self,list,pred_same_cluster):
+        cluster = []
+        prev_elem = None
+        for elem in list:
+            if not prev_elem or pred_same_cluster(prev_elem, elem):
+                cluster.append(elem)
+            elif cluster:
+                yield cluster
+                cluster = []
+            prev_elem = elem
+        if cluster:
+            yield cluster
+
+    def __extract_coreferences_clusters(self, data) -> List[List[CoReference]]:
+        return [[CoReference(text=coref['text'],
+                             type=coref['type'], \
+                             plurality=coref['number'], \
+                             gender=coref['gender'],
+                             animacy=coref['animacy'], \
+                             indx_sentence=coref['sentNum'], \
+                             indx_start=coref['startIndex'],
+                             indx_end=coref['endIndex'],
+                             is_representative_mention=coref['isRepresentativeMention'],
+                             indx_named_entity=None)
+                 for coref in corefs_cluster]
+                for corefs_cluster in data['corefs'].values()]
 
 
 
-def main():
-    example_sentence = 'Zorian’s eyes abruptly shot open as a sharp pain erupted from his stomach. His whole body convulsed, buckling against the object that fell on him, and suddenly he was wide awake, not a trace of drowsiness in his mind. Georgy University, you should come'
+
+
+if __name__ == "__main__":
+    example_sentence = 'John told him that he should go swimming' # 'Zorian’s eyes abruptly shot open as a sharp pain erupted from his stomach. His whole body convulsed, buckling against the object that fell on him, and suddenly he was wide awake, not a trace of drowsiness in his mind. Georgy University, you should come'
     print('Creating TEE object')
     tee = TextAnalyzer()
     text_analysis = {}
@@ -100,11 +100,6 @@ def main():
         text_analysis = tee.analyze_text(example_sentence)
     finally:
         tee.dispose()
-
-if __name__ == "__main__":
-    main()
-
-
 
 # sentence = 'Guangdong University of Foreign Studies is located in Guangzhou.'
 # print('Tokenize:', nlp.word_tokenize(sentence))
