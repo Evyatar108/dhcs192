@@ -1,8 +1,7 @@
 from stanfordcorenlp import StanfordCoreNLP
-from typing import List
 import json
 
-from ObjectModels.TextAnalysis import *
+from Analyzation.TextAnalyzation.TextAnalysis import *
 
 
 class TextAnalyzer:
@@ -17,12 +16,12 @@ class TextAnalyzer:
         data = self.__request_data(text)
         sentences = self.__extract_sentimented_sentences(data)
         tagged_entities = self.__extract_tagged_entities(data)
-        coreferences = self.__extract_coreferences_clusters(data)
-        return TextAnalysis(data, sentences, tagged_entities, coreferences)
+        coreferences_clusters = self.__extract_coreferences_clusters(data)
+        return (TextAnalysis(sentences, tagged_entities, coreferences_clusters), data)
 
 
     def __request_data(self, text):
-        data_as_text = self.nlp.annotate(text, properties={'annotators': 'coref, ssplit, ner, sentiment', 'outputFormat': 'json'})
+        data_as_text = self.nlp.annotate(text, properties={'annotators': 'coref, ssplit, ner, sentiment, kbp', 'outputFormat': 'json'})
         return json.loads(data_as_text)
 
     def __extract_sentimented_sentences(self,data) -> List[SentimentedSentence]:
@@ -38,7 +37,7 @@ class TextAnalyzer:
         tagged_tokens = []
         for indx,s in enumerate(data['sentences']):
             for token in s['tokens']:
-                tagged_tokens.append(TaggedEntity(text=token['originalText'], tag=token['ner'], indx_sentence= indx, indx_start=token['index']-1, indx_end=token['index']))
+                tagged_tokens.append(TaggedEntity(text=token['originalText'], tag=token['ner'], indx_sentence= indx, indx_word_start=token['index']-1, indx_word_end=token['index']))
         tagged_entities = self.__get_continuous_tagged_chunks(tagged_tokens)
         return tagged_entities
 
@@ -48,8 +47,8 @@ class TextAnalyzer:
             text=" ".join([tagged_token.text for tagged_token in tagged_tokens_cluster]), \
             tag=tagged_tokens_cluster[0].tag, \
             indx_sentence=tagged_tokens_cluster[0].indx_sentence, \
-            indx_start=tagged_tokens_cluster[0].indx_start,
-            indx_end=tagged_tokens_cluster[-1].indx_end)
+            indx_word_start=tagged_tokens_cluster[0].indx_word_start,
+            indx_word_end=tagged_tokens_cluster[-1].indx_word_end)
             for tagged_tokens_cluster in tagged_tokens_clusters_gen]
         return tagged_entities
 
@@ -77,10 +76,9 @@ class TextAnalyzer:
                              gender=coref['gender'],
                              animacy=coref['animacy'], \
                              indx_sentence=coref['sentNum'], \
-                             indx_start=coref['startIndex'],
-                             indx_end=coref['endIndex'],
-                             is_representative_mention=coref['isRepresentativeMention'],
-                             indx_named_entity=None)
+                             indx_word_start=coref['startIndex'],
+                             indx_word_end=coref['endIndex'],
+                             is_representative_mention=coref['isRepresentativeMention'])
                  for coref in corefs_cluster]
                 for corefs_cluster in data['corefs'].values()]
 
@@ -89,15 +87,15 @@ class TextAnalyzer:
 
 
 if __name__ == "__main__":
-    example_sentence = 'John told him that he should go swimming' # 'Zorian’s eyes abruptly shot open as a sharp pain erupted from his stomach. His whole body convulsed, buckling against the object that fell on him, and suddenly he was wide awake, not a trace of drowsiness in his mind. Georgy University, you should come'
+    example_sentence = 'John is living in Tranko, the largest city in the world' # 'Zorian’s eyes abruptly shot open as a sharp pain erupted from his stomach. His whole body convulsed, buckling against the object that fell on him, and suddenly he was wide awake, not a trace of drowsiness in his mind. Georgy University, you should come'
     print('Creating TEE object')
     tee = TextAnalyzer()
     text_analysis = {}
+    data = {}
     try:
-        print('Extracting tagged entities')
-        print('Tagged Entities:')
-
-        text_analysis = tee.analyze_text(example_sentence)
+        print('Executing Text Analysis')
+        text_analysis, data = tee.analyze_text(example_sentence)
+        print('Finished Text Analysis')
     finally:
         tee.dispose()
 
