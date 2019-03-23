@@ -1,35 +1,9 @@
 from stanfordcorenlp import StanfordCoreNLP
-from collections import namedtuple
 from typing import List
 import json
 
-class TextAnalysis:
-    def __init__(self,original_data, sentences, tagged_entities, coreferences):
-        self.original_data = original_data
-        self.sentences = sentences
-        self.tagged_entities = tagged_entities
-        self.coreferences = coreferences
+from ObjectModels.TextAnalysis import *
 
-class TaggedEntity:
-    def __init__(self, text, tag, indx_sentence, indx_start, indx_end):
-        self.text = text
-        self.tag = tag
-        self.indx_sentence = indx_sentence
-        self.indx_start = indx_start
-        self.indx_end = indx_end
-
-class CoReference:
-    def __init__(self, text, type, plurality, gender, animacy, indx_sentence, indx_start, indx_end, is_representative_mention, indx_named_entity):
-        self.text = text
-        self.type = type
-        self.plurality = plurality
-        self.gender = gender
-        self.animacy = animacy
-        self.indx_sentence = indx_sentence
-        self.indx_start = indx_start
-        self.indx_end = indx_end
-        self.is_representative_mention = is_representative_mention
-        self.indx_named_entity = indx_named_entity
 
 class TextAnalyzer:
 
@@ -39,7 +13,7 @@ class TextAnalyzer:
     def dispose(self):
         self.nlp.close()
 
-    def analyze_text(self,text):
+    def analyze_text(self,text) -> TextAnalysis:
         data = self.__request_data(text)
         sentences = self.__extract_sentences(data)
         tagged_entities = self.__extract_tagged_entities(data)
@@ -51,8 +25,13 @@ class TextAnalyzer:
         data_as_text = self.nlp.annotate(text, properties={'annotators': 'coref, ssplit, ner, sentiment', 'outputFormat': 'json'})
         return json.loads(data_as_text)
 
-    def __extract_sentences(self,data):
-        return ["".join([token['originalText'] + token['after'] for token in sentence_obj['tokens']]) for sentence_obj in data['sentences']]
+    def __extract_sentimented_sentences(self,data) -> List[SentimentedSentence]:
+        sentimented_sentences = []
+        for sentence_obj in data['sentences']:
+            text = "".join([token['originalText'] + token['after'] for token in sentence_obj['tokens']])
+            sentiment = sentence_obj['sentiment']
+            sentimented_sentences.append(SentimentedSentence(text=text, sentiment=sentiment))
+        return sentimented_sentences
 
 
     def __extract_tagged_entities(self, data) -> List[TaggedEntity]:
@@ -96,15 +75,15 @@ class TextAnalyzer:
             for coref in corefs_cluster:
                 coreferences.append(
                     CoReference(text=coref['text'],
-                            type= coref['type'],\
-                            plurality=coref['number'],\
-                            gender= coref['gender'],
-                            animacy= coref['animacy'],\
-                            indx_sentence=coref['sentNum'],\
-                            indx_start=coref['startIndex'],
-                            indx_end=coref['endIndex'],
-                            is_representative_mention=coref['isRepresentativeMention'],
-                            indx_named_entity=None))
+                                type=coref['type'], \
+                                plurality=coref['number'], \
+                                gender=coref['gender'],
+                                animacy=coref['animacy'], \
+                                indx_sentence=coref['sentNum'], \
+                                indx_start=coref['startIndex'],
+                                indx_end=coref['endIndex'],
+                                is_representative_mention=coref['isRepresentativeMention'],
+                                indx_named_entity=None))
         return coreferences
 
 
