@@ -32,30 +32,31 @@ class TextAnalyzer:
         for sentence_obj in data['sentences']:
             text = "".join([token['originalText'] + token['after'] for token in sentence_obj['tokens']])
             sentiment = sentence_obj['sentiment']
-            sentimented_sentences.append(SentimentedSentence(text=text, sentiment=sentiment, sentiment_value=(-1) * (
-                    int(sentence_obj['sentimentValue']) - 2)))
+            sentimented_sentences.append(SentimentedSentence(text=text, sentiment=sentiment, sentiment_value=
+            int(sentence_obj['sentimentValue']) - 2))
         return sentimented_sentences
 
-    def __extract_tagged_entities(self, data) -> List[TaggedEntity]:
+    def __extract_tagged_entities(self, data) -> List[TaggedTextEntity]:
         tagged_tokens = []
         for indx, s in enumerate(data['sentences']):
             for token in s['tokens']:
-                tagged_tokens.append(TaggedEntity(text=token['originalText'], tag=token['ner'], indx_sentence=indx,
-                                                  span_in_sentence=(token['index'] - 1, token['index'] - 1)))
+                tagged_tokens.append(TaggedTextEntity(text=token['originalText'], tag=token['ner'], indx_sentence=indx,
+                                                      span_in_sentence=(token['index'] - 1, token['index'] - 1)))
         tagged_entities = self.__get_continuous_tagged_chunks(tagged_tokens)
         return tagged_entities
 
-    def __get_continuous_tagged_chunks(self, tagged_tokens: List[TaggedEntity]) -> List[TaggedEntity]:
+    def __get_continuous_tagged_chunks(self, tagged_tokens: List[TaggedTextEntity]) -> List[TaggedTextEntity]:
         tagged_tokens_clusters_gen = self.__generate_clusters(tagged_tokens, self.__pred_same_tagged_entity)
-        tagged_entities = [TaggedEntity(
+        tagged_entities = [TaggedTextEntity(
             text=" ".join([tagged_token.text for tagged_token in tagged_tokens_cluster]),
             tag=tagged_tokens_cluster[0].tag,
             indx_sentence=tagged_tokens_cluster[0].indx_sentence,
-            span_in_sentence=(tagged_tokens_cluster[0].span_in_sentence[0], tagged_tokens_cluster[-1].span_in_sentence[1]))
+            span_in_sentence=(
+            tagged_tokens_cluster[0].span_in_sentence[0], tagged_tokens_cluster[-1].span_in_sentence[1]))
             for tagged_tokens_cluster in tagged_tokens_clusters_gen]
         return tagged_entities
 
-    def __pred_same_tagged_entity(self, prev_tagged_token: TaggedEntity, curr_tagged_token: TaggedEntity):
+    def __pred_same_tagged_entity(self, prev_tagged_token: TaggedTextEntity, curr_tagged_token: TaggedTextEntity):
         return curr_tagged_token.tag != 'O'
 
     def __generate_clusters(self, list, pred_same_cluster):
@@ -85,14 +86,15 @@ class TextAnalyzer:
 
     def __extract_openie_relations(self, data) -> List[Relation]:
         return [
-            Relation(subject=openie_relation['subject'], subject_span_in_sentence=tuple(openie_relation['subjectSpan']),
+            Relation(indx_sentence=sentence_obj['index'], subject=openie_relation['subject'],
+                     subject_span_in_sentence=tuple(openie_relation['subjectSpan']),
                      relation_type=openie_relation['relation'], object=openie_relation['object'],
                      object_span_in_sentence=tuple(openie_relation['objectSpan']), )
             for sentence_obj in data['sentences'] for openie_relation in sentence_obj['openie']]
 
 
 if __name__ == "__main__":
-    example_sentence = 'Renya walked him to school everyday. She\'d talk to him about love. Then, once they got to the school, Renya would leave him and go do math alone. Ichi couldn\'t fathom what she was thinking, playing around like that. Ichi knew Reyna was lying to him. Ichi could smell it on her.'
+    example_sentence = "Israel is a nice place"  # 'Renya walked him to school everyday. She\'d talk to him about love. Then, once they got to the school, Renya would leave him and go do math alone. Ichi couldn\'t fathom what she was thinking, playing around like that. Ichi knew Reyna was lying to him. Ichi could smell it on her.'
     print('Creating TEE object')
     tee = TextAnalyzer()
     text_analysis = {}

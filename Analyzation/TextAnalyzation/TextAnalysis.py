@@ -8,7 +8,7 @@ class SentimentedSentence:
         self.sentiment_value = sentiment_value
 
 
-class TaggedEntity:
+class TaggedTextEntity:
     def __init__(self, text, tag, indx_sentence, span_in_sentence):
         self.text = text
         self.tag = tag
@@ -30,18 +30,16 @@ class CoReference:
 
 
 class Relation:
-    def __init__(self, subject: str, subject_span_in_sentence: Tuple[int, int], relation_type: str, object: str, object_span_in_sentence: Tuple[int, int]):
+    def __init__(self,indx_sentence: int, subject: str, subject_span_in_sentence: Tuple[int, int], relation_type: str, object: str, object_span_in_sentence: Tuple[int, int]):
+        self.indx_sentence = indx_sentence
         self.subject = subject
         self.subject_span_in_sentence = subject_span_in_sentence
         self.relation_type = relation_type
         self.object = object
         self.object_span_in_sentence = object_span_in_sentence
 
-
-
-
 class TextAnalysis:
-    def __init__(self, sentimented_sentences: List[SentimentedSentence], tagged_entities: List[TaggedEntity],
+    def __init__(self, sentimented_sentences: List[SentimentedSentence], tagged_entities: List[TaggedTextEntity],
                  coreferences_clusters: List[List[CoReference]], relations: List[Relation]):
         self.sentimented_sentences = sentimented_sentences
         self.tagged_entities = tagged_entities
