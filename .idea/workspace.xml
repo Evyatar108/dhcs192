@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9a7094d-9890-4c20-b814-7e9a59d7fa84" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/CharacterUpdater.py" beforeDir="false" afterPath="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/CharacterUpdater.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/OrganizationData" beforeDir="false" afterPath="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/OrganizationData" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalyzer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalyzer.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,69 +18,64 @@
         <counts>
           <entry key="project.closed" value="1" />
           <entry key="project.open.time.5" value="3" />
+          <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="NameExtractor" value="1" />
-          <entry key="OrganizationData" value="2" />
+          <entry key="OrganizationData" value="3" />
           <entry key="README" value="1" />
           <entry key="log" value="1" />
-          <entry key="py" value="76" />
+          <entry key="py" value="80" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="PLAIN_TEXT" value="2" />
-          <entry key="Python" value="79" />
+          <entry key="Python" value="84" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="NameExtractor" value="1271" />
+          <entry key="OrganizationData" value="12" />
           <entry key="Python Console" value="57" />
           <entry key="README" value="151" />
           <entry key="TaggedEntitiesExtractor" value="355" />
           <entry key="dummy" value="38" />
-          <entry key="py" value="16820" />
+          <entry key="py" value="16891" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="544" />
-          <entry key="Python" value="18148" />
+          <entry key="Python" value="18231" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalyzer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="86" column="57" selection-start-line="86" selection-start-column="57" selection-end-line="86" selection-end-column="57" />
+            <state relative-caret-position="450">
+              <caret line="96" lean-forward="true" selection-start-line="96" selection-end-line="96" />
               <folding>
-                <marker date="1553452733646" expanded="true" signature="136:139" ph="..." />
-                <marker date="1553452733646" expanded="true" signature="368:772" ph="..." />
-                <marker date="1553452733646" expanded="true" signature="803:812" ph="..." />
+                <element signature="e#0#16#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/PostAnalysisProcessor.py">
+        <entry file="file:///usr/lib/python3.6/json/decoder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-              <folding>
-                <element signature="e#0#80#0" expanded="true" />
-                <marker date="1553438947033" expanded="true" signature="343:344" ph="..." />
-                <marker date="1553438947033" expanded="true" signature="343:830" ph="..." />
-              </folding>
+            <state relative-caret-position="5310">
+              <caret line="356" selection-start-line="356" selection-end-line="356" />
             </state>
           </provider>
         </entry>
@@ -88,8 +83,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/CharacterUpdater.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="18" column="4" selection-start-line="18" selection-start-column="4" selection-end-line="26" />
+            <state relative-caret-position="165">
+              <caret line="11" column="57" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="57" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
                 <marker date="1553455576746" expanded="true" signature="932:937" ph="..." />
@@ -100,15 +95,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/HetroRelationsUpdater.py">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/CharacterData.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+            <state relative-caret-position="165">
+              <caret line="16" selection-start-line="16" selection-end-line="16" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
                 <marker date="1553455074526" expanded="true" signature="377:380" ph="..." />
@@ -118,22 +108,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/RelationData.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="36" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
-              <folding>
-                <element signature="e#0#90#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/LocationUpdater.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="34" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+            <state relative-caret-position="45">
+              <caret line="7" column="17" selection-end-line="22" selection-end-column="82" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -141,11 +119,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/LocationData.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="28" lean-forward="true" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+            <state relative-caret-position="120">
+              <caret line="12" selection-end-line="12" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
                 <marker date="1553455778990" expanded="true" signature="318:323" ph="..." />
@@ -155,26 +133,43 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/UpdaterBase.py">
+        <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/OrganizationData">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="41" column="44" lean-forward="true" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
+            <state relative-caret-position="120">
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
               <folding>
-                <element signature="e#1#63#0" expanded="true" />
+                <element signature="e#0#29#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/NamedEntityData.py">
+        <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/OrganizationUpdater.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
-              <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+              <caret line="7" column="39" lean-forward="true" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="39" />
               <folding>
-                <element signature="e#0#29#0" expanded="true" />
-                <marker date="1553455074534" expanded="true" signature="291:296" ph="..." />
+                <element signature="e#0#23#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalysis.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="26" column="26" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/UpdaterBase.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="555">
+              <caret line="41" column="44" lean-forward="true" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -252,11 +247,13 @@
         <option value="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/CharacterData.py" />
         <option value="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/HetroRelationsUpdater.py" />
         <option value="$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalysis.py" />
-        <option value="$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalyzer.py" />
         <option value="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/UpdaterBase.py" />
         <option value="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/CharacterUpdater.py" />
         <option value="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/LocationUpdater.py" />
         <option value="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/LocationData.py" />
+        <option value="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/OrganizationData" />
+        <option value="$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/OrganizationUpdater.py" />
+        <option value="$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalyzer.py" />
       </list>
     </option>
   </component>
@@ -295,14 +292,12 @@
               <item name="Code" type="b2602c69:ProjectViewProjectNode" />
               <item name="Code" type="462c0819:PsiDirectoryNode" />
               <item name="Analyzation" type="462c0819:PsiDirectoryNode" />
-              <item name="PostAnalysisProcessing" type="462c0819:PsiDirectoryNode" />
-              <item name="ObjectModel" type="462c0819:PsiDirectoryNode" />
+              <item name="TextAnalyzation" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Code" type="b2602c69:ProjectViewProjectNode" />
               <item name="Code" type="462c0819:PsiDirectoryNode" />
-              <item name="Analyzation" type="462c0819:PsiDirectoryNode" />
-              <item name="TextAnalyzation" type="462c0819:PsiDirectoryNode" />
+              <item name="ContentProviders" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -389,19 +384,19 @@
     <frame x="-1" y="-1" width="1922" height="1061" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2124407" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2124407" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32975295" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.72904587" weight="0.32867885" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49762782" visible="true" weight="0.40064448" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7216658" visible="true" weight="0.40064448" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49973643" weight="0.32867885" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32975295" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49815497" weight="0.3290461" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50237215" side_tool="true" visible="true" weight="0.40064448" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.2783342" side_tool="true" visible="true" weight="0.40064448" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.4960464" weight="0.32867885" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -416,13 +411,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalyzer.py</url>
-          <line>107</line>
+          <line>110</line>
           <option name="timeStamp" value="29" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalyzer.py</url>
-          <line>18</line>
-          <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -472,9 +462,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/RelationsData.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/RelationsData.py" />
     <entry file="file://$USER_HOME$/.PyCharmCE2018.2/system/python_stubs/1914033877/itertools.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
@@ -482,39 +470,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/RelationshipsUpdater.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/RelationshipsUpdater.py" />
     <entry file="file://$PROJECT_DIR$/ContentProviders/ContentProviderBase.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
-          <folding>
-            <marker date="1553314631839" expanded="true" signature="33:38" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/CharactersRelationData.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/OrganizationData">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/CharactersRelationData.py" />
     <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/RelationshipsData.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="47" lean-forward="true" selection-start-line="11" selection-start-column="47" selection-end-line="11" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -522,10 +490,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="152" column="23" selection-start-line="152" selection-start-column="23" selection-end-line="152" selection-end-column="23" />
-          <folding>
-            <element signature="e#21#58#0" expanded="true" />
-            <marker date="1553304168106" expanded="true" signature="7124:7130" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -533,9 +497,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="36" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#90#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -543,28 +504,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="26" column="26" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalyzer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="86" column="57" selection-start-line="86" selection-start-column="57" selection-end-line="86" selection-end-column="57" />
-          <folding>
-            <marker date="1553452733646" expanded="true" signature="136:139" ph="..." />
-            <marker date="1553452733646" expanded="true" signature="368:772" ph="..." />
-            <marker date="1553452733646" expanded="true" signature="803:812" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -572,10 +511,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-            <marker date="1553455074534" expanded="true" signature="291:296" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -583,21 +518,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-          <folding>
-            <element signature="e#0#80#0" expanded="true" />
-            <marker date="1553438947033" expanded="true" signature="343:344" ph="..." />
-            <marker date="1553438947033" expanded="true" signature="343:830" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/HetroRelationsUpdater.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file:///usr/lib/python3.6/json/decoder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5310">
+          <caret line="356" selection-start-line="356" selection-end-line="356" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/CharacterData.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        <state relative-caret-position="165">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
             <marker date="1553455074526" expanded="true" signature="377:380" ph="..." />
@@ -605,32 +542,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/UpdaterBase.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="41" column="44" lean-forward="true" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
-          <folding>
-            <element signature="e#1#63#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/CharacterUpdater.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="18" column="4" selection-start-line="18" selection-start-column="4" selection-end-line="26" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-            <marker date="1553455576746" expanded="true" signature="932:937" ph="..." />
-            <marker date="1553455576746" expanded="true" signature="1177:1183" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/LocationUpdater.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="34" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+        <state relative-caret-position="45">
+          <caret line="7" column="17" selection-end-line="22" selection-end-column="82" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
@@ -639,11 +554,67 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/LocationData.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="28" lean-forward="true" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+        <state relative-caret-position="120">
+          <caret line="12" selection-end-line="12" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
             <marker date="1553455778990" expanded="true" signature="318:323" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/ObjectModel/OrganizationData">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="26" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/UpdaterBase.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="41" column="44" lean-forward="true" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/OrganizationUpdater.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="39" lean-forward="true" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Analyzation/PostAnalysisProcessing/CharacterUpdater.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="57" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="57" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+            <marker date="1553455576746" expanded="true" signature="932:937" ph="..." />
+            <marker date="1553455576746" expanded="true" signature="1177:1183" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Analyzation/TextAnalyzation/TextAnalyzer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="96" lean-forward="true" selection-start-line="96" selection-end-line="96" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
           </folding>
         </state>
       </provider>
