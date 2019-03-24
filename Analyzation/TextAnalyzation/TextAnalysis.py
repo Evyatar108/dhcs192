@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 
 class SentimentedSentence:
@@ -9,16 +9,15 @@ class SentimentedSentence:
 
 
 class TaggedEntity:
-    def __init__(self, text, tag, indx_sentence, indx_word_start, indx_word_end):
+    def __init__(self, text, tag, indx_sentence, span_in_sentence):
         self.text = text
         self.tag = tag
         self.indx_sentence = indx_sentence
-        self.indx_word_start = indx_word_start
-        self.indx_word_end = indx_word_end
+        self.span_in_sentence = span_in_sentence
 
 
 class CoReference:
-    def __init__(self, text, type, plurality, gender, animacy, indx_sentence, indx_word_start, indx_word_end,
+    def __init__(self, text, type, plurality, gender, animacy, indx_sentence, span_in_sentence,
                  is_representative_mention):
         self.text = text
         self.type = type
@@ -26,14 +25,26 @@ class CoReference:
         self.gender = gender
         self.animacy = animacy
         self.indx_sentence = indx_sentence
-        self.indx_word_start = indx_word_start
-        self.indx_word_end = indx_word_end
+        self.span_in_sentence = span_in_sentence
         self.is_representative_mention = is_representative_mention
+
+
+class Relation:
+    def __init__(self, subject: str, subject_span_in_sentence: Tuple[int, int], relation_type: str, object: str, object_span_in_sentence: Tuple[int, int]):
+        self.subject = subject
+        self.subject_span_in_sentence = subject_span_in_sentence
+        self.relation_type = relation_type
+        self.object = object
+        self.object_span_in_sentence = object_span_in_sentence
+
+
+
 
 class TextAnalysis:
     def __init__(self, sentimented_sentences: List[SentimentedSentence], tagged_entities: List[TaggedEntity],
-                 coreferences_clusters: List[List[CoReference]]):
+                 coreferences_clusters: List[List[CoReference]], relations: List[Relation]):
         self.sentimented_sentences = sentimented_sentences
         self.tagged_entities = tagged_entities
         self.coreferences_clusters = coreferences_clusters
+        self.relations = relations
 

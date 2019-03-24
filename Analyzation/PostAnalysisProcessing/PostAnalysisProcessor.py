@@ -1,8 +1,7 @@
 from Analyzation.PostAnalysisProcessing.CharacterUpdater import CharacterUpdater
-from Analyzation.PostAnalysisProcessing.RelationshipsData import Relationship
-from Analyzation.PostAnalysisProcessing.RelationshipsUpdater import RelationshipsUpdater
+from Analyzation.PostAnalysisProcessing.ObjectModel.RelationshipsData import Relationship
 from Analyzation.TextAnalyzation.TextAnalysis import *
-from Analyzation.PostAnalysisProcessing.CharacterData import Character, Mentions
+from Analyzation.PostAnalysisProcessing.ObjectModel.CharacterData import Character
 
 
 class TextAnalysisPostProcessor:
@@ -13,11 +12,10 @@ class TextAnalysisPostProcessor:
     # create relationships between characters
     def process_text_analysis(self, text_analysis: TextAnalysis, characters: List[Character],
                               relationships: List[Relationship], indx_chapter: int):
-        charUpdater = CharacterUpdater()
-        charUpdater.update_characters_information(text_analysis, charUpdater, indx_chapter)
 
-        relationshipsUpdater = RelationshipsUpdater()
-        relationshipsUpdater.update_relationships(text_analysis, characters, relationships)
+        CharacterUpdater().update_characters_information(text_analysis, characters, indx_chapter)
+        #LocationUpdater().
+        #OrganizationUpdater
 
 
 
