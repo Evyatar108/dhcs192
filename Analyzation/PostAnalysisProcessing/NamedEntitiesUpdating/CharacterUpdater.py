@@ -1,18 +1,18 @@
 import itertools
-from collections import defaultdict
+from collections import defaultdict, Counter
 from typing import List, Set, Dict
 
-from Analyzation.PostAnalysisProcessing.ObjectModel.CharacterData import Character
-from Analyzation.PostAnalysisProcessing.UpdaterBase import UpdaterBase
+from Analyzation.PostAnalysisProcessing.ObjectModels.CharacterData import Character
+from Analyzation.PostAnalysisProcessing.NamedEntitiesUpdating.NamedEntitiesUpdaterBase import NamedEntityUpdaterBase
 from Analyzation.TextAnalyzation.TextAnalysis import TextAnalysis, CoReference, TaggedTextEntity, SentimentedSentence
 
 
-class CharacterUpdater(UpdaterBase):
+class CharacterNamedEntityUpdater(NamedEntityUpdaterBase):
 
     def update_characters_information(self, text_analysis: TextAnalysis, characters: List[Character], indx_chapter):
-        super(CharacterUpdater, self).update_named_entitys_information(text_analysis=text_analysis,
-                                                                       named_entitys=characters,
-                                                                       indx_chapter=indx_chapter)
+        super(CharacterNamedEntityUpdater, self).update(text_analysis=text_analysis,
+                                                        named_entitys=characters,
+                                                        indx_chapter=indx_chapter)
         self.__update_relationships(text_analysis, characters, indx_chapter)
         self.__update_genders(characters)
 
@@ -43,9 +43,7 @@ class CharacterUpdater(UpdaterBase):
                     second_character.add_relationship_sentiment(first_character, sentence.sentiment_value, indx_chapter)
 
     def __update_genders(self, characters):
-        genders_count: Dict[str, int] = defaultdict(int)
         for character in characters:
-            for coref in (coref for mentions in itertools.chain(character.chapters_mentions.values()) for coref in
-                          mentions.coreferences):
-                genders_count[coref.gender] += 1
-            character.gender = max(genders_count, genders_count.get)
+            corefs = (coref for mentions in itertools.chain(character.chapters_mentions.values()) for coref in
+                      mentions.coreferences)
+            character.gender, _ = Counter(corefs).most_common(1)[0]

@@ -29,18 +29,18 @@ class CoReference:
         self.is_representative_mention = is_representative_mention
 
 
-class Relation:
-    def __init__(self,indx_sentence: int, subject: str, subject_span_in_sentence: Tuple[int, int], relation_type: str, object: str, object_span_in_sentence: Tuple[int, int]):
+class RelationData:
+    def __init__(self,indx_sentence: int, subject: str, subject_span_in_sentence: Tuple[int, int], relation: str, object: str, object_span_in_sentence: Tuple[int, int]):
         self.indx_sentence = indx_sentence
         self.subject = subject
         self.subject_span_in_sentence = subject_span_in_sentence
-        self.relation_type = relation_type
+        self.relation = relation
         self.object = object
         self.object_span_in_sentence = object_span_in_sentence
 
 class TextAnalysis:
     def __init__(self, sentimented_sentences: List[SentimentedSentence], tagged_entities: List[TaggedTextEntity],
-                 coreferences_clusters: List[List[CoReference]], relations: List[Relation]):
+                 coreferences_clusters: List[List[CoReference]], relations: List[RelationData]):
         self.sentimented_sentences = sentimented_sentences
         self.tagged_entities = tagged_entities
         self.coreferences_clusters = coreferences_clusters

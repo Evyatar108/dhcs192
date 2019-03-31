@@ -1,8 +1,8 @@
-from Analyzation.PostAnalysisProcessing.CharacterUpdater import CharacterUpdater
-from Analyzation.PostAnalysisProcessing.ObjectModel.RelationshipsData import Relationship
+from Analyzation.PostAnalysisProcessing.NamedEntitiesUpdating.CharacterUpdater import CharacterNamedEntityUpdater
+from Analyzation.PostAnalysisProcessing.NamedEntitiesUpdating.LocationUpdater import LocationNamedEntityUpdater
+from Analyzation.PostAnalysisProcessing.ObjectModels.BookData import BookData
+from Analyzation.PostAnalysisProcessing.NamedEntitiesUpdating.OrganizationUpdater import OrganizationNamedEntityUpdater
 from Analyzation.TextAnalyzation.TextAnalysis import *
-from Analyzation.PostAnalysisProcessing.ObjectModel.CharacterData import Character
-
 
 class TextAnalysisPostProcessor:
     def __init__(self):
@@ -10,13 +10,19 @@ class TextAnalysisPostProcessor:
 
     # update characters mentions based on current TextAnalysis
     # create relationships between characters
-    def process_text_analysis(self, text_analysis: TextAnalysis, characters: List[Character],
-                              relationships: List[Relationship], indx_chapter: int):
+    def process_text_analysis(self, text_analysis: TextAnalysis, bookData: BookData, indx_chapter: int):
 
-        CharacterUpdater().update_characters_information(text_analysis, characters, indx_chapter)
-        #LocationUpdater().
-        #OrganizationUpdater
+        CharacterNamedEntityUpdater().update(text_analysis, bookData.characters, indx_chapter)
+        LocationNamedEntityUpdater().update(text_analysis, bookData.locations, indx_chapter)
+        OrganizationNamedEntityUpdater().update(text_analysis, bookData.organizations, indx_chapter)
 
+        RelationsProcessor.process(bookData.characters, bookData.locations, char_loc_relations_rules)
+        RelationsProcessor.process(bookData.characters, bookData.organizations, char_org_relations_rules)
+        RelationsProcessor.process(bookData.organizations, bookData.locations, org_loc_relations_rules)
+
+        CommonalitiesFinder.add_commonalities_relations(bookData.characters)
+        CommonalitiesFinder.add_commonalities_relations(bookData.locations)
+        CommonalitiesFinder.add_commonalities_relations(bookData.organizations)
 
 
 
