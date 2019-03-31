@@ -1,14 +1,14 @@
+import copy
 import itertools
 from typing import Dict
 
 from stanfordcorenlp import StanfordCoreNLP
 import json
 
-from Analyzation.TextAnalyzation.relation_normalizer import RelationNormalizer
-from Analyzation.TextAnalyzation.text_analysis import *
+from novelanalyze.analyztn.data import *
 
 
-def analyze_text(text) -> Tuple[TextAnalysis, Dict]:
+def analyze(text) -> Tuple[TextAnalysis, Dict]:
     data = __request_data(text)
     sentences = __extract_sentimented_sentences(data)
     tagged_entities = __extract_tagged_entities(data)
@@ -102,8 +102,25 @@ def __extract_openie_relations(data) -> List[Relation]:
         for sentence_obj in data['sentences'] for raw_relation in
         itertools.chain(sentence_obj['openie'], sentence_obj['kbp'])]
 
-    normalized_relations = map(RelationNormalizer.Normalize, relations)
+    normalized_relations = map(normalize_relation, relations)
     return normalized_relations
+
+def normalize_relation(self, relationData: Relation):
+    copied_relation = copy.copy(relationData)
+
+    if copied_relation.object in ('her', 'his'):
+        copied_relation.object += "'s"
+
+    if copied_relation.relation_str == 'is':
+        if "'s" in copied_relation.subject and "'s" not in copied_relation.object:  # we should probably not treat the case "'s" is in both
+            copied_relation.object, copied_relation.subject = copied_relation.subject, copied_relation.object
+            copied_relation.object_span_in_sentence, copied_relation.subject_span_in_sentence = copied_relation.subject_span_in_sentence, copied_relation.object_span_in_sentence
+
+        if "'s" in relationData.object:  # todo - update span too?
+            copied_relation.object, _, relation = relationData.object.partition('\'s')
+            copied_relation.relation_str = f'is the {relation} of'
+
+    return copied_relation
 
 
 if __name__ == "__main__":
@@ -113,6 +130,6 @@ if __name__ == "__main__":
     text_analysis = {}
     data = {}
     print('Executing Text Analysis')
-    text_analysis, data = analyze_text(example_sentence)
+    text_analysis, data = analyze(example_sentence)
     print('Finished Text Analysis')
     pass

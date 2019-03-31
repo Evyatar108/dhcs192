@@ -1,8 +1,8 @@
 from typing import List
 
-from Analyzation.PostAnalysisProcessing.ObjectModels.character_data import Character
-from Analyzation.PostAnalysisProcessing.ObjectModels.location_data import Location
-from Analyzation.PostAnalysisProcessing.ObjectModels.OrganizationData import Organization
+from novelanalyze.prcssng.data.char import Character
+from novelanalyze.prcssng.data.loc import Location
+from novelanalyze.prcssng.data.org import Organization
 
 class NovelEntities:
     def __init__(self, characters: List[Character], locations: List[Location], organizations: List[Organization]):

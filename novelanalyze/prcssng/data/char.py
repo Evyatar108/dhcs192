@@ -1,9 +1,13 @@
 from typing import Dict, List
+from __future__ import annotations
 
-from Analyzation.PostAnalysisProcessing.ObjectModels.mentions_data import Mentions
-from Analyzation.PostAnalysisProcessing.ObjectModels.named_entity_data import NamedEntity
-from Analyzation.PostAnalysisProcessing.ObjectModels.relation_data import ExtendedRelation, Relationship
+from novelanalyze.prcssng.data.entity import NamedEntity, ExtendedRelation, Mentions
 
+
+class Relationship:
+    def __init__(self, other_character: Character):
+        self.sentiment_value = 0
+        self.other_character = other_character
 
 class Character(NamedEntity):
     def __init__(self, indx: int, names: List[str] =[], chapters_mentions: Dict[int, Mentions] = {},

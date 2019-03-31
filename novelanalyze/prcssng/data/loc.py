@@ -1,8 +1,6 @@
 from typing import List, Dict
 
-from Analyzation.PostAnalysisProcessing.ObjectModels.mentions_data import Mentions
-from Analyzation.PostAnalysisProcessing.ObjectModels.named_entity_data import NamedEntity
-from Analyzation.PostAnalysisProcessing.ObjectModels.relation_data import ExtendedRelation
+from novelanalyze.prcssng.data.entity import NamedEntity, Mentions, ExtendedRelation
 
 
 class Location(NamedEntity):

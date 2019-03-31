@@ -1,4 +1,4 @@
-from Analyzation.content_provider_base import ContentProviderBase
+from novelanalyze.contntprvdr import ContentProviderBase
 
 
 class RoyalRoadContentProvider(ContentProviderBase):

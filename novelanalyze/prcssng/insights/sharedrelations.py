@@ -1,7 +1,7 @@
 from typing import List
 
-from Analyzation.PostAnalysisProcessing.ObjectModels.character_data import Character
-from Analyzation.PostAnalysisProcessing.ObjectModels.named_entity_data import NamedEntity
+from novelanalyze.prcssng.data.char import Character
+from novelanalyze.prcssng.data.entity import NamedEntity
 
 
 class SharedRelationRule:

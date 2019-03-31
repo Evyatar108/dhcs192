@@ -24,10 +24,11 @@ First create or use existing class which inherits from ContentProviderBase
 
 ```python
 class MyContentProvider(ContentProviderBase):
-...
-
+    def provide_chapter(self, indx_chapter: int) -> str:
+        ...
+        
 my_content_provider = MyContentProvider(...)
-novel_entities = novel_analyzation.analyze_novel(my_content_provider)
+novel_entities = infoextrct.extract(my_content_provider)
 ```
 
 ## Contributing

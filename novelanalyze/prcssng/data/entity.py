@@ -1,9 +1,21 @@
 from typing import Dict, List
+from __future__ import annotations
 
-from Analyzation.PostAnalysisProcessing.ObjectModels.mentions_data import Mentions
-from Analyzation.TextAnalyzation.text_analysis import TaggedTextEntity
-from Analyzation.PostAnalysisProcessing.ObjectModels.relation_data import ExtendedRelation
+from novelanalyze.analyztn.data import TaggedTextEntity, CoReference, Relation
 
+
+class ExtendedRelation:
+    def __init__(self, relation: Relation, subject_named_entity: NamedEntity, object_named_entity: NamedEntity, indx_chapter: int):
+        self.relation = relation
+        self.subject_named_entity = subject_named_entity
+        self.object_named_entity = object_named_entity
+        self.indx_chapter = indx_chapter
+
+class Mentions:
+    def __init__(self, indx_chapter, coreferences: List[CoReference]=[], tagged_entities: List[TaggedTextEntity]=[]):
+        self.indx_chapter = indx_chapter
+        self.coreferences = coreferences
+        self.tagged_entities = tagged_entities
 
 class NamedEntity:
     def __init__(self, names: List[str], chapters_mentions: Dict[int, Mentions],

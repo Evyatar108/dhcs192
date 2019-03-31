@@ -1,8 +1,8 @@
 from typing import List
 
-from Analyzation.PostAnalysisProcessing.ObjectModels.location_data import Location
-from Analyzation.PostAnalysisProcessing.NamedEntitiesUpdating.named_entities_updater_base import NamedEntityUpdaterBase
-from Analyzation.TextAnalyzation.text_analysis import TaggedTextEntity, CoReference, TextAnalysis
+from novelanalyze.prcssng.data.loc import Location
+from novelanalyze.prcssng.updtrs.base import NamedEntityUpdaterBase
+from novelanalyze.analyztn.data import TaggedTextEntity, CoReference, TextAnalysis
 
 
 class OrganizationNamedEntityUpdater(NamedEntityUpdaterBase):

@@ -1,9 +1,8 @@
-from typing import List, Callable, Generator, Tuple, Set, Dict
+from typing import List
 
-from Analyzation.PostAnalysisProcessing import named_entity_utils
-from Analyzation.PostAnalysisProcessing.ObjectModels.named_entity_data import NamedEntity
-from Analyzation.PostAnalysisProcessing.ObjectModels.relation_data import ExtendedRelation
-from Analyzation.TextAnalyzation.text_analysis import TextAnalysis, CoReference, TaggedTextEntity, SentimentedSentence
+from novelanalyze.analyztn.data import TextAnalysis, CoReference, TaggedTextEntity
+from novelanalyze.prcssng import utils
+from novelanalyze.prcssng.data.entity import NamedEntity, ExtendedRelation
 
 
 class NamedEntityUpdaterBase:
@@ -39,9 +38,9 @@ class NamedEntityUpdaterBase:
             corefs_spans = (coref.span_in_sentence for coref in coreferences_cluster)
             matching_coref_name_iter = (coref.text for coref in coreferences_cluster if
                                         self.__is_matching_coref(coref))
-            the_named_entities = named_entity_utils.find_named_entities(named_entities, corefs_spans, indx_chapter,
-                                                                        matching_coref_name_iter,
-                                                                        is_same_named_entity_pred)
+            the_named_entities = utils.find_named_entities(named_entities, corefs_spans, indx_chapter,
+                                                           matching_coref_name_iter,
+                                                           is_same_named_entity_pred)
             for the_named_entity in the_named_entities:
                 the_named_entity.add_coreferences_cluster(indx_chapter, coreferences_cluster)
 
@@ -51,14 +50,14 @@ class NamedEntityUpdaterBase:
     def __process_relations(self, text_analysis, named_entities, indx_chapter):
         is_same_named_entity_pred = lambda named_entity_name,name_in_relation: named_entity_name in name_in_relation or name_in_relation in named_entity_name
         for relation in text_analysis.relations:
-            the_subject_named_entity = named_entity_utils.find_named_entity(named_entities, relation.subject_span_in_sentence,
-                                                                            indx_chapter,
-                                                                            relation.subject,
-                                                                            is_same_named_entity_pred)
-            the_object_named_entity = named_entity_utils.find_named_entity(named_entities, relation.object_span_in_sentence,
-                                                                           indx_chapter,
-                                                                           relation.object,
-                                                                           is_same_named_entity_pred)
+            the_subject_named_entity = utils.find_named_entity(named_entities, relation.subject_span_in_sentence,
+                                                               indx_chapter,
+                                                               relation.subject,
+                                                               is_same_named_entity_pred)
+            the_object_named_entity = utils.find_named_entity(named_entities, relation.object_span_in_sentence,
+                                                              indx_chapter,
+                                                              relation.object,
+                                                              is_same_named_entity_pred)
 
             extended_relation = ExtendedRelation(relation, the_subject_named_entity, the_object_named_entity, indx_chapter)
 

@@ -2,9 +2,9 @@ import itertools
 from collections import Counter
 from typing import List, Set
 
-from Analyzation.PostAnalysisProcessing.ObjectModels.character_data import Character
-from Analyzation.PostAnalysisProcessing.NamedEntitiesUpdating.named_entities_updater_base import NamedEntityUpdaterBase
-from Analyzation.TextAnalyzation.text_analysis import TextAnalysis, CoReference, TaggedTextEntity, SentimentedSentence
+from novelanalyze.prcssng.data.char import Character
+from novelanalyze.prcssng.updtrs.base import NamedEntityUpdaterBase
+from novelanalyze.analyztn.data import TextAnalysis, CoReference, TaggedTextEntity, SentimentedSentence
 
 
 class CharacterNamedEntityUpdater(NamedEntityUpdaterBase):
