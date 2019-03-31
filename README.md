@@ -1,6 +1,12 @@
-# Web Novels Text Analyzer
+# Novel Analyzer - Named Entities Relations Extractor
 
 This is a project we made for our course "Digital Humanities"
+
+The goal of the project is to find relations between names entities such as 
+characters, locations and organizations.
+
+Can be used to analyze text from online sources like webnovels or offline 
+sources like epub files of books by implementing the corresponding content (text) provider.
 
 ## Installation
 Download CoreNLP by Stanford University
@@ -14,9 +20,14 @@ unzip stanford-corenlp-full-2018-10-05.zip
 
 
 ## Usage
+First create or use existing class which inherits from ContentProviderBase
 
 ```python
-TODO
+class MyContentProvider(ContentProviderBase):
+...
+
+my_content_provider = MyContentProvider(...)
+novel_entities = novel_analyzation.analyze_novel(my_content_provider)
 ```
 
 ## Contributing

@@ -1,6 +1,6 @@
 from typing import List
 
-from Analyzation.TextAnalyzation.TextAnalysis import CoReference, TaggedTextEntity
+from Analyzation.TextAnalyzation.text_analysis import CoReference, TaggedTextEntity
 
 
 class Mentions:

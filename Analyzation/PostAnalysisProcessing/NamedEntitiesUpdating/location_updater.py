@@ -1,16 +1,16 @@
 from typing import List
 
-from Analyzation.PostAnalysisProcessing.ObjectModels.LocationData import Location
-from Analyzation.PostAnalysisProcessing.NamedEntitiesUpdating.NamedEntitiesUpdaterBase import NamedEntityUpdaterBase
-from Analyzation.TextAnalyzation.TextAnalysis import TaggedTextEntity, CoReference, TextAnalysis
+from Analyzation.PostAnalysisProcessing.ObjectModels.location_data import Location
+from Analyzation.PostAnalysisProcessing.NamedEntitiesUpdating.named_entities_updater_base import NamedEntityUpdaterBase
+from Analyzation.TextAnalyzation.text_analysis import TaggedTextEntity, CoReference, TextAnalysis
 
 
-class OrganizationNamedEntityUpdater(NamedEntityUpdaterBase):
+class LocationNamedEntityUpdater(NamedEntityUpdaterBase):
 
     def update_locations_information(self, text_analysis: TextAnalysis, locations: List[Location], indx_chapter):
-        super(OrganizationNamedEntityUpdater, self).update(text_analysis=text_analysis,
-                                                           named_entitys=locations,
-                                                           indx_chapter=indx_chapter)
+        super(LocationNamedEntityUpdater, self).update(text_analysis=text_analysis,
+                                                       named_entitys=locations,
+                                                       indx_chapter=indx_chapter)
 
     def __is_matched_mention(self, tagged_entity: TaggedTextEntity):
         return any(tagged_entity.tag == location_identifier for location_identifier in

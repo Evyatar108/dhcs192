@@ -1,8 +1,7 @@
 from typing import List
 
-from Analyzation.PostAnalysisProcessing.InsightsProcessing.RelationRules.RelationRuleData import RelationRule
-from Analyzation.PostAnalysisProcessing.ObjectModels.CharacterData import Character
-from Analyzation.PostAnalysisProcessing.ObjectModels.NamedEntityData import NamedEntity
+from Analyzation.PostAnalysisProcessing.ObjectModels.character_data import Character
+from Analyzation.PostAnalysisProcessing.ObjectModels.named_entity_data import NamedEntity
 
 class RelationRule:
     def __init__(self, regex_rule, new_relation, subject_type, object_type):

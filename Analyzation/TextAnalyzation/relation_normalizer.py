@@ -1,6 +1,6 @@
 import copy
 
-from Analyzation.TextAnalyzation.TextAnalysis import Relation
+from Analyzation.TextAnalyzation.text_analysis import Relation
 
 
 class RelationNormalizer:

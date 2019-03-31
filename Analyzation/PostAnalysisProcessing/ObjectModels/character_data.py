@@ -1,8 +1,8 @@
 from typing import Dict, List
 
-from Analyzation.PostAnalysisProcessing.ObjectModels.MentionsData import Mentions
-from Analyzation.PostAnalysisProcessing.ObjectModels.NamedEntityData import NamedEntity
-from Analyzation.PostAnalysisProcessing.ObjectModels.RelationData import ExtendedRelation, Relationship
+from Analyzation.PostAnalysisProcessing.ObjectModels.mentions_data import Mentions
+from Analyzation.PostAnalysisProcessing.ObjectModels.named_entity_data import NamedEntity
+from Analyzation.PostAnalysisProcessing.ObjectModels.relation_data import ExtendedRelation, Relationship
 
 
 class Character(NamedEntity):

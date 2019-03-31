@@ -1,6 +1,6 @@
 from typing import Generator, Callable, Tuple, List
 
-from Analyzation.PostAnalysisProcessing.ObjectModels.NamedEntityData import NamedEntity
+from Analyzation.PostAnalysisProcessing.ObjectModels.named_entity_data import NamedEntity
 
 
 def __ranges_intersect(first_range: Tuple[int, int], second_range: Tuple[int, int]):

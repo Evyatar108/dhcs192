@@ -1,6 +1,6 @@
-from Analyzation.PostAnalysisProcessing.ObjectModels.CharacterData import Character
-from Analyzation.PostAnalysisProcessing.ObjectModels.NamedEntityData import NamedEntity
-from Analyzation.TextAnalyzation.TextAnalysis import Relation
+from Analyzation.PostAnalysisProcessing.ObjectModels.character_data import Character
+from Analyzation.PostAnalysisProcessing.ObjectModels.named_entity_data import NamedEntity
+from Analyzation.TextAnalyzation.text_analysis import Relation
 
 
 class ExtendedRelation:
@@ -13,3 +13,4 @@ class ExtendedRelation:
 class Relationship:
     def __init__(self, other_character: Character):
         self.sentiment_value = 0
+        self.other_character = other_character

@@ -1,9 +1,7 @@
-
-## chars 1,2 got relation 'are' with 'siblings' as the subject and it's the same 'are'
 from typing import List
 
-from Analyzation.PostAnalysisProcessing.ObjectModels.CharacterData import Character
-from Analyzation.PostAnalysisProcessing.ObjectModels.NamedEntityData import NamedEntity
+from Analyzation.PostAnalysisProcessing.ObjectModels.character_data import Character
+from Analyzation.PostAnalysisProcessing.ObjectModels.named_entity_data import NamedEntity
 
 
 class SharedRelationRule:
