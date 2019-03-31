@@ -1,3 +1,5 @@
+import itertools
+
 from Analyzation.PostAnalysisProcessing.NamedEntitiesUpdating.CharacterUpdater import CharacterNamedEntityUpdater
 from Analyzation.PostAnalysisProcessing.NamedEntitiesUpdating.LocationUpdater import LocationNamedEntityUpdater
 from Analyzation.PostAnalysisProcessing.ObjectModels.BookData import BookData
@@ -16,13 +18,10 @@ class TextAnalysisPostProcessor:
         LocationNamedEntityUpdater().update(text_analysis, bookData.locations, indx_chapter)
         OrganizationNamedEntityUpdater().update(text_analysis, bookData.organizations, indx_chapter)
 
-        RelationsProcessor.process(bookData.characters, bookData.locations, char_loc_relations_rules)
-        RelationsProcessor.process(bookData.characters, bookData.organizations, char_org_relations_rules)
-        RelationsProcessor.process(bookData.organizations, bookData.locations, org_loc_relations_rules)
+        named_entities = itertools.chain(bookData.characters, bookData.locations, bookData.organizations)
 
-        CommonalitiesFinder.add_commonalities_relations(bookData.characters)
-        CommonalitiesFinder.add_commonalities_relations(bookData.locations)
-        CommonalitiesFinder.add_commonalities_relations(bookData.organizations)
+        RelationsProcessor.process(named_entities)
+        CommonalitiesFinder.add_commonalities_relations(named_entities)
 
 
 

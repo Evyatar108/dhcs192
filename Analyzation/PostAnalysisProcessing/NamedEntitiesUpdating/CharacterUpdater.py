@@ -1,6 +1,6 @@
 import itertools
-from collections import defaultdict, Counter
-from typing import List, Set, Dict
+from collections import Counter
+from typing import List, Set
 
 from Analyzation.PostAnalysisProcessing.ObjectModels.CharacterData import Character
 from Analyzation.PostAnalysisProcessing.NamedEntitiesUpdating.NamedEntitiesUpdaterBase import NamedEntityUpdaterBase
@@ -23,7 +23,7 @@ class CharacterNamedEntityUpdater(NamedEntityUpdaterBase):
         named_entities.append(Character(indx=len(named_entities)))
 
     def __is_matching_coref(self, coreference: CoReference):
-        return coreference.animacy == 'ANIMATE' and coreference.type == 'PROPER'
+        return coreference.animacy == 'ANIMATE' and coreference.type in ('PROPER', 'LIST')
 
     def __update_relationships(self, characters: List[Character], sentences: List[SentimentedSentence],
                                indx_chapter: int):

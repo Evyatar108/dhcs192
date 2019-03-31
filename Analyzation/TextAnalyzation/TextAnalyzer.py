@@ -88,13 +88,13 @@ class TextAnalyzer:
                  for coref in corefs_cluster]
                 for corefs_cluster in data['corefs'].values()]
 
-    def __extract_openie_relations(self, data) -> List[RelationData]:
+    def __extract_openie_relations(self, data) -> List[Relation]:
         relations = [
-            RelationData(indx_sentence=sentence_obj['index'], subject=relation['subject'],
-                         subject_span_in_sentence=tuple(relation['subjectSpan']),
-                         relation=relation['relation'], object=relation['object'],
-                         object_span_in_sentence=tuple(relation['objectSpan']), )
-            for sentence_obj in data['sentences'] for relation in itertools.chain(sentence_obj['openie'], sentence_obj['kbp'])]
+            Relation(indx_sentence=sentence_obj['index'], subject=raw_relation['subject'],
+                     subject_span_in_sentence=tuple(raw_relation['subjectSpan']),
+                     relation_str=raw_relation['relation'], object=raw_relation['object'],
+                     object_span_in_sentence=tuple(raw_relation['objectSpan']), )
+            for sentence_obj in data['sentences'] for raw_relation in itertools.chain(sentence_obj['openie'], sentence_obj['kbp'])]
 
         normalized_relations = map(RelationNormalizer.Normalize, relations)
         return normalized_relations
@@ -102,7 +102,7 @@ class TextAnalyzer:
 if __name__ == "__main__":
     # # "Israel is a nice place"  # 'Renya walked him to school everyday. She\'d talk to him about love. Then, once they got to the school, Renya would leave him and go do math alone. Ichi couldn\'t fathom what she was thinking, playing around like that. Ichi knew Reyna was lying to him. Ichi could smell it on her.'
 
-    example_sentence = 'Rony is small, her father is Goku' # 'Zorian’s eyes abruptly shot open as a sharp pain erupted from his stomach. His whole body convulsed, buckling against the object that fell on him, and suddenly he was wide awake, not a trace of drowsiness in his mind. “Good morning, brother!” an annoyingly cheerful voice sounded right on top of him. “Morning, morning, MORNING!!!” Zorian glared at his little sister, but she just smiled back at him cheekily, still sprawled across his stomach. She was humming to herself in obvious satisfaction, kicking her feet playfully in the air as she studied the giant world map Zorian had tacked to the wall next to his bed. Or rather, pretended to study – Zorian could see her watching him intently out of the corner of her eyes for a reaction. This was what he got for not arcane locking the door and setting up a basic alarm perimeter around his bed. “Get off,” he told her in the calmest voice he could muster. “Mom said to wake you up,” she said matter-of-factly, not budging from her spot. “Not like this, she didn’t,” Zorian grumbled, swallowing his irritation and patiently waiting till she dropped her guard. Predictably, Kirielle grew visibly agitated after only a few moments of this pretend disinterest. Just before she could blow up, Zorian quickly grasped her legs and chest and flipped her over the edge of the bed. She fell to the floor with a thud and an indignant yelp, and Zorian quickly jumped to his feet to better respond to any violence she might decide to retaliate with. He glanced down on her and sniffed disdainfully. “I’ll be sure to remember this the next time I’m asked to wake you up.”'
+    example_sentence = 'Ron and Anny are father and son' # 'Zorian’s eyes abruptly shot open as a sharp pain erupted from his stomach. His whole body convulsed, buckling against the object that fell on him, and suddenly he was wide awake, not a trace of drowsiness in his mind. “Good morning, brother!” an annoyingly cheerful voice sounded right on top of him. “Morning, morning, MORNING!!!” Zorian glared at his little sister, but she just smiled back at him cheekily, still sprawled across his stomach. She was humming to herself in obvious satisfaction, kicking her feet playfully in the air as she studied the giant world map Zorian had tacked to the wall next to his bed. Or rather, pretended to study – Zorian could see her watching him intently out of the corner of her eyes for a reaction. This was what he got for not arcane locking the door and setting up a basic alarm perimeter around his bed. “Get off,” he told her in the calmest voice he could muster. “Mom said to wake you up,” she said matter-of-factly, not budging from her spot. “Not like this, she didn’t,” Zorian grumbled, swallowing his irritation and patiently waiting till she dropped her guard. Predictably, Kirielle grew visibly agitated after only a few moments of this pretend disinterest. Just before she could blow up, Zorian quickly grasped her legs and chest and flipped her over the edge of the bed. She fell to the floor with a thud and an indignant yelp, and Zorian quickly jumped to his feet to better respond to any violence she might decide to retaliate with. He glanced down on her and sniffed disdainfully. “I’ll be sure to remember this the next time I’m asked to wake you up.”'
     print('Creating TEE object')
     tee = TextAnalyzer()
     text_analysis = {}

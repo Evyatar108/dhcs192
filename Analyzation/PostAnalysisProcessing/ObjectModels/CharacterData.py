@@ -2,7 +2,7 @@ from typing import Dict, List
 
 from Analyzation.PostAnalysisProcessing.ObjectModels.MentionsData import Mentions
 from Analyzation.PostAnalysisProcessing.ObjectModels.NamedEntityData import NamedEntity
-from Analyzation.PostAnalysisProcessing.ObjectModels.RelationData import ExtendedRelation
+from Analyzation.PostAnalysisProcessing.ObjectModels.RelationData import ExtendedRelation, Relationship
 
 
 class Character(NamedEntity):
@@ -13,3 +13,8 @@ class Character(NamedEntity):
         self.indx = indx
         self.gender = gender
         self.chapters_relationships = chapters_relationships
+
+    def add_relationship_sentiment(self, character, sentiment_value: int, indx_chapter: int):
+        chapter_relationships = self.chapters_relationships.setdefault(indx_chapter, {})
+        relationship: Relationship = chapter_relationships.setdefault(character.indx, Relationship(character))
+        relationship.sentiment_value += sentiment_value

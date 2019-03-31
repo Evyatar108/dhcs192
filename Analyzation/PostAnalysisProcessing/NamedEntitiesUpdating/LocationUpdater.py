@@ -20,4 +20,4 @@ class LocationNamedEntityUpdater(NamedEntityUpdaterBase):
         named_entities.append(Location())
 
     def __is_matching_coref(self, coreference: CoReference):
-        return coreference.animacy == 'INANIMATE' and coreference.type == 'PROPER'
+        return coreference.animacy == 'INANIMATE' and coreference.type in ('PROPER', 'LIST')

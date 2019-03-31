@@ -19,7 +19,7 @@ class NamedEntityUpdaterBase:
                                     self.__is_matched_mention(tagged_entity))
         is_same_named_entity_pred = lambda named_entity_name,tagged_entity_name: named_entity_name in tagged_entity_name.text or tagged_entity_name.text in named_entity_name
         for matching_tagged_entity in matching_tagged_entities:
-            the_named_entity = self.__find_named_entity_by_name(named_entities, matching_tagged_entity.text,
+            the_named_entity : List[NamedEntity] = self.__find_named_entity_by_name(named_entities, matching_tagged_entity.text,
                                                                 is_same_named_entity_pred)
             if the_named_entity is None:
                 self.__add_new_named_entitiy_to_list(named_entities)
@@ -37,10 +37,10 @@ class NamedEntityUpdaterBase:
             corefs_spans = (coref.span_in_sentence for coref in coreferences_cluster)
             matching_coref_name_iter = (coref.text for coref in coreferences_cluster if
                                         self.__is_matching_coref(coref))
-            the_named_entity = NamedEntityUtils.find_named_entity(named_entities, corefs_spans, indx_chapter,
+            the_named_entities = NamedEntityUtils.find_named_entities(named_entities, corefs_spans, indx_chapter,
                                                         matching_coref_name_iter,
                                                         is_same_named_entity_pred)
-            if the_named_entity is not None:
+            for the_named_entity in the_named_entities:
                 the_named_entity.add_coreferences_cluster(indx_chapter, coreferences_cluster)
 
     def __is_matching_coref(self, coreference: CoReference):
