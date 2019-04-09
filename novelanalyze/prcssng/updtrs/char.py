@@ -2,8 +2,7 @@
 import itertools
 from collections import Counter
 from typing import List, Set
-
-from novelanalyze.prcssng.entitydata.char import Character
+from novelanalyze.prcssng.entitydata import Character
 from novelanalyze.prcssng.updtrs.base import NamedEntityUpdaterBase
 from novelanalyze.analyztn.parsedata import TextAnalysis, CoReference, TaggedTextEntity, SentimentedSentence
 
@@ -14,25 +13,26 @@ class CharacterNamedEntityUpdater(NamedEntityUpdaterBase):
         super(CharacterNamedEntityUpdater, self).update(text_analysis=text_analysis,
                                                         named_entitys=characters,
                                                         indx_chapter=indx_chapter)
-        self.__update_relationships(text_analysis, characters, indx_chapter)
+        self.__update_relationships(characters, text_analysis.sentimented_sentences, indx_chapter)
         self.__update_genders(characters)
 
     def __is_matched_mention(self, tagged_entity: TaggedTextEntity):
         return tagged_entity.tag == 'PERSON'
 
     def __add_new_named_entitiy_to_list(self, named_entities):
-        named_entities.append(Character(indx=len(named_entities)))
+        named_entities.append(Character(indx_char=len(named_entities)))
 
     def __is_matching_coref(self, coreference: CoReference):
-        return coreference.animacy == 'ANIMATE' and coreference.type in ('PROPER', 'LIST')
+        return coreference.animacy == 'ANIMATE' and coreference.ref_type in ('PROPER', 'LIST')
 
-    def __update_relationships(self, characters: List[Character], sentences: List[SentimentedSentence],
+    @staticmethod
+    def __update_relationships(characters: List[Character], sentences: List[SentimentedSentence],
                                indx_chapter: int):
         mentioned_characters_in_sentences: List[Set[Character]] = [{}] * len(sentences)
         for character in characters:
-            for mentions in character.chapters_mentions[indx_chapter]:
-                for tagged_entity in mentions.tagged_entities:
-                    mentioned_characters_in_sentences[tagged_entity.indx_sentence].add(character)
+            mentions = character.chapters_mentions[indx_chapter]
+            for tagged_entity in mentions.tagged_entities:
+                mentioned_characters_in_sentences[tagged_entity.indx_sentence].add(character)
 
         mentioned_characters_in_sentences: List[List[Character]] = [list(set_of_characters) for set_of_characters in
                                                                     mentioned_characters_in_sentences]
@@ -43,7 +43,8 @@ class CharacterNamedEntityUpdater(NamedEntityUpdaterBase):
                     first_character.add_relationship_sentiment(second_character, sentence.sentiment_value, indx_chapter)
                     second_character.add_relationship_sentiment(first_character, sentence.sentiment_value, indx_chapter)
 
-    def __update_genders(self, characters):
+    @staticmethod
+    def __update_genders(characters):
         for character in characters:
             corefs = (coref for mentions in itertools.chain(character.chapters_mentions.values()) for coref in
                       mentions.coreferences)

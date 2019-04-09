@@ -31,8 +31,8 @@ class Mentions:
 class NamedEntity:
     names: List[str]
     chapters_mentions: Dict[int, Mentions] = field(default_factory=list)
-    relations_as_subject: Dict[int, List[ExtendedRelation]] = field(default_factory=list)
-    relations_as_object: Dict[int, List[ExtendedRelation]] = field(default_factory=list)
+    relations_as_subject: Dict[int, List[ExtendedRelation]] = field(default_factory=dict)
+    relations_as_object: Dict[int, List[ExtendedRelation]] = field(default_factory=dict)
 
     def add_tagged_entity(self, tagged_entity: TaggedTextEntity, indx_chapter: int):
         self.names.append(tagged_entity.text)
@@ -44,7 +44,7 @@ class NamedEntity:
             self.add_coreference(coreference, indx_chapter)
 
     def add_coreference(self, coreference: CoReference, indx_chapter: int):
-        if coreference.type == 'PROPER':
+        if coreference.ref_type == 'PROPER':
             self.names.append(self.__sanitize_name(coreference.text))
         chapter_mentions = self.chapters_mentions.setdefault(indx_chapter, Mentions(indx_chapter))
         chapter_mentions.coreferences.append(coreference)

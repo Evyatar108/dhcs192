@@ -18,10 +18,10 @@ class TaggedTextEntity:
 
 
 class CoReference:
-    def __init__(self, text, type, plurality, gender, animacy, indx_sentence, span_in_sentence,
+    def __init__(self, text, ref_type, plurality, gender, animacy, indx_sentence, span_in_sentence,
                  is_representative_mention):
         self.text = text
-        self.type = type
+        self.ref_type = ref_type
         self.plurality = plurality
         self.gender = gender
         self.animacy = animacy

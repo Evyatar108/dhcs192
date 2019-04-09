@@ -4,7 +4,7 @@ import itertools
 from novelanalyze.analyztn.parsedata import TextAnalysis
 from novelanalyze.contntprvdr import ContentProviderBase
 from novelanalyze.analyztn import corenlp
-from novelanalyze.prcssng.entitydata.novel import NovelEntities
+from novelanalyze.prcssng.entitydata import NovelEntities
 from novelanalyze.prcssng.updtrs.char import CharacterNamedEntityUpdater
 from novelanalyze.prcssng.updtrs.loc import LocationNamedEntityUpdater
 from novelanalyze.prcssng.updtrs.org import OrganizationNamedEntityUpdater

@@ -1,7 +1,7 @@
 # coding=utf-8
 from typing import List
 
-from novelanalyze.prcssng.entitydata.loc import Location
+from novelanalyze.prcssng.entitydata import Location
 from novelanalyze.prcssng.updtrs.base import NamedEntityUpdaterBase
 from novelanalyze.analyztn.parsedata import TaggedTextEntity, CoReference, TextAnalysis
 
@@ -21,4 +21,4 @@ class OrganizationNamedEntityUpdater(NamedEntityUpdaterBase):
         named_entities.append(Location())
 
     def __is_matching_coref(self, coreference: CoReference):
-        return coreference.animacy == 'INANIMATE' and coreference.type in ('PROPER', 'LIST')
+        return coreference.animacy == 'INANIMATE' and coreference.ref_type in ('PROPER', 'LIST')

@@ -2,8 +2,7 @@
 import re
 from typing import List
 
-from novelanalyze.prcssng.entitydata.char import Character
-from novelanalyze.prcssng.entitydata.entity import NamedEntity, ExtendedRelation
+from novelanalyze.prcssng.entitydata import NamedEntity, Character, ExtendedRelation
 
 
 class RelationRule:

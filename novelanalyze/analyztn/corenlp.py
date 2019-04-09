@@ -83,7 +83,7 @@ def __generate_clusters(tagged_tokens, pred_same_cluster):
 
 def __extract_coreferences_clusters(raw_data) -> List[List[CoReference]]:
     return [[CoReference(text=coref['text'],
-                         type=coref['type'],
+                         ref_type=coref['type'],
                          plurality=coref['number'],
                          gender=coref['gender'],
                          animacy=coref['animacy'],
