@@ -1,8 +1,9 @@
+# coding=utf-8
 from typing import List
 
-from novelanalyze.prcssng.data.loc import Location
+from novelanalyze.prcssng.entitydata.loc import Location
 from novelanalyze.prcssng.updtrs.base import NamedEntityUpdaterBase
-from novelanalyze.analyztn.data import TaggedTextEntity, CoReference, TextAnalysis
+from novelanalyze.analyztn.parsedata import TaggedTextEntity, CoReference, TextAnalysis
 
 
 class OrganizationNamedEntityUpdater(NamedEntityUpdaterBase):

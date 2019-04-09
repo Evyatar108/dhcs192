@@ -1,7 +1,8 @@
+# coding=utf-8
 from typing import List
 
-from novelanalyze.prcssng.data.char import Character
-from novelanalyze.prcssng.data.entity import NamedEntity
+from novelanalyze.prcssng.entitydata.char import Character
+from novelanalyze.prcssng.entitydata.entity import NamedEntity
 
 
 class SharedRelationRule:

@@ -1,3 +1,4 @@
+# coding=utf-8
 from typing import List, Tuple
 
 
@@ -30,13 +31,15 @@ class CoReference:
 
 
 class Relation:
-    def __init__(self, indx_sentence: int, subject: str, subject_span_in_sentence: Tuple[int, int], relation_str: str, object: str, object_span_in_sentence: Tuple[int, int]):
+    def __init__(self, indx_sentence: int, subject_name: str, subject_span_in_sentence: Tuple[int, int],
+                 relation_str: str, object_name: str, object_span_in_sentence: Tuple[int, int]):
         self.indx_sentence = indx_sentence
-        self.subject = subject
+        self.subject_name = subject_name
         self.subject_span_in_sentence = subject_span_in_sentence
         self.relation_str = relation_str
-        self.object = object
+        self.object_name = object_name
         self.object_span_in_sentence = object_span_in_sentence
+
 
 class TextAnalysis:
     def __init__(self, sentimented_sentences: List[SentimentedSentence], tagged_entities: List[TaggedTextEntity],
@@ -45,4 +48,3 @@ class TextAnalysis:
         self.tagged_entities = tagged_entities
         self.coreferences_clusters = coreferences_clusters
         self.relations = relations
-

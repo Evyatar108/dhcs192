@@ -1,6 +1,7 @@
+# coding=utf-8
 from typing import Generator, Callable, Tuple, List
 
-from novelanalyze.prcssng.data.entity import NamedEntity
+from novelanalyze.prcssng.entitydata.entity import NamedEntity
 
 
 def find_named_entities(named_entities, target_spans: Generator[Tuple[int, int]], indx_chapter,

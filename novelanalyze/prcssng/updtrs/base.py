@@ -1,8 +1,9 @@
+# coding=utf-8
 from typing import List
 
-from novelanalyze.analyztn.data import TextAnalysis, CoReference, TaggedTextEntity
+from novelanalyze.analyztn.parsedata import TextAnalysis, CoReference, TaggedTextEntity
 from novelanalyze.prcssng import utils
-from novelanalyze.prcssng.data.entity import NamedEntity, ExtendedRelation
+from novelanalyze.prcssng.entitydata.entity import NamedEntity, ExtendedRelation
 
 
 class NamedEntityUpdaterBase:
