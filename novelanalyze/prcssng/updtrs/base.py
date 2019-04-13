@@ -48,7 +48,7 @@ class NamedEntityUpdaterBase:
             corefs_spans = (coref.span_in_sentence for coref in coreferences_cluster)
             matching_coref_name_iter = (coref.text for coref in coreferences_cluster if
                                         self.__is_matching_coref(coref))
-            the_named_entities = utils.find_named_entities(named_entities, corefs_spans, indx_chapter,
+            the_named_entities = utils.find_named_entities(indx_chapter, named_entities, corefs_spans,
                                                            matching_coref_name_iter,
                                                            is_same_named_entity_pred)
             for the_named_entity in the_named_entities:

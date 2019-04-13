@@ -1,4 +1,5 @@
 # coding=utf-8
+from dataclasses import dataclass
 from typing import List, Tuple
 
 
@@ -29,8 +30,11 @@ class CoReference:
         self.span_in_sentence = span_in_sentence
         self.is_representative_mention = is_representative_mention
 
-
+@dataclass
 class Relation:
+    indx_sentence: int
+    #todo
+
     def __init__(self, indx_sentence: int, subject_name: str, subject_span_in_sentence: Tuple[int, int],
                  relation_str: str, object_name: str, object_span_in_sentence: Tuple[int, int]):
         self.indx_sentence = indx_sentence

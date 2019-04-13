@@ -11,6 +11,9 @@ from novelanalyze.analyztn.parsedata import *
 
 def analyze(text) -> Tuple[TextAnalysis, Dict]:
     raw_data = __request_data(text)
+
+    #todo - handle "They" as coreference to the last two persons if no coreference was made in the model
+
     sentences = __extract_sentimented_sentences(raw_data)
     tagged_entities = __extract_tagged_entities(raw_data)
     coreferences_clusters = __extract_coreferences_clusters(raw_data)

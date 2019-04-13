@@ -8,6 +8,9 @@ from novelanalyze.prcssng.entitydata import NovelEntities
 from novelanalyze.prcssng.updtrs.char import CharacterNamedEntityUpdater
 from novelanalyze.prcssng.updtrs.loc import LocationNamedEntityUpdater
 from novelanalyze.prcssng.updtrs.org import OrganizationNamedEntityUpdater
+from novelanalyze.prcssng.insights import relations
+from novelanalyze.prcssng.insights import sharedrelations
+from novelanalyze.prcssng.insights import commonalities
 
 
 def extract(novel_content_provider: ContentProviderBase) -> NovelEntities:
@@ -26,8 +29,9 @@ def __process_chapter_analysis(text_analysis: TextAnalysis, novel_entities: Nove
 
     named_entities = itertools.chain(novel_entities.characters, novel_entities.locations, novel_entities.organizations)
 
-    RelationsProcessor.process(named_entities)
-    CommonalitiesFinder.add_commonalities_relations(named_entities)
+    relations.process(named_entities)
+    sharedrelations.process(named_entities)
+    commonalities.process(named_entities)
 
 
 if __name__ == '__main__':

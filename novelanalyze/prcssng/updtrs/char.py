@@ -2,14 +2,15 @@
 import itertools
 from collections import Counter
 from typing import List, Set
-from novelanalyze.prcssng.entitydata import Character
+from novelanalyze.prcssng.entitydata import Character, NamedEntity
 from novelanalyze.prcssng.updtrs.base import NamedEntityUpdaterBase
 from novelanalyze.analyztn.parsedata import TextAnalysis, CoReference, TaggedTextEntity, SentimentedSentence
 
 
 class CharacterNamedEntityUpdater(NamedEntityUpdaterBase):
 
-    def update_characters_information(self, text_analysis: TextAnalysis, characters: List[Character], indx_chapter):
+    def update_characters_information(self, text_analysis: TextAnalysis, characters: List[Character],
+                                      indx_chapter: int):
         super(CharacterNamedEntityUpdater, self).update(text_analysis=text_analysis,
                                                         named_entitys=characters,
                                                         indx_chapter=indx_chapter)
@@ -19,7 +20,7 @@ class CharacterNamedEntityUpdater(NamedEntityUpdaterBase):
     def __is_matched_mention(self, tagged_entity: TaggedTextEntity):
         return tagged_entity.tag == 'PERSON'
 
-    def __add_new_named_entitiy_to_list(self, named_entities):
+    def __add_new_named_entitiy_to_list(self, named_entities: List[NamedEntity]):
         named_entities.append(Character(indx_char=len(named_entities)))
 
     def __is_matching_coref(self, coreference: CoReference):
@@ -44,7 +45,7 @@ class CharacterNamedEntityUpdater(NamedEntityUpdaterBase):
                     second_character.add_relationship_sentiment(first_character, sentence.sentiment_value, indx_chapter)
 
     @staticmethod
-    def __update_genders(characters):
+    def __update_genders(characters: List[Character]):
         for character in characters:
             corefs = (coref for mentions in itertools.chain(character.chapters_mentions.values()) for coref in
                       mentions.coreferences)
