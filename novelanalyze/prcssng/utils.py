@@ -1,5 +1,5 @@
 # coding=utf-8
-from typing import Generator, Callable, Tuple, List, Iterator
+from typing import Callable, Tuple, List, Iterator
 
 from novelanalyze.prcssng.entitydata import NamedEntity, ExtendedRelation
 
@@ -44,7 +44,7 @@ def __find_named_entities_by_span(named_entities, target_spans: Iterator[Tuple[i
 
 
 def __intersects_entity_reference_span(named_entity: NamedEntity, target_spank: Tuple[int, int],
-                                       indx_chapter: int):
+                                       indx_chapter: int) -> bool:
     if indx_chapter not in named_entity.chapters_mentions:
         return False
     return any(__ranges_intersect(target_spank, coref.span_in_sentence)
@@ -53,6 +53,6 @@ def __intersects_entity_reference_span(named_entity: NamedEntity, target_spank: 
         for tagged_entity in named_entity.chapters_mentions[indx_chapter].tagged_entities)
 
 
-def __ranges_intersect(first_range: Tuple[int, int], second_range: Tuple[int, int]):
+def __ranges_intersect(first_range: Tuple[int, int], second_range: Tuple[int, int]) -> bool:
     return first_range[0] <= second_range[0] <= first_range[1] \
            or first_range[0] <= second_range[1] <= first_range[1]

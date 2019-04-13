@@ -17,7 +17,7 @@ class NamedEntityUpdaterBase:
         self.__process_coreferences(text_analysis, named_entitys, indx_chapter)
         self.__process_relations(text_analysis, named_entitys, indx_chapter)
 
-    def __process_tagged_entities(self, text_analysis, named_entities, indx_chapter):
+    def __process_tagged_entities(self, text_analysis, named_entities, indx_chapter) -> None:
         matching_tagged_entities = (tagged_entity for tagged_entity in text_analysis.tagged_entities if
                                     self.__is_matched_mention(tagged_entity))
 
@@ -33,14 +33,14 @@ class NamedEntityUpdaterBase:
                 the_named_entity.add_tagged_entity(matching_tagged_entity, indx_chapter)
 
     @abstractmethod
-    def __is_matched_mention(self, tagged_entity: TaggedTextEntity):
+    def __is_matched_mention(self, tagged_entity: TaggedTextEntity) -> bool:
         pass
 
     @abstractmethod
-    def __add_new_named_entitiy_to_list(self, named_entities):
+    def __add_new_named_entitiy_to_list(self, named_entities) -> None:
         pass
 
-    def __process_coreferences(self, text_analysis, named_entities, indx_chapter):
+    def __process_coreferences(self, text_analysis, named_entities, indx_chapter) -> None:
         def is_same_named_entity_pred(named_entity_name, coref_name):
             return named_entity_name in coref_name
 
@@ -54,11 +54,11 @@ class NamedEntityUpdaterBase:
             for the_named_entity in the_named_entities:
                 the_named_entity.add_coreferences_cluster(indx_chapter, coreferences_cluster)
 
-    def __is_matching_coref(self, coreference: CoReference):
+    def __is_matching_coref(self, coreference: CoReference) -> bool:
         raise Exception("Unimplemented")
 
     @staticmethod
-    def __process_relations(text_analysis, named_entities, indx_chapter):
+    def __process_relations(text_analysis, named_entities, indx_chapter) -> None:
         def is_same_named_entity_pred(named_entity_name, name_in_relation):
             return named_entity_name in name_in_relation or name_in_relation in named_entity_name
 

@@ -1,6 +1,7 @@
 # coding=utf-8
 import copy
 import re
+from dataclasses import dataclass
 from typing import List
 
 from novelanalyze.analyztn.parsedata import Relation
@@ -8,11 +9,11 @@ from novelanalyze.prcssng.entitydata import NamedEntity, Character, ExtendedRela
 from novelanalyze.prcssng.utils import find_named_entities, find_as_subject_relation
 
 
+@dataclass
 class SharedRelationRule:
-    def __init__(self, entity_type, object_regex_rule: str, new_relation: str):
-        self.entity_type = entity_type
-        self.object_regex_rule = object_regex_rule
-        self.new_relation = new_relation
+    entity_type: type(NamedEntity)
+    object_regex_rule: str
+    new_relation: str
 
 
 shared_relation_rules: List[SharedRelationRule] = [
@@ -20,32 +21,31 @@ shared_relation_rules: List[SharedRelationRule] = [
 ]
 
 
-def process(named_entities: List[NamedEntity]):
+def process(named_entities: List[NamedEntity]) -> None:
     for named_entity in named_entities:
         for chapter_relations in named_entity.relations_as_subject.values():
             for ext_relation in chapter_relations:
                 _process_rules_for_relation(named_entities, ext_relation)
 
 
-def _process_rules_for_relation(named_entities: List[NamedEntity], ext_relation: ExtendedRelation):
+def _process_rules_for_relation(named_entities: List[NamedEntity], ext_relation: ExtendedRelation) -> None:
     if ext_relation.relation.relation_str == 'are':
         for relation_rule in shared_relation_rules:
-            if _relation_fit_rule(ext_relation, relation_rule):
+            if __relation_fit_rule(ext_relation, relation_rule):
                 subject_named_entities = find_named_entities(ext_relation.indx_chapter, named_entities,
                                                              [ext_relation.relation.subject_span_in_sentence])
                 for second_entity in subject_named_entities:
-                    _update_named_entities_with_shared_relation(ext_relation, relation_rule, second_entity)
-                pass
+                    __update_named_entities_with_shared_relation(ext_relation, relation_rule, second_entity)
                 return
 
 
-def _relation_fit_rule(ext_relation: ExtendedRelation, relation_rule: SharedRelationRule):
+def __relation_fit_rule(ext_relation: ExtendedRelation, relation_rule: SharedRelationRule) -> bool:
     return isinstance(ext_relation.subject_named_entity, relation_rule.entity_type) \
            and re.search(relation_rule.object_regex_rule, ext_relation.relation.relation_str)
 
 
-def _update_named_entities_with_shared_relation(ext_relation: ExtendedRelation, relation_rule: SharedRelationRule,
-                                                second_entity: NamedEntity):
+def __update_named_entities_with_shared_relation(ext_relation: ExtendedRelation, relation_rule: SharedRelationRule,
+                                                 second_entity: NamedEntity) -> None:
     first_entity = ext_relation.subject_named_entity
     indx_chapter = ext_relation.indx_chapter
     # we dont want to add this relation twice, so we ensure we do it only for one ordered pair of named entities
