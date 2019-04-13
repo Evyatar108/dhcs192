@@ -33,16 +33,12 @@ class CoReference:
 @dataclass
 class Relation:
     indx_sentence: int
-    #todo
-
-    def __init__(self, indx_sentence: int, subject_name: str, subject_span_in_sentence: Tuple[int, int],
-                 relation_str: str, object_name: str, object_span_in_sentence: Tuple[int, int]):
-        self.indx_sentence = indx_sentence
-        self.subject_name = subject_name
-        self.subject_span_in_sentence = subject_span_in_sentence
-        self.relation_str = relation_str
-        self.object_name = object_name
-        self.object_span_in_sentence = object_span_in_sentence
+    subject_name: str
+    subject_span_in_sentence: Tuple[int, int]
+    relation_str: str
+    relation_span: Tuple[int, int]
+    object_name: str
+    object_span_in_sentence: Tuple[int, int]
 
 
 class TextAnalysis:

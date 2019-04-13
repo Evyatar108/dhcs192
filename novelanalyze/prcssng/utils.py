@@ -1,8 +1,11 @@
 # coding=utf-8
 from typing import Generator, Callable, Tuple, List, Iterator
 
-from novelanalyze.prcssng.entitydata import NamedEntity
+from novelanalyze.prcssng.entitydata import NamedEntity, ExtendedRelation
 
+
+def find_as_subject_relation(indx_chapter: int, named_entity: NamedEntity, relation_span: Tuple[int, int])->ExtendedRelation:
+    return next((relation for relation in named_entity.relations_as_subject[indx_chapter] if relation.relation.relation_span == relation_span))
 
 def find_named_entity(indx_chapter: int, named_entities: List[NamedEntity], target_spans: Iterator[Tuple[int, int]] = iter(()),
                       target_names: Generator[str] = iter(()),
