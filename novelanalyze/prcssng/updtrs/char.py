@@ -39,10 +39,9 @@ class CharacterNamedEntityUpdater(NamedEntityUpdaterBase):
                                                                     mentioned_characters_in_sentences]
 
         for characters_in_sentence, sentence in zip(mentioned_characters_in_sentences, sentences):
-            for indx_first_character, first_character in enumerate(characters_in_sentence):
-                for second_character in characters_in_sentence[indx_first_character + 1:]:
-                    first_character.add_relationship_sentiment(second_character, sentence.sentiment_value, indx_chapter)
-                    second_character.add_relationship_sentiment(first_character, sentence.sentiment_value, indx_chapter)
+            for first_character, second_character in itertools.combinations(characters_in_sentence, 2):
+                first_character.add_relationship_sentiment(second_character, sentence.sentiment_value, indx_chapter)
+                second_character.add_relationship_sentiment(first_character, sentence.sentiment_value, indx_chapter)
 
     @staticmethod
     def __update_genders(characters: List[Character]):

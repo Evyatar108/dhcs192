@@ -16,6 +16,14 @@ class ExtendedRelation:
 
 
 @dataclass
+class CommonalityRelation:
+    relation_str: str
+    first_entity: NamedEntity
+    second_entity: NamedEntity
+    common_object_entity: NamedEntity
+
+
+@dataclass
 class Mentions:
     indx_chapter: int
     coreferences: List[CoReference] = field(default_factory=list)
@@ -24,10 +32,12 @@ class Mentions:
 
 @dataclass
 class NamedEntity:
+    # lists here are first ordered by chapter index using dictionary holding lists for each chapter
     names: List[str]
     chapters_mentions: Dict[int, Mentions] = field(default_factory=list)
     relations_as_subject: Dict[int, List[ExtendedRelation]] = field(default_factory=dict)
     relations_as_object: Dict[int, List[ExtendedRelation]] = field(default_factory=dict)
+    commonalities_relations: List[CommonalityRelation] = field(default_factory=list)
 
     def add_tagged_entity(self, tagged_entity: TaggedTextEntity, indx_chapter: int):
         self.names.append(tagged_entity.text)
@@ -55,6 +65,9 @@ class NamedEntity:
     def add_relation_as_object(self, relation: ExtendedRelation, indx_chapter: int):
         chapter_object_relations = self.relations_as_object.setdefault(indx_chapter, [])
         chapter_object_relations.append(relation)
+
+    def add_commonality_relation(self, relation: CommonalityRelation):
+        self.commonalities_relations.append(relation)
 
 
 @dataclass

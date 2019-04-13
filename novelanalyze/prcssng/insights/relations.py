@@ -29,6 +29,7 @@ def process(named_entities: Iterator[NamedEntity]):
             _process_rules_for_relation(ext_relation)
 
 
+# todo - old relations are overrided with a new relation by the rules, should we do it like this?
 def _process_rules_for_relation(ext_relation: ExtendedRelation):
     for relation_rule in relation_rules:
         if _relation_fit_rule(ext_relation, relation_rule):
