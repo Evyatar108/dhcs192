@@ -11,13 +11,8 @@ from novelanalyze.analyztn.parsedata import Relation, CoReference, TaggedTextEnt
 class ExtendedRelation:
     relation: Relation
     subject_named_entity: NamedEntity
-
-    def __init__(self, relation: Relation, subject_named_entity: NamedEntity, object_named_entity: NamedEntity,
-                 indx_chapter: int):
-        self.relation = relation
-        self.subject_named_entity = subject_named_entity
-        self.object_named_entity = object_named_entity
-        self.indx_chapter = indx_chapter
+    object_named_entity: NamedEntity
+    indx_chapter: int
 
 
 @dataclass
@@ -70,7 +65,7 @@ class Relationship:
 
 @dataclass
 class Character(NamedEntity):
-    indx_char: int
+    indx_char: int = -1
     gender: str = "UNKNOWN"
     # by chapter and then by char index
     chapters_relationships: Dict[int, Dict[int, Relationship]] = field(default_factory=list)

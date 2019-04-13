@@ -4,17 +4,22 @@ from typing import Generator, Callable, Tuple, List, Iterator
 from novelanalyze.prcssng.entitydata import NamedEntity, ExtendedRelation
 
 
-def find_as_subject_relation(indx_chapter: int, named_entity: NamedEntity, relation_span: Tuple[int, int])->ExtendedRelation:
-    return next((relation for relation in named_entity.relations_as_subject[indx_chapter] if relation.relation.relation_span == relation_span))
+def find_as_subject_relation(indx_chapter: int, named_entity: NamedEntity,
+                             relation_span: Tuple[int, int]) -> ExtendedRelation:
+    return next((relation for relation in named_entity.relations_as_subject[indx_chapter] if
+                 relation.relation.relation_span == relation_span))
 
-def find_named_entity(indx_chapter: int, named_entities: List[NamedEntity], target_spans: Iterator[Tuple[int, int]] = iter(()),
-                      target_names: Generator[str] = iter(()),
+
+def find_named_entity(indx_chapter: int, named_entities: List[NamedEntity],
+                      target_spans: Iterator[Tuple[int, int]] = iter([]),
+                      target_names: Iterator[str] = iter([]),
                       is_same_name_pred: Callable[[str, str], bool] = None) -> NamedEntity:
     return next(find_named_entities(indx_chapter, named_entities, target_spans, target_names, is_same_name_pred))
 
 
-def find_named_entities(indx_chapter: int, named_entities: List[NamedEntity], target_spans: Iterator[Tuple[int, int]] = iter(()),
-                        target_names: Generator[str] = iter(()),
+def find_named_entities(indx_chapter: int, named_entities: List[NamedEntity],
+                        target_spans: Iterator[Tuple[int, int]] = iter(()),
+                        target_names: Iterator[str] = iter(()),
                         is_same_name_pred: Callable[[str, str], bool] = None) -> Iterator[NamedEntity]:
     the_named_entities = __find_named_entities_by_span(named_entities, target_spans, indx_chapter)
     if not the_named_entities:
