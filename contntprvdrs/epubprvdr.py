@@ -8,7 +8,9 @@ from novelanalyze.contntprvdr import ContentProviderBase
 
 class EpubContentProvider(ContentProviderBase):
     def provide_chapter(self, indx_chapter: int) -> str:
-        return self.chapters[indx_chapter]
+        if len(self.chapters) > indx_chapter:
+            return self.chapters[indx_chapter]
+        return ''
 
     def __init__(self, file_path):
         book = epub.open_epub(file_path)

@@ -10,5 +10,5 @@ class ContentProviderBase:
         raise Exception('Unimplemented method')
 
     def generate_all_chapters(self) -> Iterator[str]:
-        return itertools.takewhile(lambda chapter: chapter, (self.provide_chapter(indx_chapter) for indx_chapter in
+        return itertools.takewhile(lambda chapter: chapter != '', (self.provide_chapter(indx_chapter) for indx_chapter in
                                                              itertools.count(start=1, step=1)))
