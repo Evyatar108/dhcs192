@@ -22,7 +22,7 @@ def __are_same_common_relation(relation: ExtendedRelation, other_relation: Exten
            and relation.object_named_entity == other_relation.object_named_entity
 
 
+# critical relations are the relations with _ in them like per_sibling
 def __get_as_subject_critical_relations(named_entity: NamedEntity) -> Generator[ExtendedRelation]:
     return (ext_relation for ext_relations in named_entity.relations_as_subject.values() for ext_relation in
             ext_relations if '_' in ext_relation.relation.relation_str)
-# todo
