@@ -49,7 +49,7 @@ def __update_named_entities_with_shared_relation(ext_relation: ExtendedRelation,
     first_entity = ext_relation.subject_named_entity
     indx_chapter = ext_relation.indx_chapter
     # we dont want to add this relation twice, so we ensure we do it only for one ordered pair of named entities
-    if hash(first_entity) < hash(second_entity):
+    if id(first_entity) < id(second_entity):
         connected_relation = find_as_subject_relation(indx_chapter, second_entity,
                                                       ext_relation.relation.object_span_in_sentence)
         new_relation = Relation(indx_chapter,

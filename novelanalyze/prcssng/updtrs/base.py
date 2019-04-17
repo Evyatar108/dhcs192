@@ -54,8 +54,9 @@ class NamedEntityUpdaterBase:
             for the_named_entity in the_named_entities:
                 the_named_entity.add_coreferences_cluster(indx_chapter, coreferences_cluster)
 
+    @abstractmethod
     def __is_matching_coref(self, coreference: CoReference) -> bool:
-        raise Exception("Unimplemented")
+        pass
 
     @staticmethod
     def __process_relations(text_analysis, named_entities, indx_chapter) -> None:
@@ -72,10 +73,8 @@ class NamedEntityUpdaterBase:
                                                               relation.object,
                                                               is_same_named_entity_pred)
 
-            extended_relation = ExtendedRelation(relation, the_subject_named_entity, the_object_named_entity,
-                                                 indx_chapter)
-
-            if the_subject_named_entity is not None:
+            if the_subject_named_entity is not None and the_object_named_entity is not None:
+                extended_relation = ExtendedRelation(relation, the_subject_named_entity, the_object_named_entity,
+                                                     indx_chapter)
                 the_subject_named_entity.add_relation_as_subject(extended_relation, indx_chapter)
-            if the_object_named_entity is not None:
                 the_object_named_entity.add_relation_as_subject(extended_relation, indx_chapter)

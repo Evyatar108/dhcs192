@@ -22,7 +22,7 @@ def extract(novel_content_provider: ContentProviderBase) -> NovelEntities:
         text_analysis = convert.convert_to_local_obj(raw_data)
         __process_chapter_analysis(text_analysis, novel_entities, indx_chapter)
 
-    named_entities = list(chain(novel_entities.characters, novel_entities.locations, novel_entities.organizations))
+    named_entities = list(novel_entities.get_named_entities())
 
     relations.process(named_entities)
     sharedrelations.process(named_entities)

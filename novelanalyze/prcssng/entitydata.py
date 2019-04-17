@@ -2,7 +2,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Dict, List
+from itertools import chain
+from typing import Dict, List, Iterator
 
 from novelanalyze.analyztn.parsedata import Relation, CoReference, TaggedTextEntity
 
@@ -30,14 +31,15 @@ class Mentions:
     tagged_entities: List[TaggedTextEntity] = field(default_factory=list)
 
 
-@dataclass
 class NamedEntity:
     # lists here are first ordered by chapter index using dictionary holding lists for each chapter
-    names: List[str]
-    chapters_mentions: Dict[int, Mentions] = field(default_factory=list)
-    relations_as_subject: Dict[int, List[ExtendedRelation]] = field(default_factory=dict)
-    relations_as_object: Dict[int, List[ExtendedRelation]] = field(default_factory=dict)
-    commonalities_relations: List[CommonalityRelation] = field(default_factory=list)
+
+    def __init__(self, names: List[str]):
+        self.names = names
+        self.chapters_mentions: Dict[int, Mentions] = {}
+        self.relations_as_subject: Dict[int, List[ExtendedRelation]] = {}
+        self.relations_as_object: Dict[int, List[ExtendedRelation]] = {}
+        self.commonalities_relations: List[CommonalityRelation] = []
 
     def add_tagged_entity(self, tagged_entity: TaggedTextEntity, indx_chapter: int):
         self.names.append(tagged_entity.text)
@@ -69,6 +71,12 @@ class NamedEntity:
     def add_commonality_relation(self, relation: CommonalityRelation):
         self.commonalities_relations.append(relation)
 
+    def __hash__(self):
+        return id(self)
+
+    def get_critical_relations(self) -> Iterator[ExtendedRelation]:
+        return chain.from_iterable(map(chain.from_iterable, [self.relations_as_subject.values(), self.relations_as_object.values()]))
+
 
 @dataclass
 class Relationship:
@@ -76,27 +84,26 @@ class Relationship:
     sentiment_value: int = 0
 
 
-@dataclass
 class Character(NamedEntity):
-    indx_char: int = -1
-    gender: str = "UNKNOWN"
-    # by chapter and then by char index
-    chapters_relationships: Dict[int, Dict[int, Relationship]] = field(default_factory=list)
+    def __init__(self, names: List[str]):
+        super(Character, self).__init__(names)
+        self.gender: str = "UNKNOWN"
+        self.chapters_relationships: Dict[int, Dict[Character, Relationship]] = field(default_factory=list)
 
-    def add_relationship_sentiment(self, character, sentiment_value: int, indx_chapter: int):
+    def add_relationship_sentiment(self, character: Character, sentiment_value: int, indx_chapter: int):
         chapter_relationships = self.chapters_relationships.setdefault(indx_chapter, {})
-        relationship: Relationship = chapter_relationships.setdefault(character.indx, Relationship(character))
+        relationship: Relationship = chapter_relationships.setdefault(character, Relationship(character))
         relationship.sentiment_value += sentiment_value
 
 
-@dataclass
 class Location(NamedEntity):
-    pass
+    def __init__(self, names:List[str]):
+        super(Location, self).__init__(names)
 
 
-@dataclass
 class Organization(NamedEntity):
-    pass
+    def __init__(self, names:List[str]):
+        super(Organization, self).__init__(names)
 
 
 @dataclass
@@ -104,3 +111,6 @@ class NovelEntities:
     characters: List[Character] = field(default_factory=list)
     locations: List[Location] = field(default_factory=list)
     organizations: List[Organization] = field(default_factory=list)
+
+    def get_named_entities(self) -> Iterator[NamedEntity]:
+        return chain(self.characters, self.locations, self.organizations)

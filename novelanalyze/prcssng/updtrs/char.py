@@ -21,7 +21,7 @@ class CharacterNamedEntityUpdater(NamedEntityUpdaterBase):
         return tagged_entity.tag == 'PERSON'
 
     def __add_new_named_entitiy_to_list(self, named_entities: List[NamedEntity]) -> None:
-        named_entities.append(Character(indx_char=len(named_entities)))
+        named_entities.append(Character())
 
     def __is_matching_coref(self, coreference: CoReference) -> bool:
         return coreference.animacy == 'ANIMATE' and coreference.ref_type in ('PROPER', 'LIST')

@@ -1,0 +1,117 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 500px;
+            height: 500px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"font": {"color": "white"}, "id": 139865121386056, "label": "Moshe", "shape": "dot", "title": "Moshe", "value": 4}, {"font": {"color": "white"}, "id": 139864764649600, "label": "Simba", "shape": "dot", "title": "Simba", "value": 4}, {"font": {"color": "white"}, "id": 139864764652624, "label": "Goku", "shape": "dot", "title": "Goku", "value": 4}]);
+        edges = new vis.DataSet([{"arrowStrikethrough": true, "arrows": "to", "color": "dodgerblue", "from": 139865121386056, "physics": true, "title": "per_sibling", "to": 139864764649600}, {"arrowStrikethrough": true, "arrows": "to", "color": "dodgerblue", "from": 139865121386056, "physics": true, "title": "per_brother", "to": 139864764649600}, {"arrowStrikethrough": true, "arrows": "to", "color": "dodgerblue", "from": 139864764649600, "physics": true, "title": "per_sibling", "to": 139864764652624}, {"arrowStrikethrough": true, "arrows": "to", "color": "dodgerblue", "from": 139864764649600, "physics": true, "title": "per_brother", "to": 139864764652624}, {"arrowStrikethrough": true, "arrows": "to", "color": "dodgerblue", "from": 139864764652624, "physics": true, "title": "per_sibling", "to": 139865121386056}, {"arrowStrikethrough": true, "arrows": "to", "color": "dodgerblue", "from": 139864764652624, "physics": true, "title": "per_brother", "to": 139865121386056}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 250
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        // default to using dot shape for nodes
+        options.nodes = {
+            shape: "dot"
+        }
+        
+
+        network = new vis.Network(container, data, options);
+
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
