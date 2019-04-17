@@ -92,8 +92,16 @@ def __extract_openie_relations(raw_data) -> List[Relation]:
 def normalize_relation(relation_data: Relation):
     copied_relation = copy.copy(relation_data)
 
-    if copied_relation.object_name in ('her', 'his'):
-        copied_relation.object_name += "'s"
+    def normalize_word(word):
+        if word in ('her', 'his'):
+            word += "'s"
+        return word
+
+    split_subject_name = [normalize_word(word) for word in copied_relation.subject_name.split(' ')]
+    copied_relation.subject_name = ' '.join(split_subject_name)
+
+    split_object_name = [normalize_word(word) for word in copied_relation.object_name.split(' ')]
+    copied_relation.object_name = ' '.join(split_object_name)
 
     if copied_relation.relation_str == 'is':
         if "'s" in copied_relation.subject_name and "'s" not in copied_relation.object_name:
@@ -108,3 +116,4 @@ def normalize_relation(relation_data: Relation):
             copied_relation.relation_str = f'is the {relation} of'
 
     return copied_relation
+

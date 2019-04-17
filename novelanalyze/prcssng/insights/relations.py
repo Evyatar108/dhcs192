@@ -12,11 +12,20 @@ class RelationRule:
     new_relation: str
     subject_type: type(NamedEntity)
     object_type: type(NamedEntity)
+    new_opposite_relation: str
+    switch_roles: bool
 
 
 relation_rules = [
-    RelationRule(regex_rule='is the sibling of|is the brother of|is the sister of|', new_relation='per_siblings',
-                 subject_type=Character, object_type=Character)
+    RelationRule(regex_rule='is the sibling of|is the brother of|is the sister of', new_relation='per_siblings',
+                 subject_type=Character, object_type=Character, new_opposite_relation='per_siblings',
+                 switch_roles=False),
+    RelationRule(regex_rule='is the mother of|is the mom of| is the father of|is the dad of', new_relation='per_parent',
+                 subject_type=Character, object_type=Character, new_opposite_relation='per_children',
+                 switch_roles=False),
+    RelationRule(regex_rule='is the wife of|is the husband of', new_relation='per_spouse',
+                 subject_type=Character, object_type=Character, new_opposite_relation='per_spouse',
+                 switch_roles=False),
 
 ]
 

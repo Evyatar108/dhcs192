@@ -74,8 +74,20 @@ class NamedEntity:
     def __hash__(self):
         return id(self)
 
+    def get_as_subject_critical_relations(self) -> Iterator[ExtendedRelation]:
+        return (ext_relation for ext_relation in chain.from_iterable(self.relations_as_subject.values()) if
+                self.__is_critical_relation(ext_relation))
+
+    def get_as_object_critical_relations(self) -> Iterator[ExtendedRelation]:
+        return (ext_relation for ext_relation in chain.from_iterable(self.relations_as_object.values()) if
+                self.__is_critical_relation(ext_relation))
+
     def get_critical_relations(self) -> Iterator[ExtendedRelation]:
-        return chain.from_iterable(map(chain.from_iterable, [self.relations_as_subject.values(), self.relations_as_object.values()]))
+        return chain(self.get_as_subject_critical_relations(), self.get_as_object_critical_relations())
+
+    @staticmethod
+    def __is_critical_relation(ext_relation: ExtendedRelation):
+        return '_' in ext_relation.relation.relation_str
 
 
 @dataclass
@@ -97,17 +109,18 @@ class Character(NamedEntity):
 
 
 class Location(NamedEntity):
-    def __init__(self, names:List[str]):
+    def __init__(self, names: List[str]):
         super(Location, self).__init__(names)
 
 
 class Organization(NamedEntity):
-    def __init__(self, names:List[str]):
+    def __init__(self, names: List[str]):
         super(Organization, self).__init__(names)
 
 
 @dataclass
 class NovelEntities:
+    name: str
     characters: List[Character] = field(default_factory=list)
     locations: List[Location] = field(default_factory=list)
     organizations: List[Organization] = field(default_factory=list)
