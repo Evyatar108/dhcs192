@@ -18,6 +18,7 @@ class ExtendedRelation:
 
 @dataclass
 class CommonalityRelation:
+    indx_chapter: int
     relation_str: str
     first_entity: NamedEntity
     second_entity: NamedEntity
@@ -60,12 +61,12 @@ class NamedEntity:
     def __sanitize_name(name: str):
         return name.strip().partition('\'s')[0]
 
-    def add_relation_as_subject(self, relation: ExtendedRelation, indx_chapter: int):
-        chapter_subject_relations = self.relations_as_subject.setdefault(indx_chapter, [])
+    def add_relation_as_subject(self, relation: ExtendedRelation):
+        chapter_subject_relations = self.relations_as_subject.setdefault(relation.indx_chapter, [])
         chapter_subject_relations.append(relation)
 
-    def add_relation_as_object(self, relation: ExtendedRelation, indx_chapter: int):
-        chapter_object_relations = self.relations_as_object.setdefault(indx_chapter, [])
+    def add_relation_as_object(self, relation: ExtendedRelation):
+        chapter_object_relations = self.relations_as_object.setdefault(relation.indx_chapter, [])
         chapter_object_relations.append(relation)
 
     def add_commonality_relation(self, relation: CommonalityRelation):

@@ -3,7 +3,6 @@ from typing import Callable, Tuple, List, Iterator
 
 from novelanalyze.prcssng.entitydata import NamedEntity, ExtendedRelation
 
-
 def find_as_subject_relation(indx_chapter: int, named_entity: NamedEntity,
                              relation_span: Tuple[int, int]) -> ExtendedRelation:
     return next((relation for relation in named_entity.relations_as_subject[indx_chapter] if

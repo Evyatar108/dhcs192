@@ -16,17 +16,29 @@ class RelationRule:
     switch_roles: bool
 
 
-relation_rules = [
-    RelationRule(regex_rule='is the sibling of|is the brother of|is the sister of', new_relation='per_siblings',
-                 subject_type=Character, object_type=Character, new_opposite_relation='per_siblings',
-                 switch_roles=False),
-    RelationRule(regex_rule='is the mother of|is the mom of| is the father of|is the dad of', new_relation='per_parent',
-                 subject_type=Character, object_type=Character, new_opposite_relation='per_children',
-                 switch_roles=False),
-    RelationRule(regex_rule='is the wife of|is the husband of', new_relation='per_spouse',
-                 subject_type=Character, object_type=Character, new_opposite_relation='per_spouse',
-                 switch_roles=False),
+def wrap_words_as_regex_rule(*args: str) -> str:
+    return '|'.join(f'is the (\w*(-?)){word} of' for word in args)
 
+
+relation_rules = [
+    RelationRule(
+        regex_rule=wrap_words_as_regex_rule('sibling', 'brother', 'sister', 'bro', 'sis'), new_relation='per_siblings',
+        subject_type=Character, object_type=Character, new_opposite_relation='per_siblings', switch_roles=False),
+    RelationRule(
+        regex_rule=wrap_words_as_regex_rule('mother', 'mom', 'father', 'dad'), new_relation='per_parent',
+        subject_type=Character, object_type=Character, new_opposite_relation='per_children', switch_roles=False),
+    RelationRule(
+        regex_rule=wrap_words_as_regex_rule('son', 'daughter', 'child', 'firstborn', 'offspring'),
+        new_relation='per_children', subject_type=Character, object_type=Character, new_opposite_relation='per_parent',
+        switch_roles=False),
+    RelationRule(
+        regex_rule=wrap_words_as_regex_rule('wife', 'husband', 'spouse', 'bride', 'groom'), new_relation='per_spouse',
+        subject_type=Character, object_type=Character, new_opposite_relation='per_spouse', switch_roles=False),
+    RelationRule(
+        regex_rule=wrap_words_as_regex_rule('niece', 'cousin', 'uncle', 'aunt', 'ancestor', 'descendant', 'grandfather',
+                                            'grandmother', 'granddaughter', 'grandson'),
+        new_relation='per_other_family', subject_type=Character, object_type=Character,
+        new_opposite_relation='per_other_family', switch_roles=False),
 ]
 
 
@@ -49,4 +61,4 @@ def __process_rules_for_relation(ext_relation: ExtendedRelation) -> None:
 def __relation_fit_rule(ext_relation: ExtendedRelation, relation_rule: RelationRule) -> bool:
     return isinstance(ext_relation.subject_named_entity, relation_rule.subject_type) \
            and isinstance(ext_relation.object_named_entity, relation_rule.object_type) \
-           and re.search(relation_rule.regex_relation_rule, ext_relation.relation.relation_str)
+           and re.search(relation_rule.regex_rule, ext_relation.relation.relation_str)

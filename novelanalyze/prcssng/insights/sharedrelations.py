@@ -16,8 +16,14 @@ class SharedRelationRule:
     new_relation: str
 
 
+def wrap_rule(*args: str)->str:
+    return '|'.join(f'(\w*(-?)){regex_rule}' for regex_rule in args)
+
+
 shared_relation_rules: List[SharedRelationRule] = [
-    SharedRelationRule(Character, 'siblings|brothers|sisters', 'per_sibling')
+    SharedRelationRule(Character, wrap_rule('siblings', 'brothers', 'sisters'), 'per_sibling'),
+    SharedRelationRule(Character, wrap_rule('married'), 'per_spouse'),
+    SharedRelationRule(Character, wrap_rule('related', 'family'), 'per_other_family')
 ]
 
 
@@ -52,7 +58,7 @@ def __update_named_entities_with_shared_relation(ext_relation: ExtendedRelation,
     if id(first_entity) < id(second_entity):
         connected_relation = find_as_subject_relation(indx_chapter, second_entity,
                                                       ext_relation.relation.object_span_in_sentence)
-        new_relation = Relation(indx_chapter,
+        new_relation = Relation(-1,
                                 ext_relation.relation.subject_name, ext_relation.relation.subject_span_in_sentence,
                                 relation_rule.new_relation, (-2, -1),
                                 connected_relation.relation.subject_name,
@@ -67,8 +73,8 @@ def __update_named_entities_with_shared_relation(ext_relation: ExtendedRelation,
         new_ext_relation = ExtendedRelation(new_relation, first_entity, second_entity, indx_chapter)
         mirrored_new_ext_relation = ExtendedRelation(new_relation, second_entity, first_entity, indx_chapter)
 
-        first_entity.add_relation_as_subject(new_ext_relation, indx_chapter)
-        second_entity.add_relation_as_object(new_ext_relation, indx_chapter)
+        first_entity.add_relation_as_subject(new_ext_relation)
+        second_entity.add_relation_as_object(new_ext_relation)
 
-        first_entity.add_relation_as_object(mirrored_new_ext_relation, indx_chapter)
-        second_entity.add_relation_as_subject(mirrored_new_ext_relation, indx_chapter)
+        first_entity.add_relation_as_object(mirrored_new_ext_relation)
+        second_entity.add_relation_as_subject(mirrored_new_ext_relation)

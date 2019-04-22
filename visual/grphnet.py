@@ -1,11 +1,10 @@
 # coding=utf-8
-from itertools import chain
-from typing import Tuple, Dict
+from typing import Tuple
 
 from pyvis.network import Network
 
 from novelanalyze.analyztn.parsedata import Relation
-from novelanalyze.prcssng.entitydata import NovelEntities, Location, Character, ExtendedRelation, NamedEntity
+from novelanalyze.prcssng.entitydata import NovelEntities, Character, ExtendedRelation
 
 
 def novel_to_visuazlized_relations_network_graph(novel_entities: NovelEntities) -> None:
@@ -18,12 +17,16 @@ def novel_to_visuazlized_relations_network_graph(novel_entities: NovelEntities) 
         value = sum(1 for _ in named_entity.get_critical_relations())
         title = named_entity.names[0]
         for ext_relation in named_entity.get_as_object_critical_relations():
-                relation_desc, _ = __get_relation_name_and_color(ext_relation.relation.relation_str)
-                title += '<br>' + relation_desc + ': ' + ext_relation.subject_named_entity.names[0]
+            relation_desc, _ = __get_relation_name_and_color(ext_relation.relation.relation_str)
+            title += '<br>' + relation_desc + ': ' + ext_relation.subject_named_entity.names[0]
         graph.add_node(n_id=id(named_entity), label=named_entity.names[0], value=value, title=title)
 
     for named_entity in novel_entities.get_named_entities():
+        seen_relations = set({})
         for ext_relation in named_entity.get_as_subject_critical_relations():
+            relation_as_tuple = (ext_relation.relation.relation_str, ext_relation.object_named_entity)
+            if relation_as_tuple not in seen_relations:
+                seen_relations.add(relation_as_tuple)
                 relation_desc, relation_color = __get_relation_name_and_color(ext_relation.relation.relation_str)
                 print(relation_desc)
                 graph.add_edge(id(ext_relation.subject_named_entity), id(ext_relation.object_named_entity),
@@ -33,16 +36,16 @@ def novel_to_visuazlized_relations_network_graph(novel_entities: NovelEntities) 
     graph.show(novel_entities.name + '.html')
 
 
-relations_info = {'per_siblings': ('sibling', 'dodgerblue'), 'per_parents': ('parent', 'lightsteelblue'),
+relations_info = {'per_siblings': ('sibling', 'dodgerblue'),
+                  'per_parents': ('parent', 'lightsteelblue'),
                   'per_other_family': ('relative', 'deepskyblue'),
-                  'per_spouse': ('spouse', 'blueviolet')}
+                  'per_spouse': ('spouse', 'blueviolet'),
+                  'per_children': ('children', 'lightsalmon')}
 
 
 def __get_relation_name_and_color(relation_str: str) -> Tuple[str, str]:
     if relation_str not in relations_info:
         return relation_str, 'yellow'
-    # todo avoid duplicate relations
-    # todo add mirrored relations
     return relations_info[relation_str]
 
 
