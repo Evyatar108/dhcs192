@@ -13,32 +13,31 @@ class RelationRule:
     subject_type: type(NamedEntity)
     object_type: type(NamedEntity)
     new_opposite_relation: str
-    switch_roles: bool
 
 
 def wrap_words_as_regex_rule(*args: str) -> str:
-    return '|'.join(f'is the (\w*(-?)){word} of' for word in args)
+    return '|'.join(f'is (\w*(-?)){word} of' for word in args)
 
 
 relation_rules = [
     RelationRule(
-        regex_rule=wrap_words_as_regex_rule('sibling', 'brother', 'sister', 'bro', 'sis'), new_relation='per_siblings',
-        subject_type=Character, object_type=Character, new_opposite_relation='per_siblings', switch_roles=False),
+        regex_rule=wrap_words_as_regex_rule('sibling', 'brother', 'sister', 'bro', 'sis'), new_relation='per:siblings',
+        subject_type=Character, object_type=Character, new_opposite_relation='per:siblings'),
     RelationRule(
-        regex_rule=wrap_words_as_regex_rule('mother', 'mom', 'father', 'dad'), new_relation='per_parent',
-        subject_type=Character, object_type=Character, new_opposite_relation='per_children', switch_roles=False),
+        regex_rule=wrap_words_as_regex_rule('mother', 'mom', 'father', 'dad'), new_relation='per:children',
+        subject_type=Character, object_type=Character, new_opposite_relation='per:parents'),
     RelationRule(
         regex_rule=wrap_words_as_regex_rule('son', 'daughter', 'child', 'firstborn', 'offspring'),
-        new_relation='per_children', subject_type=Character, object_type=Character, new_opposite_relation='per_parent',
-        switch_roles=False),
+        new_relation='per:parents', subject_type=Character, object_type=Character,
+        new_opposite_relation='per:children'),
     RelationRule(
-        regex_rule=wrap_words_as_regex_rule('wife', 'husband', 'spouse', 'bride', 'groom'), new_relation='per_spouse',
-        subject_type=Character, object_type=Character, new_opposite_relation='per_spouse', switch_roles=False),
+        regex_rule=wrap_words_as_regex_rule('wife', 'husband', 'spouse', 'bride', 'groom'), new_relation='per:spouse',
+        subject_type=Character, object_type=Character, new_opposite_relation='per:spouse'),
     RelationRule(
         regex_rule=wrap_words_as_regex_rule('niece', 'cousin', 'uncle', 'aunt', 'ancestor', 'descendant', 'grandfather',
                                             'grandmother', 'granddaughter', 'grandson'),
-        new_relation='per_other_family', subject_type=Character, object_type=Character,
-        new_opposite_relation='per_other_family', switch_roles=False),
+        new_relation='per:other_family', subject_type=Character, object_type=Character,
+        new_opposite_relation='per:other_family')
 ]
 
 
@@ -54,7 +53,11 @@ def process(named_entities: Iterator[NamedEntity]) -> None:
 def __process_rules_for_relation(ext_relation: ExtendedRelation) -> None:
     for relation_rule in relation_rules:
         if __relation_fit_rule(ext_relation, relation_rule):
-            ext_relation.relation = relation_rule.new_relation
+            ext_relation.relation.relation_str = relation_rule.new_relation
+            opposite_relation = ext_relation.create_opposite(relation_rule.new_opposite_relation)
+
+            ext_relation.subject_named_entity.add_relation_as_object(opposite_relation)
+            ext_relation.object_named_entity.add_relation_as_subject(opposite_relation)
             return
 
 

@@ -15,6 +15,16 @@ class ExtendedRelation:
     object_named_entity: NamedEntity
     indx_chapter: int
 
+    def create_opposite(self, opp_relation_str=None):
+        opp_relation_str = self.relation.relation_str if opp_relation_str is None else opp_relation_str
+        opp_relation = Relation(self.indx_chapter, self.relation.object_name, self.relation.object_span_in_sentence,
+                                opp_relation_str, self.relation.relation_span, self.relation.subject_name,
+                                self.relation.subject_span_in_sentence)
+        opp_ext_relation = ExtendedRelation(opp_relation, self.object_named_entity, self.subject_named_entity,
+                                            self.indx_chapter)
+
+        return opp_ext_relation
+
 
 @dataclass
 class CommonalityRelation:
@@ -35,8 +45,9 @@ class Mentions:
 class NamedEntity:
     # lists here are first ordered by chapter index using dictionary holding lists for each chapter
 
-    def __init__(self, names: List[str]):
-        self.names = names
+    def __init__(self, names: List[str] = None):
+        self.names = names if names is not None else []
+        self.name = names[0] if names is not None else None
         self.chapters_mentions: Dict[int, Mentions] = {}
         self.relations_as_subject: Dict[int, List[ExtendedRelation]] = {}
         self.relations_as_object: Dict[int, List[ExtendedRelation]] = {}
@@ -52,8 +63,8 @@ class NamedEntity:
             self.add_coreference(coreference, indx_chapter)
 
     def add_coreference(self, coreference: CoReference, indx_chapter: int):
-        if coreference.ref_type == 'PROPER':
-            self.names.append(self.__sanitize_name(coreference.text))
+        # if coreference.ref_type == 'PROPER':
+        #    self.names.append(self.__sanitize_name(coreference.text))
         chapter_mentions = self.chapters_mentions.setdefault(indx_chapter, Mentions(indx_chapter))
         chapter_mentions.coreferences.append(coreference)
 
@@ -75,20 +86,20 @@ class NamedEntity:
     def __hash__(self):
         return id(self)
 
-    def get_as_subject_critical_relations(self) -> Iterator[ExtendedRelation]:
+    def get_as_subject_kbp_relations(self) -> Iterator[ExtendedRelation]:
         return (ext_relation for ext_relation in chain.from_iterable(self.relations_as_subject.values()) if
-                self.__is_critical_relation(ext_relation))
+                self.__is_kbp_relation(ext_relation))
 
-    def get_as_object_critical_relations(self) -> Iterator[ExtendedRelation]:
+    def get_as_object_kbp_relations(self) -> Iterator[ExtendedRelation]:
         return (ext_relation for ext_relation in chain.from_iterable(self.relations_as_object.values()) if
-                self.__is_critical_relation(ext_relation))
+                self.__is_kbp_relation(ext_relation))
 
-    def get_critical_relations(self) -> Iterator[ExtendedRelation]:
-        return chain(self.get_as_subject_critical_relations(), self.get_as_object_critical_relations())
+    def get_kbp_relations(self) -> Iterator[ExtendedRelation]:
+        return chain(self.get_as_subject_kbp_relations(), self.get_as_object_kbp_relations())
 
     @staticmethod
-    def __is_critical_relation(ext_relation: ExtendedRelation):
-        return '_' in ext_relation.relation.relation_str
+    def __is_kbp_relation(ext_relation: ExtendedRelation):
+        return ':' in ext_relation.relation.relation_str
 
 
 @dataclass
@@ -98,10 +109,10 @@ class Relationship:
 
 
 class Character(NamedEntity):
-    def __init__(self, names: List[str]):
+    def __init__(self, names: List[str] = None):
         super(Character, self).__init__(names)
         self.gender: str = "UNKNOWN"
-        self.chapters_relationships: Dict[int, Dict[Character, Relationship]] = field(default_factory=list)
+        self.chapters_relationships: Dict[int, Dict[Character, Relationship]] = {}
 
     def add_relationship_sentiment(self, character: Character, sentiment_value: int, indx_chapter: int):
         chapter_relationships = self.chapters_relationships.setdefault(indx_chapter, {})
@@ -110,12 +121,12 @@ class Character(NamedEntity):
 
 
 class Location(NamedEntity):
-    def __init__(self, names: List[str]):
+    def __init__(self, names: List[str] = None):
         super(Location, self).__init__(names)
 
 
 class Organization(NamedEntity):
-    def __init__(self, names: List[str]):
+    def __init__(self, names: List[str] = None):
         super(Organization, self).__init__(names)
 
 

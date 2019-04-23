@@ -7,40 +7,40 @@ from novelanalyze.analyztn.parsedata import Relation
 from novelanalyze.prcssng.entitydata import NovelEntities, Character, ExtendedRelation
 
 
-def novel_to_visuazlized_relations_network_graph(novel_entities: NovelEntities) -> None:
+def show_relations_network_graph(novel_entities: NovelEntities) -> None:
     graph = Network(directed=True, bgcolor="#222222", font_color="white")
     graph.barnes_hut()
     graph.set_edge_smooth('dynamic')
     nodes_dict = {}
     for named_entity in novel_entities.get_named_entities():
         nodes_dict[id(named_entity)] = named_entity
-        value = sum(1 for _ in named_entity.get_critical_relations())
-        title = named_entity.names[0]
-        for ext_relation in named_entity.get_as_object_critical_relations():
+        value = sum(1 for _ in named_entity.get_kbp_relations())
+        title = named_entity.name
+        for ext_relation in named_entity.get_as_object_kbp_relations():
             relation_desc, _ = __get_relation_name_and_color(ext_relation.relation.relation_str)
-            title += '<br>' + relation_desc + ': ' + ext_relation.subject_named_entity.names[0]
-        graph.add_node(n_id=id(named_entity), label=named_entity.names[0], value=value, title=title)
+            title += '<br>' + relation_desc + ': ' + ext_relation.subject_named_entity.name
+        graph.add_node(n_id=id(named_entity), label=named_entity.name, value=value, title=title)
 
     for named_entity in novel_entities.get_named_entities():
         seen_relations = set({})
-        for ext_relation in named_entity.get_as_subject_critical_relations():
+        for ext_relation in named_entity.get_as_subject_kbp_relations():
             relation_as_tuple = (ext_relation.relation.relation_str, ext_relation.object_named_entity)
             if relation_as_tuple not in seen_relations:
                 seen_relations.add(relation_as_tuple)
                 relation_desc, relation_color = __get_relation_name_and_color(ext_relation.relation.relation_str)
                 print(relation_desc)
-                graph.add_edge(id(ext_relation.subject_named_entity), id(ext_relation.object_named_entity),
+                graph.add_edge(id(ext_relation.object_named_entity),id(ext_relation.subject_named_entity),
                                arrowStrikethrough=True,
                                physics=True, title=relation_desc, color=relation_color)
 
     graph.show(novel_entities.name + '.html')
 
 
-relations_info = {'per_siblings': ('sibling', 'dodgerblue'),
-                  'per_parents': ('parent', 'lightsteelblue'),
-                  'per_other_family': ('relative', 'deepskyblue'),
-                  'per_spouse': ('spouse', 'blueviolet'),
-                  'per_children': ('children', 'lightsalmon')}
+relations_info = {'per:siblings': ('sibling', 'dodgerblue'),
+                  'per:parents': ('parent', 'lightsteelblue'),
+                  'per:other_family': ('relative', 'deepskyblue'),
+                  'per:spouse': ('spouse', 'blueviolet'),
+                  'per:children': ('children', 'lightsalmon')}
 
 
 def __get_relation_name_and_color(relation_str: str) -> Tuple[str, str]:
@@ -52,18 +52,18 @@ def __get_relation_name_and_color(relation_str: str) -> Tuple[str, str]:
 if __name__ == "__main__":
     def create_relation(named_one, named_two):
         mock_span = (-1, -1)
-        sibling_relation = Relation(1, named_one.names[0], mock_span, 'per_siblings', mock_span, named_two.names[0],
+        sibling_relation = Relation(1, named_one.name, mock_span, 'per:siblings', mock_span, named_two.name,
                                     mock_span)
         ext_sibling_relation = ExtendedRelation(sibling_relation, named_one, named_two, 1)
 
-        other_relation = Relation(1, named_one.names[0], mock_span, 'per_other_family', mock_span, named_two.names[0],
+        other_relation = Relation(1, named_one.name, mock_span, 'per:other_family', mock_span, named_two.name,
                                   mock_span)
         ext_other_relation = ExtendedRelation(other_relation, named_one, named_two, 1)
 
-        named_one.add_relation_as_subject(ext_sibling_relation, 1)
-        named_two.add_relation_as_object(ext_sibling_relation, 1)
-        named_one.add_relation_as_subject(ext_other_relation, 1)
-        named_two.add_relation_as_object(ext_other_relation, 1)
+        named_one.add_relation_as_subject(ext_sibling_relation)
+        named_two.add_relation_as_object(ext_sibling_relation)
+        named_one.add_relation_as_subject(ext_other_relation)
+        named_two.add_relation_as_object(ext_other_relation)
 
 
     novel_entities = NovelEntities('example novel')
@@ -75,5 +75,5 @@ if __name__ == "__main__":
     create_relation(goku, moshe)
     novel_entities.characters.extend([moshe, simba, goku])
 
-    novel_to_visuazlized_relations_network_graph(novel_entities)
+    show_relations_network_graph(novel_entities)
     pass

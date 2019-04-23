@@ -1,11 +1,11 @@
 # coding=utf-8
 from itertools import combinations
-from typing import List, Generator
+from typing import List
 
 from novelanalyze.analyztn.parsedata import Relation
 from novelanalyze.prcssng.entitydata import NamedEntity, CommonalityRelation, ExtendedRelation
 
-common_relation_to_relation = {'per_children': 'per_siblings', 'per_other_family': 'per_other_family'}
+common_relation_to_relation = {'per:parents': 'per:siblings', 'per:other_family': 'per:other_family'}
 
 
 def __is_convertible_common_relation(common_relation: CommonalityRelation) -> bool:
@@ -15,8 +15,8 @@ def __is_convertible_common_relation(common_relation: CommonalityRelation) -> bo
 def process(named_entities: List[NamedEntity]) -> None:
     common_relations_to_convert = {}
     for first_entity, second_entity in combinations(named_entities, 2):
-        for first_entity_ext_relation in first_entity.get_as_subject_critical_relations():
-            for second_entity_ext_relation in second_entity.get_as_subject_critical_relations():
+        for first_entity_ext_relation in first_entity.get_as_subject_kbp_relations():
+            for second_entity_ext_relation in second_entity.get_as_subject_kbp_relations():
                 if __are_same_common_relation(first_entity_ext_relation, second_entity_ext_relation):
                     new_commonality_relation = CommonalityRelation(
                         max(first_entity_ext_relation.indx_chapter, second_entity_ext_relation.indx_chapter),
@@ -37,8 +37,7 @@ def process(named_entities: List[NamedEntity]) -> None:
         common_relation.first_entity.add_relation_as_subject(ext_relation)
         common_relation.second_entity.add_relation_as_object(ext_relation)
 
-        mirrored_ext_relation = __create_ext_relation(common_relation.indx_chapter, common_relation.second_entity,
-                                                      common_relation.first_entity, new_relation_str)
+        mirrored_ext_relation = ext_relation.create_opposite()
         common_relation.second_entity.add_relation_as_subject(mirrored_ext_relation)
         common_relation.first_entity.add_relation_as_object(mirrored_ext_relation)
 
@@ -56,8 +55,8 @@ def __common_relation_as_tuple(common_relation: CommonalityRelation):
 def __create_ext_relation(indx_chapter: int, subject_entity: NamedEntity, object_entity: NamedEntity,
                           relation_str: str):
     fake_span = (-2, -1)
-    relation = Relation(-1, subject_entity.names[0], fake_span, relation_str, fake_span,
-                        object_entity.names[0], fake_span)
+    relation = Relation(-1, subject_entity.name, fake_span, relation_str, fake_span,
+                        object_entity.name, fake_span)
     ext_relation = ExtendedRelation(relation, subject_entity, object_entity,
                                     indx_chapter)
     return ext_relation

@@ -1,5 +1,4 @@
 # coding=utf-8
-import copy
 import re
 from dataclasses import dataclass
 from typing import List
@@ -16,14 +15,14 @@ class SharedRelationRule:
     new_relation: str
 
 
-def wrap_rule(*args: str)->str:
+def wrap_rule(*args: str) -> str:
     return '|'.join(f'(\w*(-?)){regex_rule}' for regex_rule in args)
 
 
 shared_relation_rules: List[SharedRelationRule] = [
-    SharedRelationRule(Character, wrap_rule('siblings', 'brothers', 'sisters'), 'per_sibling'),
-    SharedRelationRule(Character, wrap_rule('married'), 'per_spouse'),
-    SharedRelationRule(Character, wrap_rule('related', 'family'), 'per_other_family')
+    SharedRelationRule(Character, wrap_rule('siblings', 'brothers', 'sisters'), 'per:sibling'),
+    SharedRelationRule(Character, wrap_rule('married'), 'per:spouse'),
+    SharedRelationRule(Character, wrap_rule('related', 'family'), 'per:other_family')
 ]
 
 
@@ -38,7 +37,8 @@ def _process_rules_for_relation(named_entities: List[NamedEntity], ext_relation:
     if ext_relation.relation.relation_str == 'are':
         for relation_rule in shared_relation_rules:
             if __relation_fit_rule(ext_relation, relation_rule):
-                subject_named_entities = find_named_entities(ext_relation.indx_chapter, named_entities,
+                subject_named_entities = find_named_entities(ext_relation.indx_chapter,
+                                                             ext_relation.relation.indx_sentence, named_entities,
                                                              [ext_relation.relation.subject_span_in_sentence])
                 for second_entity in subject_named_entities:
                     __update_named_entities_with_shared_relation(ext_relation, relation_rule, second_entity)
@@ -63,15 +63,9 @@ def __update_named_entities_with_shared_relation(ext_relation: ExtendedRelation,
                                 relation_rule.new_relation, (-2, -1),
                                 connected_relation.relation.subject_name,
                                 connected_relation.relation.subject_span_in_sentence)
-        mirrored_new_relation = copy.copy(new_relation)
-
-        mirrored_new_relation.subject_name = new_relation.object_name
-        mirrored_new_relation.subject_span_in_sentence = new_relation.subject_span_in_sentence
-        mirrored_new_relation.object_name = new_relation.subject_name
-        mirrored_new_relation.object_span_in_sentence = new_relation.subject_span_in_sentence
 
         new_ext_relation = ExtendedRelation(new_relation, first_entity, second_entity, indx_chapter)
-        mirrored_new_ext_relation = ExtendedRelation(new_relation, second_entity, first_entity, indx_chapter)
+        mirrored_new_ext_relation = new_ext_relation.create_opposite()
 
         first_entity.add_relation_as_subject(new_ext_relation)
         second_entity.add_relation_as_object(new_ext_relation)

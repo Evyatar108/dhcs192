@@ -53,7 +53,7 @@ def __generate_clusters(tagged_tokens: List[TaggedTextEntity], pred_same_cluster
     cluster = []
     prev_elem = None
     for elem in tagged_tokens:
-        if not prev_elem or pred_same_cluster(prev_elem):
+        if not prev_elem or pred_same_cluster(elem):
             cluster.append(elem)
         elif cluster:
             yield cluster
@@ -70,7 +70,7 @@ def __extract_coreferences_clusters(raw_data) -> List[List[CoReference]]:
                          gender=coref['gender'],
                          animacy=coref['animacy'],
                          indx_sentence=coref['sentNum'] - 1,
-                         span_in_sentence=(coref['startIndex'] - 1, coref['endIndex'] - 2),
+                         span_in_sentence=__fix_span([coref['startIndex'], coref['endIndex']], 1),
                          is_representative_mention=coref['isRepresentativeMention'])
              for coref in corefs_cluster]
             for corefs_cluster in raw_data['corefs'].values()]
@@ -79,14 +79,18 @@ def __extract_coreferences_clusters(raw_data) -> List[List[CoReference]]:
 def __extract_openie_relations(raw_data) -> List[Relation]:
     relations = [
         Relation(indx_sentence=sentence_obj['index'], subject_name=raw_relation['subject'],
-                 subject_span_in_sentence=tuple(raw_relation['subjectSpan']),
-                 relation_str=raw_relation['relation'], relation_span=raw_relation['relationSpan'],
-                 object_name=raw_relation['object'], object_span_in_sentence=tuple(raw_relation['objectSpan']))
+                 subject_span_in_sentence=__fix_span(raw_relation['subjectSpan'], 0),
+                 relation_str=raw_relation['relation'], relation_span=__fix_span(raw_relation['relationSpan'], 0),
+                 object_name=raw_relation['object'], object_span_in_sentence=__fix_span(raw_relation['objectSpan'], 0))
         for sentence_obj in raw_data['sentences'] for raw_relation in
         itertools.chain(sentence_obj['openie'], sentence_obj['kbp'])]
 
     normalized_relations = map(normalize_relation, relations)
     return list(normalized_relations)
+
+
+def __fix_span(span: List[int], offset: int)-> Tuple[int, int]:
+    return span[0]-offset, span[1]-offset-1
 
 
 def normalize_relation(relation_data: Relation):
@@ -113,7 +117,6 @@ def normalize_relation(relation_data: Relation):
 
         if "'s" in relation_data.object_name:  # todo - update span too?
             copied_relation.object_name, _, relation = relation_data.object_name.partition('\'s')
-            copied_relation.relation_str = f'is the {relation} of'
+            copied_relation.relation_str = f'is {relation} of'
 
     return copied_relation
-
