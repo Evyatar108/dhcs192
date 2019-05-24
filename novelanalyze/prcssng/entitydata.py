@@ -87,15 +87,27 @@ class NamedEntity:
         return id(self)
 
     def get_as_subject_kbp_relations(self) -> Iterator[ExtendedRelation]:
-        return (ext_relation for ext_relation in chain.from_iterable(self.relations_as_subject.values()) if
-                self.__is_kbp_relation(ext_relation))
+        return self.__gen_each_relation_once(
+            (ext_relation for ext_relation in chain.from_iterable(self.relations_as_subject.values()) if
+             self.__is_kbp_relation(ext_relation)))
 
     def get_as_object_kbp_relations(self) -> Iterator[ExtendedRelation]:
-        return (ext_relation for ext_relation in chain.from_iterable(self.relations_as_object.values()) if
-                self.__is_kbp_relation(ext_relation))
+        return self.__gen_each_relation_once(
+            (ext_relation for ext_relation in chain.from_iterable(self.relations_as_object.values()) if
+             self.__is_kbp_relation(ext_relation)))
 
     def get_kbp_relations(self) -> Iterator[ExtendedRelation]:
-        return chain(self.get_as_subject_kbp_relations(), self.get_as_object_kbp_relations())
+        return self.__gen_each_relation_once(
+            chain(self.get_as_subject_kbp_relations(), self.get_as_object_kbp_relations()))
+
+    @staticmethod
+    def __gen_each_relation_once(relations: Iterator[ExtendedRelation]):
+        seen_relations = set()
+        for ext_relation in relations:
+            relation_as_tuple = (ext_relation.relation.relation_str, ext_relation.object_named_entity)
+            if relation_as_tuple not in seen_relations:
+                seen_relations.add(relation_as_tuple)
+                yield ext_relation
 
     @staticmethod
     def __is_kbp_relation(ext_relation: ExtendedRelation):

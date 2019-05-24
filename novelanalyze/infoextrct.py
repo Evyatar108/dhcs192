@@ -36,8 +36,6 @@ def __process_chapter_analysis(text_analysis: TextAnalysis, novel_entities: Nove
     LocationNamedEntityUpdater().update(text_analysis, novel_entities.locations, indx_chapter)
     OrganizationNamedEntityUpdater().update(text_analysis, novel_entities.organizations, indx_chapter)
 
-
-# todo add an example from offline/online novel
 if __name__ == "__main__":
     provider = StringContentProvider('test string', 'John is the father of Ron. John is the father of Bob')
     novel_entities = extract_entities(provider)
