@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from contntprvdrs.string import StringContentProvider
+from contntprvdrs.chapterstring import StringContentProvider
 from novelanalyze.analyztn import corenlp, convert, enrich
 from novelanalyze.analyztn.parsedata import TextAnalysis
 from novelanalyze.contntprvdr import ContentProviderBase
