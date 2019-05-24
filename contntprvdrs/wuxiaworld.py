@@ -4,12 +4,17 @@ import requests
 from bs4 import BeautifulSoup
 from novelanalyze.contntprvdr import ContentProviderBase
 
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'
+}
+
 
 class WuxiaWorldContentProvider(ContentProviderBase):
     def __init__(self, url: str):
         uri = urlparse(url)
+
         self.host_name = f'{uri.scheme}://{uri.netloc}'
-        self.soup = BeautifulSoup(requests.get(url).content, 'html.parser')
+        self.soup = BeautifulSoup(requests.get(url, headers=headers).content, 'html.parser')
 
     def provide_chapter(self, indx_chapter: int) -> str:
         chapter_urls = [tag.select_one('a[href]')['href'] for tag in self.soup.find_all("li", class_="chapter-item")]
@@ -17,7 +22,7 @@ class WuxiaWorldContentProvider(ContentProviderBase):
             url = chapter_urls[indx_chapter]
         else:
             url = chapter_urls[indx_chapter - 1]
-        paragraphs = BeautifulSoup(requests.get(self.host_name+url).content, 'html.parser')\
+        paragraphs = BeautifulSoup(requests.get(self.host_name+url, headers=headers).content, 'html.parser')\
             .find("div", class_="fr-view")\
             .find_all('p')
         paragraphs_text = [paragraph.text for paragraph in paragraphs]
