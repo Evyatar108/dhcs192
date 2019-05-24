@@ -39,8 +39,3 @@ class RoyalRoadContentProvider(ContentProviderBase):
             .find_all('p')
         paragraphs_text = [paragraph.text for paragraph in paragraphs]
         return "\n".join(paragraphs_text)
-
-
-if __name__ == '__main__':
-    contentProvider = RoyalRoadContentProvider('https://www.royalroad.com/fiction/22597/stupid-cat')
-    print(contentProvider.provide_chapter(2))
