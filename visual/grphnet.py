@@ -14,24 +14,21 @@ def show_relations_network_graph(novel_entities: NovelEntities) -> None:
     nodes_dict = {}
     for named_entity in novel_entities.get_named_entities():
         nodes_dict[id(named_entity)] = named_entity
-        value = sum(1 for _ in named_entity.get_kbp_relations())
+        value = sum(1 for _ in named_entity.get_as_subject_kbp_relations())
         title = named_entity.name
-        for ext_relation in named_entity.get_as_object_kbp_relations():
+        for ext_relation in named_entity.get_as_subject_kbp_relations():
             relation_desc, _ = __get_relation_name_and_color(ext_relation.relation.relation_str)
-            title += '<br>' + relation_desc + ': ' + ext_relation.subject_named_entity.name
+            title += '<br>' + relation_desc + ': ' + ext_relation.object_named_entity.name
         graph.add_node(n_id=id(named_entity), label=named_entity.name, value=value, title=title)
 
     for named_entity in novel_entities.get_named_entities():
-        seen_relations = set({})
         for ext_relation in named_entity.get_as_subject_kbp_relations():
-            relation_as_tuple = (ext_relation.relation.relation_str, ext_relation.object_named_entity)
-            if relation_as_tuple not in seen_relations:
-                seen_relations.add(relation_as_tuple)
-                relation_desc, relation_color = __get_relation_name_and_color(ext_relation.relation.relation_str)
-                print(relation_desc)
-                graph.add_edge(id(ext_relation.object_named_entity),id(ext_relation.subject_named_entity),
-                               arrowStrikethrough=True,
-                               physics=True, title=relation_desc, color=relation_color)
+            relation_desc, relation_color = __get_relation_name_and_color(ext_relation.relation.relation_str)
+            relation_desc += " of"
+            print(relation_desc)
+            graph.add_edge(id(ext_relation.object_named_entity), id(ext_relation.subject_named_entity),
+                           arrowStrikethrough=True,
+                           physics=True, title=relation_desc, color=relation_color)
 
     graph.show(novel_entities.name + '.html')
 

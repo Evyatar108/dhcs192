@@ -21,7 +21,7 @@ def query_model(text):
 
 
 def __update_results_dict(results_dict, text):
-    nlp = StanfordCoreNLP(r'../stanford-corenlp-full-2018-10-05')
+    nlp = StanfordCoreNLP(r'stanford-corenlp-full-2018-10-05')
     try:
         data_as_text = nlp.annotate(text, properties={
             'annotators': 'coref, tokenize,ssplit, ner, sentiment, openie, kbp, pos, lemma, parse',
