@@ -1,6 +1,7 @@
 # coding=utf-8
 from abc import abstractmethod, ABCMeta
 from collections import Counter
+from itertools import chain
 from typing import List
 
 from novelanalyze.analyztn.parsedata import TextAnalysis, CoReference, TaggedTextEntity
@@ -48,13 +49,12 @@ class NamedEntityUpdaterBase(object):
             return named_entity_name in coref_name
 
         for coreferences_cluster in text_analysis.coreferences_clusters:
-            corefs_spans = [coref.span_in_sentence for coref in coreferences_cluster]
-            matching_coref_names = [coref.text for coref in coreferences_cluster if
-                                    self._is_matching_coref(coref)]
-            the_named_entities = utils.find_named_entities(indx_chapter, coreferences_cluster[0].indx_sentence,
-                                                           named_entities, corefs_spans,
-                                                           matching_coref_names,
-                                                           is_same_named_entity_pred)
+            the_named_entities = list(
+                chain.from_iterable(utils.find_named_entities(indx_chapter, coref.indx_sentence,
+                                                              named_entities, [coref.span_in_sentence],
+                                                              [coref.text] if self._is_matching_coref(coref) else [],
+                                                              is_same_named_entity_pred)
+                                    for coref in coreferences_cluster))
             for the_named_entity in the_named_entities:
                 the_named_entity.add_coreferences_cluster(coreferences_cluster, indx_chapter)
 

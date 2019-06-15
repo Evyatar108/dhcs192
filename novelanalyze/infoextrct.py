@@ -17,6 +17,7 @@ def extract_entities(novel_content_provider: ContentProviderBase) -> NovelEntiti
     chapters_generator = novel_content_provider.generate_all_chapters()
     novel_entities = NovelEntities(novel_content_provider.novel_name)
     for indx_chapter, chapter in enumerate(chapters_generator):
+        chapter = chapter.replace("’", "'")
         raw_data = corenlp.query_model(chapter)
         enrich.improve_coreferences(raw_data)
         text_analysis = convert.convert_to_local_obj(raw_data)
@@ -35,6 +36,7 @@ def __process_chapter_analysis(text_analysis: TextAnalysis, novel_entities: Nove
     CharacterNamedEntityUpdater().update(text_analysis, novel_entities.characters, indx_chapter)
     LocationNamedEntityUpdater().update(text_analysis, novel_entities.locations, indx_chapter)
     OrganizationNamedEntityUpdater().update(text_analysis, novel_entities.organizations, indx_chapter)
+
 
 if __name__ == "__main__":
     provider = StringContentProvider('test string', 'John is the father of Ron. John is the father of Bob')

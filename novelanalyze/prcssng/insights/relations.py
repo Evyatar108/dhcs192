@@ -15,8 +15,16 @@ class RelationRule:
     new_opposite_relation: str
 
 
+def identity(word):
+    return word
+
+
+def format_is_the(word):
+    return f'is (\w*(-?)){word} of'
+
+
 def wrap_words_as_regex_rule(*args: str) -> str:
-    return '|'.join(f'is (\w*(-?)){word} of' for word in args)
+    return '|'.join(format(word) for word in args for format in [identity, format_is_the])
 
 
 relation_rules = [

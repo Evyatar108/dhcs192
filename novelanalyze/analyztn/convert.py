@@ -83,7 +83,7 @@ def __extract_openie_relations(raw_data) -> List[Relation]:
                  relation_str=raw_relation['relation'], relation_span=__fix_span(raw_relation['relationSpan'], 0),
                  object_name=raw_relation['object'], object_span_in_sentence=__fix_span(raw_relation['objectSpan'], 0))
         for sentence_obj in raw_data['sentences'] for raw_relation in
-        itertools.chain(sentence_obj['openie'], sentence_obj['kbp'])]
+        itertools.chain(sentence_obj['openie'])]#, sentence_obj['kbp'])]
 
     normalized_relations = map(normalize_relation, relations)
     return list(normalized_relations)
