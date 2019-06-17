@@ -16,7 +16,7 @@ class SharedRelationRule:
 
 
 def wrap_rule(*args: str) -> str:
-    return '|'.join(f'(\w*(-?)){regex_rule}' for regex_rule in args)
+    return '|'.join(f'(\w+ )?(step(-| ))?{regex_rule}' for regex_rule in args)
 
 
 shared_relation_rules: List[SharedRelationRule] = [
@@ -34,7 +34,7 @@ def process(named_entities: List[NamedEntity]) -> None:
 
 
 def _process_rules_for_relation(named_entities: List[NamedEntity], ext_relation: ExtendedRelation) -> None:
-    if ext_relation.relation.relation_str == 'are':
+    if ext_relation.relation.relation_str == 'are' or ext_relation.relation.relation_str == 'were':
         for relation_rule in shared_relation_rules:
             if __relation_fit_rule(ext_relation, relation_rule):
                 subject_named_entities = find_named_entities(ext_relation.indx_chapter,

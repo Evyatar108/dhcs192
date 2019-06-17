@@ -107,7 +107,7 @@ def normalize_relation(relation_data: Relation):
     split_object_name = [normalize_word(word) for word in copied_relation.object_name.split(' ')]
     copied_relation.object_name = ' '.join(split_object_name)
 
-    if copied_relation.relation_str == 'is':
+    if copied_relation.relation_str == 'is' or copied_relation.relation_str == 'was':
         if "'s" in copied_relation.subject_name and "'s" not in copied_relation.object_name:
             # we should probably not treat the case "'s" is in both
             copied_relation.object_name, copied_relation.subject_name = \
@@ -117,6 +117,6 @@ def normalize_relation(relation_data: Relation):
 
         if "'s" in relation_data.object_name:  # todo - update span too?
             copied_relation.object_name, _, relation = relation_data.object_name.partition('\'s')
-            copied_relation.relation_str = f'is {relation} of'
+            copied_relation.relation_str += f'{relation} of'
 
     return copied_relation

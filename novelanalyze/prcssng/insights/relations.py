@@ -20,7 +20,7 @@ def identity(word):
 
 
 def format_is_the(word):
-    return f'^is (\w*(-?)){word} of$'
+    return f'^(is|was) (the )?(\w+ )?(step(-| ))?{word} of$'
 
 
 def wrap_words_as_regex_rule(*args: str) -> str:

@@ -44,10 +44,10 @@ def extract_entities(novel_content_provider: ContentProviderBase) -> NovelEntiti
 def __process_chapter_analysis(text_analysis: TextAnalysis, novel_entities: NovelEntities, indx_chapter: int):
     CharacterNamedEntityUpdater().update(text_analysis, novel_entities.characters, indx_chapter)
     print('Updated character entities')
-    LocationNamedEntityUpdater().update(text_analysis, novel_entities.locations, indx_chapter)
-    print('Updated location entities')
-    OrganizationNamedEntityUpdater().update(text_analysis, novel_entities.organizations, indx_chapter)
-    print('Updated organization entities')
+    #LocationNamedEntityUpdater().update(text_analysis, novel_entities.locations, indx_chapter)
+    #print('Updated location entities')
+    #OrganizationNamedEntityUpdater().update(text_analysis, novel_entities.organizations, indx_chapter)
+    #print('Updated organization entities')
 
 
 if __name__ == "__main__":
