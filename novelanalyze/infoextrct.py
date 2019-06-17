@@ -21,23 +21,33 @@ def extract_entities(novel_content_provider: ContentProviderBase) -> NovelEntiti
         print(f'chapter: {chapter}')
         chapter = chapter.replace("’", "'")
         raw_data = corenlp.query_model(chapter)
+        print(f'Queried model')
         enrich.improve_coreferences(raw_data)
+        print('Improved coreferences')
         text_analysis = convert.convert_to_local_obj(raw_data)
+        print('Converted to local object')
         __process_chapter_analysis(text_analysis, novel_entities, indx_chapter + 1)
+        print('Processed chapter analysis')
 
     named_entities = list(novel_entities.get_named_entities())
 
     relations.process(named_entities)
+    print('Processed relations')
     sharedrelations.process(named_entities)
+    print('Processed shared relations')
     commonalities.process(named_entities)
+    print('Processed commonalities')
 
     return novel_entities
 
 
 def __process_chapter_analysis(text_analysis: TextAnalysis, novel_entities: NovelEntities, indx_chapter: int):
     CharacterNamedEntityUpdater().update(text_analysis, novel_entities.characters, indx_chapter)
+    print('Updated character entities')
     LocationNamedEntityUpdater().update(text_analysis, novel_entities.locations, indx_chapter)
+    print('Updated location entities')
     OrganizationNamedEntityUpdater().update(text_analysis, novel_entities.organizations, indx_chapter)
+    print('Updated organization entities')
 
 
 if __name__ == "__main__":

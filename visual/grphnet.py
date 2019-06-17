@@ -27,7 +27,6 @@ def show_relations_network_graph(novel_entities: NovelEntities) -> None:
         for ext_relation in named_entity.get_as_subject_kbp_relations():
             relation_desc, relation_color = __get_relation_name_and_color(ext_relation.relation.relation_str)
             # relation_desc += " of"
-            print(relation_desc)
             graph.add_edge(id(ext_relation.object_named_entity), id(ext_relation.subject_named_entity),
                            arrowStrikethrough=True,
                            physics=True, title=relation_desc, color=relation_color)

@@ -111,7 +111,7 @@ class NamedEntity:
 
     @staticmethod
     def __is_kbp_relation(ext_relation: ExtendedRelation):
-        return ':' in ext_relation.relation.relation_str
+        return True #':' in ext_relation.relation.relation_str
 
 
 @dataclass
