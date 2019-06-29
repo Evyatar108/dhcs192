@@ -16,27 +16,30 @@ def extract_entities(novel_content_provider: ContentProviderBase) -> NovelEntiti
     chapters_generator = novel_content_provider.generate_all_chapters()
     novel_entities = NovelEntities(novel_content_provider.novel_name)
     for indx_chapter, chapter in enumerate(chapters_generator):
-        print(f'Analayzing chapter number {indx_chapter}')
+        print(f'Analayzing chapter number {indx_chapter + 1}')
         chapter = chapter.replace("’", "'")
+        print(f'Quering corenlp model')
         raw_data = corenlp.query_model(chapter)
-        print(f'Queried model')
+        print('Improving coreferences')
         enrich.improve_coreferences(raw_data)
-        print('Improved coreferences')
+        print('Converting to local object')
         text_analysis = convert.convert_to_local_obj(raw_data)
-        print('Converted to local object')
+        print('Processing and aggregating chapter analysis')
         __process_chapter_analysis(text_analysis, novel_entities, indx_chapter + 1)
-        print('Processed chapter analysis')
 
     named_entities = list(novel_entities.get_named_entities())
 
+    print('Inferring relations using regex')
     relations.process(named_entities)
-    print('Processed relations')
+
+    print('Merging speaker entities')
     speaker.process(named_entities)
-    print('Processed speaker entity')
+
+    print('Inferring relations based on relations belonging to multiple entities')
     sharedrelations.process(named_entities)
-    print('Processed shared relations')
+
+    print('Inferring relations based on indirect relations')
     commonalities.process(named_entities)
-    print('Processed commonalities')
 
     __update_novel_entities(novel_entities, named_entities)
 
@@ -44,8 +47,8 @@ def extract_entities(novel_content_provider: ContentProviderBase) -> NovelEntiti
 
 
 def __process_chapter_analysis(text_analysis: TextAnalysis, novel_entities: NovelEntities, indx_chapter: int):
+    print('Processing character entities')
     CharacterNamedEntityUpdater().update(text_analysis, novel_entities.characters, indx_chapter)
-    print('Updated character entities')
     # LocationNamedEntityUpdater().update(text_analysis, novel_entities.locations, indx_chapter)
     # print('Updated location entities')
     # OrganizationNamedEntityUpdater().update(text_analysis, novel_entities.organizations, indx_chapter)

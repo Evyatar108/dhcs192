@@ -8,6 +8,7 @@ from novelanalyze.prcssng.entitydata import NovelEntities, Character, ExtendedRe
 
 
 def show_relations_network_graph(novel_entities: NovelEntities) -> None:
+    print('Displaying relations graph')
     graph = Network(directed=True, bgcolor="#222222", font_color="white")
     graph.barnes_hut()
     graph.set_edge_smooth('dynamic')
@@ -29,14 +30,11 @@ def show_relations_network_graph(novel_entities: NovelEntities) -> None:
         for ext_relation in named_entity.get_as_subject_kbp_relations():
             relation_desc, relation_color = __get_relation_name_and_color(ext_relation.relation.relation_str)
             # relation_desc += " of"
-            try:
-                graph.add_edge(id(ext_relation.object_named_entity), id(ext_relation.subject_named_entity),
+            graph.add_edge(id(ext_relation.object_named_entity), id(ext_relation.subject_named_entity),
                            arrowStrikethrough=True,
                            physics=True, title=relation_desc, color=relation_color)
-            except:
-                pass
 
-    graph.show(novel_entities.name + '.html')
+    graph.show("output/" + novel_entities.name + '.html')
 
 
 relations_info = {'per:siblings': ('sibling', 'dodgerblue'),

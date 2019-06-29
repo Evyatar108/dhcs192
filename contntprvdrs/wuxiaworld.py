@@ -23,8 +23,8 @@ class WuxiaWorldContentProvider(ContentProviderBase):
             url = chapter_urls[indx_chapter]
         else:
             url = chapter_urls[indx_chapter - 1]
-        paragraphs = BeautifulSoup(requests.get(self.host_name+url, headers=headers).content, 'html.parser')\
-            .find("div", class_="fr-view")\
+        paragraphs = BeautifulSoup(requests.get(self.host_name + url, headers=headers).content, 'html.parser') \
+            .find("div", class_="fr-view") \
             .find_all('p')
         paragraphs_text = [paragraph.text for paragraph in paragraphs]
         return "\n".join(paragraphs_text)

@@ -11,5 +11,5 @@ class TextFileContentProvider(ContentProviderBase):
         self.file_path = file_path
 
     def provide_chapter(self, indx_chapter: int) -> str:
-        file = open(self.file_path, "r")
+        file = open(self.file_path)
         return file.read()

@@ -15,7 +15,7 @@ class ContentProviderBase:
         raise Exception('Unimplemented method')
 
     def generate_all_chapters(self) -> Iterator[str]:
-        for indx_chapter in range(1, self.num_of_chapters):
+        for indx_chapter in range(1, self.num_of_chapters + 1):
             yield self.__delayed_provide_chapter(indx_chapter)
 
     def __delayed_provide_chapter(self, indx_chapter: int):

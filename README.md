@@ -1,4 +1,4 @@
-# Novel Analyzer - Named Entities Relations Extractor
+# Named Entities Relations Extractor
 
 This is a project we made for the course "Digital Humanities"
 

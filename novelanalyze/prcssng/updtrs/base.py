@@ -16,10 +16,15 @@ class NamedEntityUpdaterBase(object):
 
     def update(self, text_analysis: TextAnalysis, named_entities: List[NamedEntity],
                indx_chapter):
+        print('Creating named entities based on tagged entities')
         self.__process_tagged_entities(text_analysis, named_entities, indx_chapter)
-        self.__merge_tagged_entities(named_entities)
+        print('Merging named entited')
+        self.__merge_named_entities(named_entities)
+        print('Matching coreferences to named entities')
         self.__process_coreferences(text_analysis, named_entities, indx_chapter)
+        print('Matching relations to named entities')
         self.__process_relations(text_analysis, named_entities, indx_chapter)
+        print('Updating display name of named entities')
         self.__update_most_common_name(named_entities)
 
     def __process_tagged_entities(self, text_analysis: TextAnalysis, named_entities: List[NamedEntity],
@@ -40,7 +45,7 @@ class NamedEntityUpdaterBase(object):
             the_named_entity.add_tagged_entity(matching_tagged_entity, indx_chapter)
 
     # todo - move merging to a common place to avoid duplication of logic which is used in the speaker file too
-    def __merge_tagged_entities(self, named_entities: List[NamedEntity]):
+    def __merge_named_entities(self, named_entities: List[NamedEntity]):
         found_merge = True
         while found_merge:
             found_merge = False
