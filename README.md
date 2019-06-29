@@ -1,5 +1,8 @@
 # Named Entities Relations Extractor
 
+* TOC
+{:toc}
+
 This is a project we made for the course "Digital Humanities"
 
 The goal of this project is to find relations between names entities such as 
@@ -38,7 +41,7 @@ Unzip the file inside the project's folder
 ```bash
 unzip stanford-corenlp-full-2018-10-05.zip
 ```
-
+If you want to use the available webcrawlers- download chromedriver with the version of your chrome and place it in the project's directory
 
 ## Usage
 Move to the project's directory and run the stanford corenlp server using the command
@@ -61,12 +64,11 @@ novel_entities = infoextrct.extract(my_content_provider)
 
 and add the option to the grphviz.py file
 
-## Example Output
+## Output Example
 Running the program on the first 20 chapters of the
 [Dont Feed The Dark](https://www.royalroad.com/fiction/6245/dont-feed-the-dark) 
 web novel we get the following
 [graph](dont-feed-the-dark.html)
-(Download it to your computer and run it locally using your webbrowser)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
@@ -79,4 +81,5 @@ Please make sure to update tests as appropriate.
 
 ## Made by
 Hadar Levi
+
 Evyatar Mitrani
