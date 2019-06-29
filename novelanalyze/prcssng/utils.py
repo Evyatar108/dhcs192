@@ -1,4 +1,5 @@
 # coding=utf-8
+from itertools import chain
 from typing import Callable, Tuple, List, Iterator
 
 from novelanalyze.prcssng.entitydata import NamedEntity, ExtendedRelation
@@ -18,6 +19,15 @@ def find_named_entity(indx_chapter: int, indx_sentence: int, named_entities: Lis
                                              is_same_name_pred)
     x = next(iter(the_named_entities), None)
     return x
+
+
+def find_named_entity_strict(indx_chapter: int, indx_sentence, named_entities: List[NamedEntity],
+                             target_span: Tuple[int, int],
+                             target_name: str):
+    possible_entities = (named_entity for named_entity in named_entities if
+                         __intersects_entity_reference_span(named_entity, target_span, indx_chapter, indx_sentence)
+                         and target_name in chain(named_entity.names, named_entity.coref_names))
+    return next(possible_entities, None)
 
 
 def find_named_entities(indx_chapter: int, indx_sentence: int, named_entities: List[NamedEntity],

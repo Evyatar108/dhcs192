@@ -64,40 +64,47 @@ def __generate_clusters(tagged_tokens: List[TaggedTextEntity], pred_same_cluster
 
 
 def __extract_coreferences_clusters(raw_data) -> List[List[CoReference]]:
-    return [[CoReference(text=coref['text'],
-                         ref_type=coref['type'],
-                         plurality=coref['number'],
-                         gender=coref['gender'],
-                         animacy=coref['animacy'],
-                         indx_sentence=coref['sentNum'] - 1,
-                         span_in_sentence=__fix_span([coref['startIndex'], coref['endIndex']], 1),
-                         is_representative_mention=coref['isRepresentativeMention'])
-             for coref in corefs_cluster]
-            for corefs_cluster in raw_data['corefs'].values()]
+    coref_clusters = [[CoReference(text=coref['text'],
+                           ref_type=coref['type'],
+                           plurality=coref['number'],
+                           gender=coref['gender'],
+                           animacy=coref['animacy'],
+                           indx_sentence=coref['sentNum'] - 1,
+                           span_in_sentence=__fix_span([coref['startIndex'], coref['endIndex']], 1),
+                           is_representative_mention=coref['isRepresentativeMention'],
+                           speaker=raw_data['sentences'])
+               for coref in corefs_cluster]
+              for corefs_cluster in raw_data['corefs'].values()]
 
+    for coref_cluster in coref_clusters:
+        for coref in coref_cluster:
+            coref.speaker = raw_data['sentences'][coref.indx_sentence]['tokens'][coref.span_in_sentence[0]]['speaker']
+    return coref_clusters
 
 def __extract_openie_relations(raw_data) -> List[Relation]:
     relations = [
-        Relation(indx_sentence=sentence_obj['index'], subject_name=raw_relation['subject'],
+        Relation(indx_sentence=sentence_obj['index'], subject_name=raw_relation['subject'].strip(),
                  subject_span_in_sentence=__fix_span(raw_relation['subjectSpan'], 0),
-                 relation_str=raw_relation['relation'], relation_span=__fix_span(raw_relation['relationSpan'], 0),
-                 object_name=raw_relation['object'], object_span_in_sentence=__fix_span(raw_relation['objectSpan'], 0))
+                 relation_str=raw_relation['relation'].strip(),
+                 relation_span=__fix_span(raw_relation['relationSpan'], 0),
+                 object_name=raw_relation['object'].strip(),
+                 object_span_in_sentence=__fix_span(raw_relation['objectSpan'], 0))
         for sentence_obj in raw_data['sentences'] for raw_relation in
-        itertools.chain(sentence_obj['openie'])]#, sentence_obj['kbp'])]
+        itertools.chain(sentence_obj['openie'])]  # , sentence_obj['kbp'])]
 
     normalized_relations = map(normalize_relation, relations)
     return list(normalized_relations)
 
 
-def __fix_span(span: List[int], offset: int)-> Tuple[int, int]:
-    return span[0]-offset, span[1]-offset-1
+def __fix_span(span: List[int], offset: int) -> Tuple[int, int]:
+    return span[0] - offset, span[1] - offset - 1
 
 
 def normalize_relation(relation_data: Relation):
     copied_relation = copy.copy(relation_data)
 
     def normalize_word(word):
-        if word in ('her', 'his'):
+        if word.lower() in ('her', 'his', 'my'):
             word += "'s"
         return word
 
@@ -107,16 +114,21 @@ def normalize_relation(relation_data: Relation):
     split_object_name = [normalize_word(word) for word in copied_relation.object_name.split(' ')]
     copied_relation.object_name = ' '.join(split_object_name)
 
-    if copied_relation.relation_str == 'is' or copied_relation.relation_str == 'was':
-        if "'s" in copied_relation.subject_name and "'s" not in copied_relation.object_name:
+    if copied_relation.relation_str.lower() in ['is', 'was', 'am', 'are', 'were']:
+        if "'s" in copied_relation.object_name and "'s" not in copied_relation.subject_name:
             # we should probably not treat the case "'s" is in both
             copied_relation.object_name, copied_relation.subject_name = \
                 copied_relation.subject_name, copied_relation.object_name
             copied_relation.object_span_in_sentence, copied_relation.subject_span_in_sentence = \
                 copied_relation.subject_span_in_sentence, copied_relation.object_span_in_sentence
 
-        if "'s" in relation_data.object_name:  # todo - update span too?
-            copied_relation.object_name, _, relation = relation_data.object_name.partition('\'s')
-            copied_relation.relation_str += f'{relation} of'
+        if "'s" in copied_relation.subject_name:  # todo - update span too?
+            copied_relation.subject_name, _, relation = (text.strip() for text in
+                                                         copied_relation.subject_name.partition('\'s'))
+            copied_relation.relation_str += f' {relation} of'
+
+    copied_relation.subject_name = copied_relation.subject_name.strip('\'s').strip()
+    copied_relation.relation_str = copied_relation.relation_str.strip()
+    copied_relation.object_name = copied_relation.object_name.strip('\'s').strip()
 
     return copied_relation

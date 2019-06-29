@@ -1,8 +1,8 @@
 # coding=utf-8
 from abc import abstractmethod, ABCMeta
 from collections import Counter
-from itertools import chain
-from typing import List
+from itertools import chain, combinations
+from typing import List, Tuple
 
 from novelanalyze.analyztn.parsedata import TextAnalysis, CoReference, TaggedTextEntity
 from novelanalyze.prcssng import utils
@@ -12,15 +12,18 @@ from novelanalyze.prcssng.utils import find_named_entity
 
 class NamedEntityUpdaterBase(object):
     __metaclass__ = ABCMeta
+    speaker_indx = 1
 
     def update(self, text_analysis: TextAnalysis, named_entities: List[NamedEntity],
                indx_chapter):
         self.__process_tagged_entities(text_analysis, named_entities, indx_chapter)
+        self.__merge_tagged_entities(named_entities)
         self.__process_coreferences(text_analysis, named_entities, indx_chapter)
         self.__process_relations(text_analysis, named_entities, indx_chapter)
         self.__update_most_common_name(named_entities)
 
-    def __process_tagged_entities(self, text_analysis, named_entities, indx_chapter) -> None:
+    def __process_tagged_entities(self, text_analysis: TextAnalysis, named_entities: List[NamedEntity],
+                                  indx_chapter: int) -> None:
         matching_tagged_entities = (tagged_entity for tagged_entity in text_analysis.tagged_entities if
                                     self._is_matched_mention(tagged_entity))
 
@@ -36,6 +39,33 @@ class NamedEntityUpdaterBase(object):
                 the_named_entity = self._add_new_named_entitiy_to_list(named_entities)
             the_named_entity.add_tagged_entity(matching_tagged_entity, indx_chapter)
 
+    def __merge_tagged_entities(self, named_entities: List[NamedEntity]):
+        found_merge = True
+        while found_merge:
+            found_merge = False
+            entity, other_entity = self.__find_compatible_merge(named_entities)
+            if entity is not None and other_entity is not None:
+                found_merge = True
+                for chapter_indx in other_entity.chapters_mentions.keys():
+                    for coref in other_entity.chapters_mentions[chapter_indx].coreferences:
+                        entity.add_coreference(coref, chapter_indx)
+                    for tagged_entity in other_entity.chapters_mentions[chapter_indx].tagged_entities:
+                        entity.add_tagged_entity(tagged_entity, chapter_indx)
+                named_entities.remove(other_entity)
+                for named_entity in named_entities:
+                    for ext_relation in chain.from_iterable(named_entity.relations_as_subject.values()):
+                        if ext_relation.object_named_entity == other_entity:
+                            ext_relation.object_named_entity = entity
+                    for ext_relation in chain.from_iterable(named_entity.relations_as_object.values()):
+                        if ext_relation.subject_named_entity == other_entity:
+                            ext_relation.subject_named_entity = entity
+
+    @staticmethod
+    def __find_compatible_merge(named_entities: List[NamedEntity]) -> Tuple[NamedEntity, NamedEntity]:
+        compatible_merges = (pair for pair in combinations(named_entities, 2) if
+                             any(name == other_name for name in pair[0].names for other_name in pair[1].names))
+        return next(compatible_merges, (None, None))
+
     @abstractmethod
     def _is_matched_mention(self, tagged_entity: TaggedTextEntity) -> bool:
         pass
@@ -46,17 +76,23 @@ class NamedEntityUpdaterBase(object):
 
     def __process_coreferences(self, text_analysis, named_entities, indx_chapter) -> None:
         def is_same_named_entity_pred(named_entity_name, coref_name):
-            return named_entity_name in coref_name
+            return coref_name in named_entity_name
 
         for coreferences_cluster in text_analysis.coreferences_clusters:
             the_named_entities = list(
                 chain.from_iterable(utils.find_named_entities(indx_chapter, coref.indx_sentence,
-                                                              named_entities, [coref.span_in_sentence],
-                                                              [coref.text] if self._is_matching_coref(coref) else [],
+                                                              named_entities, [],
+                                                              [coref.text],
                                                               is_same_named_entity_pred)
-                                    for coref in coreferences_cluster))
+                                    for coref in coreferences_cluster
+                                    if self._is_matching_coref(coref)))
             for the_named_entity in the_named_entities:
                 the_named_entity.add_coreferences_cluster(coreferences_cluster, indx_chapter)
+            if not the_named_entities and coreferences_cluster[0].text.lower() in ['i', 'my']:
+                the_named_entity = self._add_new_named_entitiy_to_list(named_entities)
+                the_named_entity.add_coreferences_cluster(coreferences_cluster, indx_chapter)
+                the_named_entity.names.append(f'Speaker {self.speaker_indx}')
+                self.speaker_indx += 1
 
     @abstractmethod
     def _is_matching_coref(self, coreference: CoReference) -> bool:
@@ -64,18 +100,15 @@ class NamedEntityUpdaterBase(object):
 
     @staticmethod
     def __process_relations(text_analysis, named_entities, indx_chapter) -> None:
-        def is_same_named_entity_pred(named_entity_name, name_in_relation):
-            return named_entity_name in name_in_relation or name_in_relation in named_entity_name
-
         for relation in text_analysis.relations:
-            the_subject_named_entity = utils.find_named_entity(indx_chapter, relation.indx_sentence, named_entities,
-                                                               [relation.subject_span_in_sentence],
-                                                               [relation.subject_name],
-                                                               is_same_named_entity_pred)
-            the_object_named_entity = utils.find_named_entity(indx_chapter, relation.indx_sentence, named_entities,
-                                                              [relation.object_span_in_sentence],
-                                                              [relation.object_name],
-                                                              is_same_named_entity_pred)
+            the_subject_named_entity = utils.find_named_entity_strict(indx_chapter, relation.indx_sentence,
+                                                                      named_entities,
+                                                                      relation.subject_span_in_sentence,
+                                                                      relation.subject_name)
+            the_object_named_entity = utils.find_named_entity_strict(indx_chapter, relation.indx_sentence,
+                                                                     named_entities,
+                                                                     relation.object_span_in_sentence,
+                                                                     relation.object_name)
 
             if the_subject_named_entity is not None and the_object_named_entity is not None:
                 extended_relation = ExtendedRelation(relation, the_subject_named_entity, the_object_named_entity,

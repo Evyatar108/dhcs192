@@ -28,6 +28,7 @@ class CoReference:
     indx_sentence: int
     span_in_sentence: Tuple[int, int]
     is_representative_mention: bool
+    speaker: str
 
 
 @dataclass

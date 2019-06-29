@@ -2,7 +2,7 @@
 import itertools
 from collections import Counter
 from typing import List, Set
-from novelanalyze.prcssng.entitydata import Character, NamedEntity
+from novelanalyze.prcssng.entitydata import Character, NamedEntity, Mentions
 from novelanalyze.prcssng.updtrs.base import NamedEntityUpdaterBase
 from novelanalyze.analyztn.parsedata import TextAnalysis, CoReference, TaggedTextEntity, SentimentedSentence
 
@@ -14,7 +14,7 @@ class CharacterNamedEntityUpdater(NamedEntityUpdaterBase):
         super(CharacterNamedEntityUpdater, self).update(text_analysis=text_analysis,
                                                         named_entities=characters,
                                                         indx_chapter=indx_chapter)
-        self.__update_relationships(characters, text_analysis.sentimented_sentences, indx_chapter)
+        #self.__update_relationships(characters, text_analysis.sentimented_sentences, indx_chapter)
         self.__update_genders(characters)
 
     def _is_matched_mention(self, tagged_entity: TaggedTextEntity) -> bool:
@@ -22,7 +22,7 @@ class CharacterNamedEntityUpdater(NamedEntityUpdaterBase):
 
     def _add_new_named_entitiy_to_list(self, named_entities: List[NamedEntity]) -> NamedEntity:
         character = Character()
-        named_entities.append(character)
+        named_entities.insert(len(named_entities), character)
         return character
 
     def _is_matching_coref(self, coreference: CoReference) -> bool:
@@ -33,7 +33,7 @@ class CharacterNamedEntityUpdater(NamedEntityUpdaterBase):
                                indx_chapter: int) -> None:
         mentioned_characters_in_sentences: List[Set[Character]] = [set()] * len(sentences)
         for character in characters:
-            mentions = character.chapters_mentions[indx_chapter]
+            mentions = character.chapters_mentions.setdefault(indx_chapter, Mentions(indx_chapter))
             for tagged_entity in mentions.tagged_entities:
                 mentioned_characters_in_sentences[tagged_entity.indx_sentence].add(character)
 

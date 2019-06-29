@@ -47,6 +47,7 @@ class NamedEntity:
 
     def __init__(self, names: List[str] = None):
         self.names = names if names is not None else []
+        self.coref_names = []
         self.name = names[0] if names is not None else None
         self.chapters_mentions: Dict[int, Mentions] = {}
         self.relations_as_subject: Dict[int, List[ExtendedRelation]] = {}
@@ -63,14 +64,9 @@ class NamedEntity:
             self.add_coreference(coreference, indx_chapter)
 
     def add_coreference(self, coreference: CoReference, indx_chapter: int):
-        # if coreference.ref_type == 'PROPER':
-        #    self.names.append(self.__sanitize_name(coreference.text))
+        self.coref_names.append(coreference.text)
         chapter_mentions = self.chapters_mentions.setdefault(indx_chapter, Mentions(indx_chapter))
         chapter_mentions.coreferences.append(coreference)
-
-    @staticmethod
-    def __sanitize_name(name: str):
-        return name.strip().partition('\'s')[0]
 
     def add_relation_as_subject(self, relation: ExtendedRelation):
         chapter_subject_relations = self.relations_as_subject.setdefault(relation.indx_chapter, [])
@@ -100,6 +96,10 @@ class NamedEntity:
         return self.__gen_each_relation_once(
             chain(self.get_as_subject_kbp_relations(), self.get_as_object_kbp_relations()))
 
+    def get_coreferences(self) -> Iterator[CoReference]:
+        return (coref for chapter_mentions in self.chapters_mentions.values() for coref in
+                chapter_mentions.coreferences)
+
     @staticmethod
     def __gen_each_relation_once(relations: Iterator[ExtendedRelation]):
         seen_relations = set()
@@ -111,7 +111,7 @@ class NamedEntity:
 
     @staticmethod
     def __is_kbp_relation(ext_relation: ExtendedRelation):
-        return True #':' in ext_relation.relation.relation_str
+        return True  # ':' in ext_relation.relation.relation_str todo
 
 
 @dataclass

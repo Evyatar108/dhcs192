@@ -3,6 +3,7 @@ import gzip
 import json
 import os
 
+import requests
 from stanfordcorenlp import StanfordCoreNLP
 
 cached_results_file_name = 'cached_results.json.gz'
@@ -20,16 +21,12 @@ def query_model(text):
     return results_dict[text]
 
 
-def __update_results_dict(results_dict, text):
-    nlp = StanfordCoreNLP(r'stanford-corenlp-full-2018-10-05')
-    try:
-        data_as_text = nlp.annotate(text, properties={
-            'annotators': 'coref, tokenize,ssplit, ner, sentiment, openie, kbp, pos, lemma, parse',
-            'outputFormat': 'json',
-            'coref.algorithm': 'neural',
-            'timeout': '50000'})
-    finally:
-        nlp.close()
+def __update_results_dict(results_dict, text:str):
+    data_as_text = requests.post('http://localhost:9000', params={'properties': str({
+        'annotators': 'tokenize,ssplit, ner, sentiment, openie, kbp, pos, lemma, parse',
+        'outputFormat': 'json',
+        #'coref.algorithm': 'neural',
+        'timeout': '500000'})}, data=text.encode('ascii', 'ignore').decode('ascii'), headers={'Connection': 'close'}).text
 
     results_dict[text] = json.loads(data_as_text)
 

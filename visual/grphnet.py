@@ -13,6 +13,8 @@ def show_relations_network_graph(novel_entities: NovelEntities) -> None:
     graph.set_edge_smooth('dynamic')
     nodes_dict = {}
     for named_entity in novel_entities.get_named_entities():
+        if not any(named_entity.get_kbp_relations()):
+            continue
         nodes_dict[id(named_entity)] = named_entity
         value = sum(1 for _ in named_entity.get_as_subject_kbp_relations())
         title = named_entity.name
@@ -27,9 +29,12 @@ def show_relations_network_graph(novel_entities: NovelEntities) -> None:
         for ext_relation in named_entity.get_as_subject_kbp_relations():
             relation_desc, relation_color = __get_relation_name_and_color(ext_relation.relation.relation_str)
             # relation_desc += " of"
-            graph.add_edge(id(ext_relation.object_named_entity), id(ext_relation.subject_named_entity),
+            try:
+                graph.add_edge(id(ext_relation.object_named_entity), id(ext_relation.subject_named_entity),
                            arrowStrikethrough=True,
                            physics=True, title=relation_desc, color=relation_color)
+            except:
+                pass
 
     graph.show(novel_entities.name + '.html')
 

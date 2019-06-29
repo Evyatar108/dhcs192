@@ -20,7 +20,12 @@ unzip stanford-corenlp-full-2018-10-05.zip
 
 
 ## Usage
-First create or use existing class which inherits from ContentProviderBase
+Run the stanford corenlp server using the command
+```bash
+java -Xmx4g -cp "stanford-corenlp-full-2018-10-05/*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000
+```
+
+Create or use existing class which inherits from ContentProviderBase
 
 ```python
 class MyContentProvider(ContentProviderBase):

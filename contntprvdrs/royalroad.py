@@ -30,8 +30,11 @@ class RoyalRoadContentProvider(ContentProviderBase):
         self.host_name = f'{uri.scheme}://{uri.netloc}'
         self.soup = BeautifulSoup(driver.page_source, 'html.parser')
         driver.close()
+        self.num_of_chapters = num_of_chapters
 
     def provide_chapter(self, indx_chapter: int) -> str:
+        if self.num_of_chapters > self.num_of_chapters:
+            return ''
         chapter_urls = [tag['href'] for tag in self.soup.find("table", id="chapters").select('a[href]')]
         url = chapter_urls[indx_chapter-1]
         time.sleep(1)
