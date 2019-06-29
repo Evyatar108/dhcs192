@@ -1,16 +1,3 @@
 markdown: kramdown
 title: Novel Analyzer
-
-slides:
-  theme: solarized # Can be: beige, black, blood, league, moon, night, serif, simple, sky, solarized or white.
-  data-separator: "^\\r?\\n-----\\r?\\n$" # See also https://github.com/hakimel/reveal.js/#external-markdown.
-  data-separator-vertical: "^\\r?\\n---\\r?\\n$" # The double backslash is needed for the converter - see also the rendered _site - there we (should) have the correct regex with single backslashes.
-  data-separator-notes: "^Notes:" # Notes are hidden on the slides but shown on the speaker notes - try to press "s" on a running slideshow to see the speaker notes in a new tab/window.
-
-
-sidebar: # Rule for all of the following parameters: If no data is existing, then the menu headers are automatically hidden regardless of the setting. Pages have no heading - they coming direct after the page title.
-  pages: true # Pages with frontmatter variable `sidebar` set to a value higher then 0 (order index).
-  categories: true
-  tags: true
-  contact: true # Email and all social media entries from the site author - see also _data/authors.yml.
-  legal: true # Pages with frontmatter variable `sidebar-legal` set to a value higher then 0 (order index).
+theme: jekyll-theme-time-machine
