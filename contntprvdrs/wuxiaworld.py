@@ -10,8 +10,8 @@ headers = {
 
 
 class WuxiaWorldContentProvider(ContentProviderBase):
-    def __init__(self, name: str, url: str):
-        super().__init__(name)
+    def __init__(self, name: str, url: str, num_of_chapters: int):
+        super().__init__(name, num_of_chapters)
         uri = urlparse(url)
 
         self.host_name = f'{uri.scheme}://{uri.netloc}'

@@ -8,10 +8,10 @@ from novelanalyze.contntprvdr import ContentProviderBase
 
 
 class EpubContentProvider(ContentProviderBase):
-    def __init__(self, file_path: str, last_chapter_indx: int):
-        self.last_chapter_indx = last_chapter_indx
+    def __init__(self, file_path: str, num_of_chapters: int):
+        self.num_of_chapters = num_of_chapters
         path, file_name = os.path.split(file_path)
-        super().__init__(file_name)
+        super().__init__(file_name, num_of_chapters)
 
         book = epub.open_epub(file_path)
         self.chapters = self.extract_chapters(book)
@@ -31,6 +31,6 @@ class EpubContentProvider(ContentProviderBase):
                 chapter_text = soup.get_text()
                 chapters.append(chapter_text)
                 parsed_chapters += 1
-                if parsed_chapters >= self.last_chapter_indx:
+                if parsed_chapters >= self.num_of_chapters:
                     return chapters
         return chapters

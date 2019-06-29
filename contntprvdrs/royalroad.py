@@ -16,8 +16,8 @@ headers = {
 
 
 class RoyalRoadContentProvider(ContentProviderBase):
-    def __init__(self, name: str, url: str):
-        super().__init__(name)
+    def __init__(self, name: str, url: str, num_of_chapters: int):
+        super().__init__(name, num_of_chapters)
         opts = Options()
         opts.add_argument('headless')
         opts.add_argument(f"user-agent={user_agent}")
@@ -30,11 +30,8 @@ class RoyalRoadContentProvider(ContentProviderBase):
         self.host_name = f'{uri.scheme}://{uri.netloc}'
         self.soup = BeautifulSoup(driver.page_source, 'html.parser')
         driver.close()
-        self.num_of_chapters = num_of_chapters
 
     def provide_chapter(self, indx_chapter: int) -> str:
-        if self.num_of_chapters > self.num_of_chapters:
-            return ''
         chapter_urls = [tag['href'] for tag in self.soup.find("table", id="chapters").select('a[href]')]
         url = chapter_urls[indx_chapter-1]
         time.sleep(1)

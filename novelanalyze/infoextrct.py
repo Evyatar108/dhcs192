@@ -17,7 +17,6 @@ def extract_entities(novel_content_provider: ContentProviderBase) -> NovelEntiti
     novel_entities = NovelEntities(novel_content_provider.novel_name)
     for indx_chapter, chapter in enumerate(chapters_generator):
         print(f'Analayzing chapter number {indx_chapter}')
-        print(f'chapter: {chapter}')
         chapter = chapter.replace("’", "'")
         raw_data = corenlp.query_model(chapter)
         print(f'Queried model')
