@@ -64,7 +64,7 @@ novel_entities = infoextrct.extract(my_content_provider)
 
 and add the option to the grphviz.py file
 
-## Example Output
+## Output Example
 Running the program on the first 20 chapters of the
 [Dont Feed The Dark](https://www.royalroad.com/fiction/6245/dont-feed-the-dark) 
 web novel we get the following
