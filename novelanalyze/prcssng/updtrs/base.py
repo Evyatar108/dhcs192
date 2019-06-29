@@ -39,6 +39,7 @@ class NamedEntityUpdaterBase(object):
                 the_named_entity = self._add_new_named_entitiy_to_list(named_entities)
             the_named_entity.add_tagged_entity(matching_tagged_entity, indx_chapter)
 
+    # todo - move merging to a common place to avoid duplication of logic which is used in the speaker file too
     def __merge_tagged_entities(self, named_entities: List[NamedEntity]):
         found_merge = True
         while found_merge:
@@ -56,9 +57,11 @@ class NamedEntityUpdaterBase(object):
                     for ext_relation in chain.from_iterable(named_entity.relations_as_subject.values()):
                         if ext_relation.object_named_entity == other_entity:
                             ext_relation.object_named_entity = entity
+                            entity.add_relation_as_object(ext_relation)
                     for ext_relation in chain.from_iterable(named_entity.relations_as_object.values()):
                         if ext_relation.subject_named_entity == other_entity:
                             ext_relation.subject_named_entity = entity
+                            entity.add_relation_as_subject(ext_relation)
 
     @staticmethod
     def __find_compatible_merge(named_entities: List[NamedEntity]) -> Tuple[NamedEntity, NamedEntity]:
