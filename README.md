@@ -65,7 +65,8 @@ and add the option to the grphviz.py file
 Running the program on the first 20 chapters of the
 [Dont Feed The Dark](https://www.royalroad.com/fiction/6245/dont-feed-the-dark) 
 web novel we get the following
-[graph](http://htmlpreview.github.com/?https://github.com/Evyatar108/dhcs192/blob/master/dont-feed-the-dark.html)
+[graph](dont-feed-the-dark.html)
+(Download it to your computer and run it locally using your webbrowser)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
