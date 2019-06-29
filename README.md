@@ -1,5 +1,8 @@
 # Novel Analyzer - Named Entities Relations Extractor
 
+* TOC
+{:toc}
+
 This is a project we made for the course "Digital Humanities"
 
 The goal of this project is to find relations between names entities such as 
