@@ -1,7 +1,7 @@
 # coding=utf-8
 from typing import List
 
-from contntprvdrs.chapterstring import StringContentProvider
+from contntprvdrs.strngprvdr import StringContentProvider
 from novelanalyze.analyztn import corenlp, convert, enrich
 from novelanalyze.analyztn.parsedata import TextAnalysis
 from novelanalyze.contntprvdr import ContentProviderBase

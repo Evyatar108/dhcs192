@@ -16,8 +16,8 @@ headers = {
 
 
 class RoyalRoadContentProvider(ContentProviderBase):
-    def __init__(self, name: str, url: str, num_of_chapters: int):
-        super().__init__(name, num_of_chapters)
+    def __init__(self, novel_name: str, url: str, num_of_chapters: int):
+        super().__init__(novel_name, num_of_chapters)
         opts = Options()
         opts.add_argument('headless')
         opts.add_argument(f"user-agent={user_agent}")
