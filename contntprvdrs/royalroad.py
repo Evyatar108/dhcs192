@@ -16,12 +16,12 @@ headers = {
 
 
 class RoyalRoadContentProvider(ContentProviderBase):
-    def __init__(self, name: str, url: str):
+    def __init__(self, name: str, url: str, num_of_chapters: int):
         super().__init__(name)
         opts = Options()
         opts.add_argument('headless')
         opts.add_argument(f"user-agent={user_agent}")
-        driver = webdriver.Chrome('./chromedriver.exe', options=opts)
+        driver = webdriver.Chrome('./chromedriver', options=opts)
         driver.get(url)
         elem = driver.find_element_by_xpath('//*[@id="chapters_length"]/label/select/option[5]')
         elem.click()
