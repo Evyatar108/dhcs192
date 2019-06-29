@@ -58,10 +58,11 @@ def __process_rules_for_relation(ext_relation: ExtendedRelation) -> None:
     for relation_rule in relation_rules:
         if __relation_fit_rule(ext_relation, relation_rule):
             ext_relation.relation.relation_str = relation_rule.new_relation
-            opposite_relation = ext_relation.create_opposite(relation_rule.new_opposite_relation)
+            if relation_rule.new_opposite_relation:
+                opposite_relation = ext_relation.create_opposite(relation_rule.new_opposite_relation)
 
-            ext_relation.subject_named_entity.add_relation_as_object(opposite_relation)
-            ext_relation.object_named_entity.add_relation_as_subject(opposite_relation)
+                ext_relation.subject_named_entity.add_relation_as_object(opposite_relation)
+                ext_relation.object_named_entity.add_relation_as_subject(opposite_relation)
             return
 
 
