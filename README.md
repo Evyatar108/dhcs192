@@ -1,11 +1,11 @@
-# coding=utf-8# Novel Analyzer - Named Entities Relations Extractor
+# Novel Analyzer - Named Entities Relations Extractor
 
-This is a project we made for our course "Digital Humanities"
+This is a project we made for the course "Digital Humanities"
 
-The goal of the project is to find relations between names entities such as 
+The goal of this project is to find relations between names entities such as 
 characters, locations and organizations.
 
-Can be used to analyze text from online sources like webnovels or offline 
+It can be used to analyze text from online sources like webnovels or offline 
 sources like epub files of books by implementing the corresponding content (text) provider.
 
 ## Features
@@ -17,15 +17,17 @@ Aggregating tagged named entities tokens into one named entity object
 
 Matching co-references to previously created named entities and enriching their info based on them.
 
-Finding the corresponding object and subject named entities for each OpenIE relation after preprocessing of the relation
+Finding the corresponding object and subject named entities for each OpenIE relation after relations' preprocessing 
 
-Using regex to construct connections between named entities (currently family) from their OpenIE relations  
+Applying regex to identify connections between named entities (currently family) from their OpenIE relations  
 
-Infer new connections between named entities based on their current connections to other named entities
+Inferring new connections between named entities based on their current connections to other named entities
 
-Build connections from shared relations where two or more named entities are the subject/object of the same relation
+Building connections from shared relations where two or more named entities are the subject/object of the same relation
 
-Merge first person named entities to represent the story-teller of the webnovel if there is one
+Merging first person named entities to represent the story-teller of the novel if there is one
+
+Visualizing the connections/relations between the named entities using a graph
 
 ## Installation
 Download CoreNLP by Stanford University
@@ -43,7 +45,9 @@ Move to the project's directory and run the stanford corenlp server using the co
 ```bash
 java -Xmx4g -cp "stanford-corenlp-full-2018-10-05/*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000
 ```
+Run the grphviz.py file which will start an interactive console
 
+## Adding new content providers
 Create or use existing class which inherits from ContentProviderBase
 
 ```python
@@ -54,6 +58,8 @@ class MyContentProvider(ContentProviderBase):
 my_content_provider = MyContentProvider(...)
 novel_entities = infoextrct.extract(my_content_provider)
 ```
+
+and add the option to the grphviz.py file
 
 ## Example Output
 Running the program on the first 20 chapters of the
@@ -68,3 +74,8 @@ Please make sure to update tests as appropriate.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
+
+
+## Made by
+Hadar Levi
+Evyatar Mitrani
