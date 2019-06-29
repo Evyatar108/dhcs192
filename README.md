@@ -41,7 +41,7 @@ Unzip the file inside the project's folder
 ```bash
 unzip stanford-corenlp-full-2018-10-05.zip
 ```
-
+If you want to use the available webcrawlers- download chromedriver with the version of your chrome and place it in the project's directory
 
 ## Usage
 Move to the project's directory and run the stanford corenlp server using the command
