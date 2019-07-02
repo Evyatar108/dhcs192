@@ -75,9 +75,12 @@ Further work needs to be done to enable easier customization of the rules withou
 ## Output Example
 Running the program on the first 20 chapters of the
 [Dont Feed The Dark](https://www.royalroad.com/fiction/6245/dont-feed-the-dark) 
-web novel we get the following
+web novel we get the following graph which describe all of the extract relations between the characters
 [graph](dont-feed-the-dark.html)
 
+Running the program on [The Story Of An Hour - Summary](https://www.sparknotes.com/short-stories/the-story-of-an-hour/summary/)
+using the familiy relation extraction option only - we get the following 
+[graph](the_story_of_an_hour.html)
 ## Contributing
 Pull requests are welcome. For significant changes, please open an issue first to discuss what you would like to change.
 
